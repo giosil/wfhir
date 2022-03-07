@@ -1,0 +1,65 @@
+package org.dew.fhir.model;
+
+import java.io.Serializable;
+
+/**
+ * 
+ * Age data type.
+ * 
+ * @see <a href="https://www.hl7.org/fhir/datatypes.html#Age">Age</a>
+ */
+public 
+class Age extends Element implements Serializable
+{
+  private static final long serialVersionUID = -726267586501975517L;
+  
+  protected String code;
+  protected String system;
+  protected int value;
+  
+  public Age()
+  {
+  }
+  
+  public String getCode() {
+    return code;
+  }
+
+  public String getSystem() {
+    return system;
+  }
+
+  public int getValue() {
+    return value;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
+  }
+
+  public void setSystem(String system) {
+    this.system = system;
+  }
+
+  public void setValue(int value) {
+    this.value = value;
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if(object instanceof Age) {
+      return this.hashCode() == object.hashCode();
+    }
+    return false;
+  }
+  
+  @Override
+  public int hashCode() {
+    return value;
+  }
+  
+  @Override
+  public String toString() {
+    return "Age(" + code + "," + system + "," + value + ")";
+  }
+}
