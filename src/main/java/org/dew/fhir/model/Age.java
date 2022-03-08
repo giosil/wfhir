@@ -15,7 +15,7 @@ class Age extends Element implements Serializable
   
   protected String code;
   protected String system;
-  protected int value;
+  protected Integer value;
   
   public Age()
   {
@@ -29,7 +29,7 @@ class Age extends Element implements Serializable
     return system;
   }
 
-  public int getValue() {
+  public Integer getValue() {
     return value;
   }
 
@@ -41,7 +41,7 @@ class Age extends Element implements Serializable
     this.system = system;
   }
 
-  public void setValue(int value) {
+  public void setValue(Integer value) {
     this.value = value;
   }
 

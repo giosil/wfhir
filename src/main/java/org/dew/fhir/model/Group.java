@@ -14,12 +14,12 @@ class Group extends DomainResource implements Serializable
   private static final long serialVersionUID = -9028624104483647077L;
   
   protected Identifier[] identifier;
-  protected boolean active;
+  protected Boolean active;
   protected CodeableConcept type;
-  protected boolean actual;
+  protected Boolean actual;
   protected CodeableConcept code;
   protected String name;
-  protected int quantity;
+  protected Integer quantity;
   protected Reference<Resource> managingEntity;
   protected GroupCharacteristic[] characteristic;
   protected GroupMember[] member;
@@ -58,7 +58,7 @@ class Group extends DomainResource implements Serializable
     return identifier;
   }
 
-  public boolean isActive() {
+  public Boolean isActive() {
     return active;
   }
 
@@ -66,7 +66,7 @@ class Group extends DomainResource implements Serializable
     return type;
   }
 
-  public boolean isActual() {
+  public Boolean isActual() {
     return actual;
   }
 
@@ -78,7 +78,7 @@ class Group extends DomainResource implements Serializable
     return name;
   }
 
-  public int getQuantity() {
+  public Integer getQuantity() {
     return quantity;
   }
 
@@ -98,7 +98,7 @@ class Group extends DomainResource implements Serializable
     this.identifier = identifier;
   }
 
-  public void setActive(boolean active) {
+  public void setActive(Boolean active) {
     this.active = active;
   }
 
@@ -106,7 +106,7 @@ class Group extends DomainResource implements Serializable
     this.type = type;
   }
 
-  public void setActual(boolean actual) {
+  public void setActual(Boolean actual) {
     this.actual = actual;
   }
 
@@ -118,7 +118,7 @@ class Group extends DomainResource implements Serializable
     this.name = name;
   }
 
-  public void setQuantity(int quantity) {
+  public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
 

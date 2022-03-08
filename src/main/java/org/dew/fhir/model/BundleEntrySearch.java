@@ -14,7 +14,7 @@ class BundleEntrySearch extends BackboneElement implements Serializable
   private static final long serialVersionUID = 6631928918562193932L;
   
   protected String mode;
-  protected double score;
+  protected Double score;
   
   public BundleEntrySearch()
   {
@@ -24,7 +24,7 @@ class BundleEntrySearch extends BackboneElement implements Serializable
     return mode;
   }
 
-  public double getScore() {
+  public Double getScore() {
     return score;
   }
 
@@ -32,7 +32,7 @@ class BundleEntrySearch extends BackboneElement implements Serializable
     this.mode = mode;
   }
 
-  public void setScore(double score) {
+  public void setScore(Double score) {
     this.score = score;
   }
   

@@ -14,7 +14,7 @@ class Schedule extends DomainResource implements Serializable
   private static final long serialVersionUID = -9028624104483647077L;
   
   protected Identifier[] identifier;
-  protected boolean active;
+  protected Boolean active;
   protected CodeableConcept[] serviceCategory;
   protected CodeableConcept[] serviceType;
   protected CodeableConcept[] specialty;
@@ -42,7 +42,7 @@ class Schedule extends DomainResource implements Serializable
     return identifier;
   }
 
-  public boolean isActive() {
+  public Boolean isActive() {
     return active;
   }
 
@@ -74,7 +74,7 @@ class Schedule extends DomainResource implements Serializable
     this.identifier = identifier;
   }
 
-  public void setActive(boolean active) {
+  public void setActive(Boolean active) {
     this.active = active;
   }
 

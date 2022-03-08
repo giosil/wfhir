@@ -20,15 +20,10 @@ class Narrative extends Element implements Serializable
   {
   }
   
-  public Narrative(String div)
+  public Narrative(String status, String div)
   {
-    this.div = div;
-  }
-  
-  public Narrative(String div, String status)
-  {
-    this.div = div;
     this.status = status;
+    this.div = div;
   }
   
   public String getStatus() {

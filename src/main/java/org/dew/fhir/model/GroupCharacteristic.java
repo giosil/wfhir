@@ -15,11 +15,11 @@ class GroupCharacteristic extends BackboneElement implements Serializable
   
   protected CodeableConcept code;
   protected CodeableConcept valueCodeableConcept;
-  protected boolean valueBoolean;
+  protected Boolean valueBoolean;
   protected Quantity valueQuantity;
   protected Range valueRange;
   protected Reference<Resource> valueReference;
-  protected boolean exclude;
+  protected Boolean exclude;
   protected Period period;
   
   public GroupCharacteristic()
@@ -34,7 +34,7 @@ class GroupCharacteristic extends BackboneElement implements Serializable
     return valueCodeableConcept;
   }
 
-  public boolean isValueBoolean() {
+  public Boolean isValueBoolean() {
     return valueBoolean;
   }
 
@@ -50,7 +50,7 @@ class GroupCharacteristic extends BackboneElement implements Serializable
     return valueReference;
   }
 
-  public boolean isExclude() {
+  public Boolean isExclude() {
     return exclude;
   }
 
@@ -66,7 +66,7 @@ class GroupCharacteristic extends BackboneElement implements Serializable
     this.valueCodeableConcept = valueCodeableConcept;
   }
 
-  public void setValueBoolean(boolean valueBoolean) {
+  public void setValueBoolean(Boolean valueBoolean) {
     this.valueBoolean = valueBoolean;
   }
 
@@ -82,7 +82,7 @@ class GroupCharacteristic extends BackboneElement implements Serializable
     this.valueReference = valueReference;
   }
 
-  public void setExclude(boolean exclude) {
+  public void setExclude(Boolean exclude) {
     this.exclude = exclude;
   }
 

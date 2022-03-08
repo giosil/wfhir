@@ -16,11 +16,17 @@ class ContactPoint extends Element implements Serializable
   protected String system;
   protected String value;
   protected String use;
-  protected int rank;
+  protected Integer rank;
   protected Period period;
   
   public ContactPoint()
   {
+  }
+  
+  public ContactPoint(String system, String value)
+  {
+    this.system = system;
+    this.value = value;
   }
 
   public String getSystem() {
@@ -35,7 +41,7 @@ class ContactPoint extends Element implements Serializable
     return use;
   }
 
-  public int getRank() {
+  public Integer getRank() {
     return rank;
   }
 
@@ -55,7 +61,7 @@ class ContactPoint extends Element implements Serializable
     this.use = use;
   }
 
-  public void setRank(int rank) {
+  public void setRank(Integer rank) {
     this.rank = rank;
   }
 

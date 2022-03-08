@@ -13,7 +13,7 @@ class Dosage extends BackboneElement implements Serializable
 {
   private static final long serialVersionUID = -6483017982427909521L;
   
-  protected int sequence;
+  protected Integer sequence;
   protected String text;
   protected CodeableConcept additionalInstruction;
   protected String patientInstruction;

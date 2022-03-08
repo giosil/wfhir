@@ -30,6 +30,20 @@ class Element implements Serializable
     this.id = id;
     this.extension = extension;
   }
+  
+  public Element(Extension extension)
+  {
+    if(extension != null) {
+      this.extension = new Extension[] { extension };
+    }
+  }
+  
+  public Element(String url, String codingSystem, String codingCode, String codingDisplay)
+  {
+    if(url != null && url.length() > 0) {
+      this.extension = new Extension[] { new Extension(url, codingSystem, codingCode, codingDisplay) };
+    }
+  }
 
   public String getId() {
     return id;

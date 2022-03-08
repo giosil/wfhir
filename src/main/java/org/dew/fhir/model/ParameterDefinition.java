@@ -15,7 +15,7 @@ class ParameterDefinition extends Element implements Serializable
   
   protected String name;
   protected String use;
-  protected int min;
+  protected Integer min;
   protected String max; // Is string!
   protected String documentation;
   protected String type;
@@ -33,7 +33,7 @@ class ParameterDefinition extends Element implements Serializable
     return use;
   }
 
-  public int getMin() {
+  public Integer getMin() {
     return min;
   }
 
@@ -61,7 +61,7 @@ class ParameterDefinition extends Element implements Serializable
     this.use = use;
   }
 
-  public void setMin(int min) {
+  public void setMin(Integer min) {
     this.min = min;
   }
 

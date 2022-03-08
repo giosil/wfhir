@@ -15,7 +15,7 @@ class GroupMember extends BackboneElement implements Serializable
   
   protected Reference<Resource> entity;
   protected Period period;
-  protected boolean inactive;
+  protected Boolean inactive;
   
   public GroupMember()
   {
@@ -29,7 +29,7 @@ class GroupMember extends BackboneElement implements Serializable
     return period;
   }
 
-  public boolean isInactive() {
+  public Boolean isInactive() {
     return inactive;
   }
 
@@ -41,7 +41,7 @@ class GroupMember extends BackboneElement implements Serializable
     this.period = period;
   }
 
-  public void setInactive(boolean inactive) {
+  public void setInactive(Boolean inactive) {
     this.inactive = inactive;
   }
 

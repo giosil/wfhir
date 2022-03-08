@@ -13,7 +13,7 @@ class Quantity extends Element implements Serializable
 {
   private static final long serialVersionUID = -7860987903572076004L;
   
-  protected double value;
+  protected Double value;
   protected String comparator;
   protected String unit;
   protected String system;
@@ -23,7 +23,7 @@ class Quantity extends Element implements Serializable
   {
   }
 
-  public double getValue() {
+  public Double getValue() {
     return value;
   }
 
@@ -43,7 +43,7 @@ class Quantity extends Element implements Serializable
     return code;
   }
 
-  public void setValue(double value) {
+  public void setValue(Double value) {
     this.value = value;
   }
 

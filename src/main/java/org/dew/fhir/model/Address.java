@@ -25,11 +25,43 @@ class Address extends Element implements Serializable
   protected String postalCode;
   protected String country;
   protected Period period;
+  // extra
+  protected Element _city;
+  protected Element _state;
   
   public Address()
   {
   }
-
+  
+  public Address(String line, String city)
+  {
+    if(line != null) {
+      this.line = new String[] { line };
+    }
+    this.city = city;
+  }
+  
+  public Address(String line, String city, String district)
+  {
+    if(line != null) {
+      this.line = new String[] { line };
+    }
+    this.city = city;
+    this.district = district;
+  }
+  
+  public Address(String line, String city, String district, String state, String postalCode, String country)
+  {
+    if(line != null) {
+      this.line = new String[] { line };
+    }
+    this.city = city;
+    this.district = district;
+    this.state = state;
+    this.postalCode = postalCode;
+    this.country = country;
+  }
+  
   public String getUse() {
     return use;
   }
@@ -68,6 +100,14 @@ class Address extends Element implements Serializable
 
   public Period getPeriod() {
     return period;
+  }
+
+  public Element get_city() {
+    return _city;
+  }
+
+  public Element get_state() {
+    return _state;
   }
 
   public void setUse(String use) {
@@ -109,7 +149,15 @@ class Address extends Element implements Serializable
   public void setPeriod(Period period) {
     this.period = period;
   }
-  
+
+  public void set_city(Element _city) {
+    this._city = _city;
+  }
+
+  public void set_state(Element _state) {
+    this._state = _state;
+  }
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof Address) {

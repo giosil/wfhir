@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * 
- * Code filters specify additional constraints on the data, specifying the value set of interest for a particular element of the data. Each code filter defines an additional constraint on the data, i.e. code filters are AND'ed, not OR'ed.
+ * Code filters specify additional constraints on the data, specifying the value set of interest for a particular element of the data. Each code filter defines an additional constraInteger on the data, i.e. code filters are AND'ed, not OR'ed.
  * 
  * @see <a href="https://www.hl7.org/fhir/metadatatypes-definitions.html#DataRequirement.codeFilter">DataRequirement.codeFilter</a>
  */

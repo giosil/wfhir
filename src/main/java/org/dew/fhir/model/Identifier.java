@@ -25,7 +25,13 @@ class Identifier extends Element implements Serializable
   public Identifier()
   {
   }
-  
+
+  public Identifier(String system, String value)
+  {
+    this.system = system;
+    this.value = value;
+  }
+
   public String getUse() {
     return use;
   }

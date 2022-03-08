@@ -21,7 +21,7 @@ class Attachment extends Element implements Serializable
   protected String language;
   protected String data;
   protected String url;
-  protected int size;
+  protected Integer size;
   protected String hash;
   protected String title;
   protected Date creation;
@@ -46,7 +46,7 @@ class Attachment extends Element implements Serializable
     return url;
   }
 
-  public int getSize() {
+  public Integer getSize() {
     return size;
   }
 
@@ -78,7 +78,7 @@ class Attachment extends Element implements Serializable
     this.url = url;
   }
 
-  public void setSize(int size) {
+  public void setSize(Integer size) {
     this.size = size;
   }
 

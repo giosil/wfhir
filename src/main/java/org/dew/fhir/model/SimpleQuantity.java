@@ -13,7 +13,7 @@ class SimpleQuantity extends Element implements Serializable
 {
   private static final long serialVersionUID = 8394534169077582238L;
   
-  protected double value;
+  protected Double value;
   protected String unit;
   protected String system;
   protected String code;
@@ -22,7 +22,7 @@ class SimpleQuantity extends Element implements Serializable
   {
   }
 
-  public double getValue() {
+  public Double getValue() {
     return value;
   }
 
@@ -38,7 +38,7 @@ class SimpleQuantity extends Element implements Serializable
     return code;
   }
 
-  public void setValue(double value) {
+  public void setValue(Double value) {
     this.value = value;
   }
 

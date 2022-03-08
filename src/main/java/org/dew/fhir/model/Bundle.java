@@ -17,7 +17,7 @@ class Bundle extends Resource implements Serializable
   protected Identifier identifier;
   protected String type;
   protected Date timestamp;
-  protected int total;
+  protected Integer total;
   protected BundleLink link;
   protected BundleEntry[] entry;
   protected Signature signature;
@@ -38,7 +38,7 @@ class Bundle extends Resource implements Serializable
     return timestamp;
   }
 
-  public int getTotal() {
+  public Integer getTotal() {
     return total;
   }
 
@@ -66,7 +66,7 @@ class Bundle extends Resource implements Serializable
     this.timestamp = timestamp;
   }
 
-  public void setTotal(int total) {
+  public void setTotal(Integer total) {
     this.total = total;
   }
 

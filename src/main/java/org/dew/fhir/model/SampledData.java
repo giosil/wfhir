@@ -18,11 +18,11 @@ class SampledData extends Element implements Serializable
   private static final long serialVersionUID = -7860987903572076004L;
   
   protected SimpleQuantity origin;
-  protected double period;
-  protected double factor;
-  protected double lowerLimit;
-  protected double upperLimit;
-  protected int dimensions;
+  protected Double period;
+  protected Double factor;
+  protected Double lowerLimit;
+  protected Double upperLimit;
+  protected Integer dimensions;
   protected String data;
   
   public SampledData()
@@ -33,23 +33,23 @@ class SampledData extends Element implements Serializable
     return origin;
   }
 
-  public double getPeriod() {
+  public Double getPeriod() {
     return period;
   }
 
-  public double getFactor() {
+  public Double getFactor() {
     return factor;
   }
 
-  public double getLowerLimit() {
+  public Double getLowerLimit() {
     return lowerLimit;
   }
 
-  public double getUpperLimit() {
+  public Double getUpperLimit() {
     return upperLimit;
   }
 
-  public int getDimensions() {
+  public Integer getDimensions() {
     return dimensions;
   }
 
@@ -61,23 +61,23 @@ class SampledData extends Element implements Serializable
     this.origin = origin;
   }
 
-  public void setPeriod(double period) {
+  public void setPeriod(Double period) {
     this.period = period;
   }
 
-  public void setFactor(double factor) {
+  public void setFactor(Double factor) {
     this.factor = factor;
   }
 
-  public void setLowerLimit(double lowerLimit) {
+  public void setLowerLimit(Double lowerLimit) {
     this.lowerLimit = lowerLimit;
   }
 
-  public void setUpperLimit(double upperLimit) {
+  public void setUpperLimit(Double upperLimit) {
     this.upperLimit = upperLimit;
   }
 
-  public void setDimensions(int dimensions) {
+  public void setDimensions(Integer dimensions) {
     this.dimensions = dimensions;
   }
 

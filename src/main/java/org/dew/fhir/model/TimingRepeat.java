@@ -18,20 +18,20 @@ class TimingRepeat extends Element implements Serializable
   protected Duration boundsDuration;
   protected Range boundsRange;
   protected Period boundsPeriod;
-  protected int count;
-  protected int countMax;
-  protected double duration;
-  protected double durationMax;
+  protected Integer count;
+  protected Integer countMax;
+  protected Double duration;
+  protected Double durationMax;
   protected String durationUnit;
-  protected int frequency;
-  protected int frequencyMax;
-  protected double period;
-  protected double periodMax;
+  protected Integer frequency;
+  protected Integer frequencyMax;
+  protected Double period;
+  protected Double periodMax;
   protected String periodUnit;
   protected String dayOfWeek;
   protected Date timeOfDay;
   protected String when;
-  protected int offset;
+  protected Integer offset;
   
   public TimingRepeat()
   {
@@ -49,19 +49,19 @@ class TimingRepeat extends Element implements Serializable
     return boundsPeriod;
   }
 
-  public int getCount() {
+  public Integer getCount() {
     return count;
   }
 
-  public int getCountMax() {
+  public Integer getCountMax() {
     return countMax;
   }
 
-  public double getDuration() {
+  public Double getDuration() {
     return duration;
   }
 
-  public double getDurationMax() {
+  public Double getDurationMax() {
     return durationMax;
   }
 
@@ -69,19 +69,19 @@ class TimingRepeat extends Element implements Serializable
     return durationUnit;
   }
 
-  public int getFrequency() {
+  public Integer getFrequency() {
     return frequency;
   }
 
-  public int getFrequencyMax() {
+  public Integer getFrequencyMax() {
     return frequencyMax;
   }
 
-  public double getPeriod() {
+  public Double getPeriod() {
     return period;
   }
 
-  public double getPeriodMax() {
+  public Double getPeriodMax() {
     return periodMax;
   }
 
@@ -101,7 +101,7 @@ class TimingRepeat extends Element implements Serializable
     return when;
   }
 
-  public int getOffset() {
+  public Integer getOffset() {
     return offset;
   }
 
@@ -117,19 +117,19 @@ class TimingRepeat extends Element implements Serializable
     this.boundsPeriod = boundsPeriod;
   }
 
-  public void setCount(int count) {
+  public void setCount(Integer count) {
     this.count = count;
   }
 
-  public void setCountMax(int countMax) {
+  public void setCountMax(Integer countMax) {
     this.countMax = countMax;
   }
 
-  public void setDuration(double duration) {
+  public void setDuration(Double duration) {
     this.duration = duration;
   }
 
-  public void setDurationMax(double durationMax) {
+  public void setDurationMax(Double durationMax) {
     this.durationMax = durationMax;
   }
 
@@ -137,19 +137,19 @@ class TimingRepeat extends Element implements Serializable
     this.durationUnit = durationUnit;
   }
 
-  public void setFrequency(int frequency) {
+  public void setFrequency(Integer frequency) {
     this.frequency = frequency;
   }
 
-  public void setFrequencyMax(int frequencyMax) {
+  public void setFrequencyMax(Integer frequencyMax) {
     this.frequencyMax = frequencyMax;
   }
 
-  public void setPeriod(double period) {
+  public void setPeriod(Double period) {
     this.period = period;
   }
 
-  public void setPeriodMax(double periodMax) {
+  public void setPeriodMax(Double periodMax) {
     this.periodMax = periodMax;
   }
 
@@ -169,7 +169,7 @@ class TimingRepeat extends Element implements Serializable
     this.when = when;
   }
 
-  public void setOffset(int offset) {
+  public void setOffset(Integer offset) {
     this.offset = offset;
   }
 

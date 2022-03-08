@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * 
- * Date filters specify additional constraints on the data in terms of the applicable date range for specific elements. Each date filter specifies an additional constraint on the data, i.e. date filters are AND'ed, not OR'ed.
+ * Date filters specify additional constraints on the data in terms of the applicable date range for specific elements. Each date filter specifies an additional constraInteger on the data, i.e. date filters are AND'ed, not OR'ed.
  * 
  * @see <a href="https://www.hl7.org/fhir/metadatatypes-definitions.html#DataRequirement.dateFilter">DataRequirement.dateFilter</a>
  */

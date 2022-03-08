@@ -17,10 +17,16 @@ class Coding extends Element implements Serializable
   private String version;
   private String code;
   private String display;
-  private boolean userSelected;
+  private Boolean userSelected;
   
   public Coding()
   {
+  }
+  
+  public Coding(String system, String code)
+  {
+    this.system = system;
+    this.code = code;
   }
   
   public Coding(String system, String version, String code)
@@ -38,7 +44,7 @@ class Coding extends Element implements Serializable
     this.display = display;
   }
   
-  public Coding(String system, String version, String code, String display, boolean userSelected)
+  public Coding(String system, String version, String code, String display, Boolean userSelected)
   {
     this.system = system;
     this.version = version;
@@ -63,7 +69,7 @@ class Coding extends Element implements Serializable
     return display;
   }
 
-  public boolean isUserSelected() {
+  public Boolean isUserSelected() {
     return userSelected;
   }
 
@@ -83,7 +89,7 @@ class Coding extends Element implements Serializable
     this.display = display;
   }
 
-  public void setUserSelected(boolean userSelected) {
+  public void setUserSelected(Boolean userSelected) {
     this.userSelected = userSelected;
   }
   

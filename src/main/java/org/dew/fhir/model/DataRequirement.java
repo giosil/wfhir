@@ -20,7 +20,7 @@ class DataRequirement extends Element implements Serializable
   protected String mustSupport;
   protected DataRequirementCodeFilter codeFilter;
   protected DataRequirementDateFilter dateFilter;
-  protected int limit;
+  protected Integer limit;
   protected DataRequirementSort sort;
   
   public DataRequirement()
@@ -55,7 +55,7 @@ class DataRequirement extends Element implements Serializable
     return dateFilter;
   }
 
-  public int getLimit() {
+  public Integer getLimit() {
     return limit;
   }
 
@@ -91,7 +91,7 @@ class DataRequirement extends Element implements Serializable
     this.dateFilter = dateFilter;
   }
 
-  public void setLimit(int limit) {
+  public void setLimit(Integer limit) {
     this.limit = limit;
   }
 

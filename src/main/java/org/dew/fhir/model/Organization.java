@@ -15,7 +15,7 @@ class Organization extends DomainResource implements Serializable
   private static final long serialVersionUID = 1479043036079896361L;
   
   protected Identifier[] identifier;
-  protected boolean active;
+  protected Boolean active;
   protected CodeableConcept[] type;
   protected String name;
   protected String[] alias;
@@ -27,10 +27,12 @@ class Organization extends DomainResource implements Serializable
   
   public Organization()
   {
+    this.resourceType = "Organization";
   }
   
   public Organization(Identifier singleIdentifier)
   {
+    this.resourceType = "Organization";
     this.identifier = new Identifier[] { singleIdentifier };
     this.active = true;
   }
@@ -43,6 +45,7 @@ class Organization extends DomainResource implements Serializable
   
   public Organization(Identifier singleIdentifier, String name)
   {
+    this.resourceType = "Organization";
     this.identifier = new Identifier[] { singleIdentifier };
     this.name = name;
     this.active = true;
@@ -50,6 +53,7 @@ class Organization extends DomainResource implements Serializable
   
   public Organization(Identifier[] identifier, String name)
   {
+    this.resourceType = "Organization";
     this.identifier = identifier;
     this.name = name;
     this.active = true;
@@ -59,7 +63,7 @@ class Organization extends DomainResource implements Serializable
     return identifier;
   }
 
-  public boolean isActive() {
+  public Boolean isActive() {
     return active;
   }
 
@@ -99,7 +103,7 @@ class Organization extends DomainResource implements Serializable
     this.identifier = identifier;
   }
 
-  public void setActive(boolean active) {
+  public void setActive(Boolean active) {
     this.active = active;
   }
 

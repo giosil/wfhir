@@ -16,17 +16,17 @@ class Patient extends DomainResource implements Serializable
   private static final long serialVersionUID = -4436253357387343929L;
   
   protected Identifier[] identifier;
-  protected boolean active;
+  protected Boolean active;
   protected HumanName name;
   protected ContactPoint telecom;
   protected String gender;
   protected Date birthDate;
-  protected boolean deceasedBoolean;
+  protected Boolean deceasedBoolean;
   protected Date deceasedDateTime;
   protected Address[] address;
   protected CodeableConcept maritalStatus;
-  protected boolean multipleBirthBoolean;
-  protected int multipleBirthInteger;
+  protected Boolean multipleBirthBoolean;
+  protected Integer multipleBirthInteger;
   protected Attachment photo;
   protected PatientContact contact;
   protected PatientCommunication communication;
@@ -36,13 +36,14 @@ class Patient extends DomainResource implements Serializable
   
   public Patient()
   {
+    this.resourceType = "Patient";
   }
 
   public Identifier[] getIdentifier() {
     return identifier;
   }
 
-  public boolean isActive() {
+  public Boolean isActive() {
     return active;
   }
 
@@ -62,7 +63,7 @@ class Patient extends DomainResource implements Serializable
     return birthDate;
   }
 
-  public boolean isDeceasedBoolean() {
+  public Boolean isDeceasedBoolean() {
     return deceasedBoolean;
   }
 
@@ -78,11 +79,11 @@ class Patient extends DomainResource implements Serializable
     return maritalStatus;
   }
 
-  public boolean isMultipleBirthBoolean() {
+  public Boolean isMultipleBirthBoolean() {
     return multipleBirthBoolean;
   }
 
-  public int getMultipleBirthInteger() {
+  public Integer getMultipleBirthInteger() {
     return multipleBirthInteger;
   }
 
@@ -114,7 +115,7 @@ class Patient extends DomainResource implements Serializable
     this.identifier = identifier;
   }
 
-  public void setActive(boolean active) {
+  public void setActive(Boolean active) {
     this.active = active;
   }
 
@@ -134,7 +135,7 @@ class Patient extends DomainResource implements Serializable
     this.birthDate = birthDate;
   }
 
-  public void setDeceasedBoolean(boolean deceasedBoolean) {
+  public void setDeceasedBoolean(Boolean deceasedBoolean) {
     this.deceasedBoolean = deceasedBoolean;
   }
 
@@ -150,11 +151,11 @@ class Patient extends DomainResource implements Serializable
     this.maritalStatus = maritalStatus;
   }
 
-  public void setMultipleBirthBoolean(boolean multipleBirthBoolean) {
+  public void setMultipleBirthBoolean(Boolean multipleBirthBoolean) {
     this.multipleBirthBoolean = multipleBirthBoolean;
   }
 
-  public void setMultipleBirthInteger(int multipleBirthInteger) {
+  public void setMultipleBirthInteger(Integer multipleBirthInteger) {
     this.multipleBirthInteger = multipleBirthInteger;
   }
 
