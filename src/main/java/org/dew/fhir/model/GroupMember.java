@@ -13,7 +13,7 @@ class GroupMember extends BackboneElement implements Serializable
 {
   private static final long serialVersionUID = -2113568141872759378L;
   
-  protected Reference<? extends Resource> entity;
+  protected Reference<Resource> entity;
   protected Period period;
   protected Boolean inactive;
   
@@ -21,12 +21,12 @@ class GroupMember extends BackboneElement implements Serializable
   {
   }
 
-  public GroupMember(Reference<? extends Resource> entity)
+  public GroupMember(Reference<Resource> entity)
   {
     this.entity = entity;
   }
 
-  public Reference<? extends Resource> getEntity() {
+  public Reference<Resource> getEntity() {
     return entity;
   }
 
@@ -38,7 +38,7 @@ class GroupMember extends BackboneElement implements Serializable
     return inactive;
   }
 
-  public void setEntity(Reference<? extends Resource> entity) {
+  public void setEntity(Reference<Resource> entity) {
     this.entity = entity;
   }
 

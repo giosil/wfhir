@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class Schedule extends DomainResource implements Serializable
 {
-  private static final long serialVersionUID = -9028624104483647077L;
+  private static final long serialVersionUID = 1752310390289639386L;
   
   protected Identifier[] identifier;
   protected Boolean active;
@@ -24,16 +24,19 @@ class Schedule extends DomainResource implements Serializable
   
   public Schedule()
   {
+    this.resourceType = "Schedule";
   }
   
   public Schedule(Identifier singleIdentifier)
   {
+    this.resourceType = "Schedule";
     this.identifier = new Identifier[] { singleIdentifier };
     this.active = true;
   }
   
   public Schedule(Identifier[] identifier)
   {
+    this.resourceType = "Schedule";
     this.identifier = identifier;
     this.active = true;
   }

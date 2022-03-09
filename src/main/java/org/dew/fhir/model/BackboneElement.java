@@ -57,8 +57,8 @@ class BackboneElement extends Element implements Serializable
   
   @Override
   public int hashCode() {
-    if(modifierExtension == null) return 0;
-    return modifierExtension.hashCode();
+    if(id == null) return 0;
+    return id.hashCode();
   }
   
   @Override
