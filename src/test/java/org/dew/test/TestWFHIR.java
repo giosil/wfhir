@@ -15,7 +15,7 @@ import org.dew.fhir.model.ValueSet;
 import org.dew.fhir.model.ValueSetCompose;
 import org.dew.fhir.model.ValueSetComposeInclude;
 
-import org.json.JSON;
+import org.dew.fhir.json.JSON;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
