@@ -11,13 +11,19 @@ import java.io.Serializable;
 public 
 class Ratio extends Element implements Serializable
 {
-  private static final long serialVersionUID = 1466487247645314758L;
+  private static final long serialVersionUID = -7923949540927746108L;
   
   protected Quantity numerator;
   protected Quantity denominator;
   
   public Ratio()
   {
+  }
+
+  public Ratio(Quantity numerator, Quantity denominator)
+  {
+    this.numerator = numerator;
+    this.denominator = denominator;
   }
 
   public Quantity getNumerator() {

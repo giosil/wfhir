@@ -2,23 +2,29 @@ package org.dew.fhir.model;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * A name of a human with text, parts and usage information.
+ *
+ * @see <a href="https://www.hl7.org/fhir/datatypes.html#HumanName">HumanName</a>
+ */
 public 
 class HumanName extends Element implements Serializable
 {
-  private static final long serialVersionUID = 3038645898839931130L;
+  private static final long serialVersionUID = -4680725942501770488L;
   
   protected String use;
   protected String text;
   protected String family;
-  protected String given;
-  protected String prefix;
-  protected String suffix;
+  protected String[] given;
+  protected String[] prefix;
+  protected String[] suffix;
   protected Period period;
   
   public HumanName()
   {
   }
-
+  
   public String getUse() {
     return use;
   }
@@ -31,15 +37,15 @@ class HumanName extends Element implements Serializable
     return family;
   }
 
-  public String getGiven() {
+  public String[] getGiven() {
     return given;
   }
 
-  public String getPrefix() {
+  public String[] getPrefix() {
     return prefix;
   }
 
-  public String getSuffix() {
+  public String[] getSuffix() {
     return suffix;
   }
 
@@ -59,22 +65,22 @@ class HumanName extends Element implements Serializable
     this.family = family;
   }
 
-  public void setGiven(String given) {
+  public void setGiven(String[] given) {
     this.given = given;
   }
 
-  public void setPrefix(String prefix) {
+  public void setPrefix(String[] prefix) {
     this.prefix = prefix;
   }
 
-  public void setSuffix(String suffix) {
+  public void setSuffix(String[] suffix) {
     this.suffix = suffix;
   }
 
   public void setPeriod(Period period) {
     this.period = period;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof HumanName) {
@@ -85,12 +91,11 @@ class HumanName extends Element implements Serializable
   
   @Override
   public int hashCode() {
-    if(text == null) return 0;
-    return text.hashCode();
+    return (family + ":" + text).hashCode();
   }
   
   @Override
   public String toString() {
-    return "HumanName(" + id + "," + use + "," + text + ")";
+    return "HumanName(" + id + "," + use + "," + family + "," + text + ")";
   }
 }

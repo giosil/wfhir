@@ -2,6 +2,8 @@ package org.dew.fhir.model;
 
 import java.io.Serializable;
 
+import org.dew.fhir.util.Base64Coder;
+
 /**
  * 
  * Data that comes from a series of measurements taken by a device, which may have upper and lower limits. 
@@ -15,7 +17,7 @@ import java.io.Serializable;
 public 
 class SampledData extends Element implements Serializable
 {
-  private static final long serialVersionUID = -7860987903572076004L;
+  private static final long serialVersionUID = -6363552056513903580L;
   
   protected SimpleQuantity origin;
   protected Double period;
@@ -84,6 +86,37 @@ class SampledData extends Element implements Serializable
   public void setData(String data) {
     this.data = data;
   }
+  
+  public void encodeData(byte[] raw) {
+    if(raw == null || raw.length == 0) {
+      this.data = null;
+    }
+    else {
+      this.data = new String(Base64Coder.encode(raw));
+    }
+  }
+  
+  public byte[] decodeData() {
+    if(data == null || data.length() == 0) {
+      return new byte[0];
+    }
+    byte[] result = null;
+    try {
+      result = Base64Coder.decode(data);
+    }
+    catch(Exception ex) {
+      ex.printStackTrace();
+    }
+    if(result == null) result = new byte[0];
+    return result;
+  }
+  
+  public int dimensions() {
+    if(dimensions == null) {
+      return 0;
+    }
+    return dimensions.intValue();
+  }
 
   @Override
   public boolean equals(Object object) {
@@ -103,4 +136,3 @@ class SampledData extends Element implements Serializable
     return "SampledData(" + origin + "," + data + ")";
   }
 }
-

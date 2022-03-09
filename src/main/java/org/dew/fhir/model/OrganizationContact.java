@@ -15,13 +15,13 @@ class OrganizationContact extends BackboneElement implements Serializable
   
   protected CodeableConcept purpose;
   protected HumanName name;
-  protected ContactPoint telecom;
+  protected ContactPoint[] telecom;
   protected Address address;
   
   public OrganizationContact()
   {
   }
-
+  
   public CodeableConcept getPurpose() {
     return purpose;
   }
@@ -30,7 +30,7 @@ class OrganizationContact extends BackboneElement implements Serializable
     return name;
   }
 
-  public ContactPoint getTelecom() {
+  public ContactPoint[] getTelecom() {
     return telecom;
   }
 
@@ -46,14 +46,14 @@ class OrganizationContact extends BackboneElement implements Serializable
     this.name = name;
   }
 
-  public void setTelecom(ContactPoint telecom) {
+  public void setTelecom(ContactPoint[] telecom) {
     this.telecom = telecom;
   }
 
   public void setAddress(Address address) {
     this.address = address;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof OrganizationContact) {

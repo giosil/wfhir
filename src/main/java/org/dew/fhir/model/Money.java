@@ -11,13 +11,24 @@ import java.io.Serializable;
 public 
 class Money extends Element implements Serializable
 {
-  private static final long serialVersionUID = -7860987903572076004L;
+  private static final long serialVersionUID = -1669859165639525613L;
   
   protected Double value;
   protected String currency;
   
   public Money()
   {
+  }
+
+  public Money(double value)
+  {
+    this.value = value;
+  }
+
+  public Money(double value, String currency)
+  {
+    this.value = value;
+    this.currency = currency;
   }
 
   public Double getValue() {

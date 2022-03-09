@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class Count extends Element implements Serializable
 {
-  private static final long serialVersionUID = -4446820247442043090L;
+  private static final long serialVersionUID = 8069565837340517055L;
   
   protected String code;
   protected String system;
@@ -19,6 +19,19 @@ class Count extends Element implements Serializable
   
   public Count()
   {
+  }
+  
+  public Count(String code, int value)
+  {
+    this.code = code;
+    this.value = value;
+  }
+  
+  public Count(String code, String system, int value)
+  {
+    this.code = code;
+    this.system = system;
+    this.value = value;
   }
   
   public String getCode() {
@@ -44,7 +57,12 @@ class Count extends Element implements Serializable
   public void setValue(Integer value) {
     this.value = value;
   }
-
+  
+  public int intValue() {
+    if(value == null) return 0;
+    return value.intValue();
+  }
+  
   @Override
   public boolean equals(Object object) {
     if(object instanceof Count) {
@@ -55,6 +73,7 @@ class Count extends Element implements Serializable
   
   @Override
   public int hashCode() {
+    if(value == null) return 0;
     return value;
   }
   

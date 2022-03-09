@@ -11,9 +11,9 @@ import java.io.Serializable;
 public 
 class BundleEntry extends BackboneElement implements Serializable
 {
-  private static final long serialVersionUID = -7558085592715409007L;
+  private static final long serialVersionUID = -1653473702215133317L;
   
-  protected BundleEntryLink link;
+  protected BundleEntryLink[] link;
   protected String fullUrl;
   protected Resource resource;
   protected BundleEntrySearch search;
@@ -23,8 +23,8 @@ class BundleEntry extends BackboneElement implements Serializable
   public BundleEntry()
   {
   }
-  
-  public BundleEntryLink getLink() {
+
+  public BundleEntryLink[] getLink() {
     return link;
   }
 
@@ -48,7 +48,7 @@ class BundleEntry extends BackboneElement implements Serializable
     return response;
   }
 
-  public void setLink(BundleEntryLink link) {
+  public void setLink(BundleEntryLink[] link) {
     this.link = link;
   }
 
@@ -91,4 +91,3 @@ class BundleEntry extends BackboneElement implements Serializable
     return "BundleEntry(" + id + "," + link + "," + fullUrl + ")";
   }
 }
-

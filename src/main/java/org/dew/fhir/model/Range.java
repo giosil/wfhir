@@ -13,13 +13,19 @@ import java.io.Serializable;
 public 
 class Range extends Element implements Serializable
 {
-  private static final long serialVersionUID = 9178654601366354804L;
+  private static final long serialVersionUID = -1663122693667728107L;
   
   protected SimpleQuantity low;
   protected SimpleQuantity high;
   
   public Range()
   {
+  }
+
+  public Range(SimpleQuantity low, SimpleQuantity high)
+  {
+    this.low = low;
+    this.high = high;
   }
 
   public SimpleQuantity getLow() {

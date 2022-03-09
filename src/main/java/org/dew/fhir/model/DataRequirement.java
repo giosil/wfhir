@@ -11,27 +11,32 @@ import java.io.Serializable;
 public 
 class DataRequirement extends Element implements Serializable
 {
-  private static final long serialVersionUID = -7860987903572076004L;
+  private static final long serialVersionUID = 5846068590746767404L;
   
   protected String type;
-  protected String profile;
+  protected String[] profile;
   protected CodeableConcept subjectCodeableConcept;
   protected Reference<Group> subjectReference;
-  protected String mustSupport;
-  protected DataRequirementCodeFilter codeFilter;
-  protected DataRequirementDateFilter dateFilter;
+  protected String[] mustSupport;
+  protected DataRequirementCodeFilter[] codeFilter;
+  protected DataRequirementDateFilter[] dateFilter;
   protected Integer limit;
-  protected DataRequirementSort sort;
+  protected DataRequirementSort[] sort;
   
   public DataRequirement()
   {
+  }
+  
+  public DataRequirement(String type)
+  {
+    this.type = type;
   }
 
   public String getType() {
     return type;
   }
 
-  public String getProfile() {
+  public String[] getProfile() {
     return profile;
   }
 
@@ -43,15 +48,15 @@ class DataRequirement extends Element implements Serializable
     return subjectReference;
   }
 
-  public String getMustSupport() {
+  public String[] getMustSupport() {
     return mustSupport;
   }
 
-  public DataRequirementCodeFilter getCodeFilter() {
+  public DataRequirementCodeFilter[] getCodeFilter() {
     return codeFilter;
   }
 
-  public DataRequirementDateFilter getDateFilter() {
+  public DataRequirementDateFilter[] getDateFilter() {
     return dateFilter;
   }
 
@@ -59,7 +64,7 @@ class DataRequirement extends Element implements Serializable
     return limit;
   }
 
-  public DataRequirementSort getSort() {
+  public DataRequirementSort[] getSort() {
     return sort;
   }
 
@@ -67,7 +72,7 @@ class DataRequirement extends Element implements Serializable
     this.type = type;
   }
 
-  public void setProfile(String profile) {
+  public void setProfile(String[] profile) {
     this.profile = profile;
   }
 
@@ -79,15 +84,15 @@ class DataRequirement extends Element implements Serializable
     this.subjectReference = subjectReference;
   }
 
-  public void setMustSupport(String mustSupport) {
+  public void setMustSupport(String[] mustSupport) {
     this.mustSupport = mustSupport;
   }
 
-  public void setCodeFilter(DataRequirementCodeFilter codeFilter) {
+  public void setCodeFilter(DataRequirementCodeFilter[] codeFilter) {
     this.codeFilter = codeFilter;
   }
 
-  public void setDateFilter(DataRequirementDateFilter dateFilter) {
+  public void setDateFilter(DataRequirementDateFilter[] dateFilter) {
     this.dateFilter = dateFilter;
   }
 
@@ -95,7 +100,7 @@ class DataRequirement extends Element implements Serializable
     this.limit = limit;
   }
 
-  public void setSort(DataRequirementSort sort) {
+  public void setSort(DataRequirementSort[] sort) {
     this.sort = sort;
   }
 

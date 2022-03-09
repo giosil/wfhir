@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class SimpleQuantity extends Element implements Serializable
 {
-  private static final long serialVersionUID = 8394534169077582238L;
+  private static final long serialVersionUID = -3925640597612653225L;
   
   protected Double value;
   protected String unit;
@@ -20,6 +20,32 @@ class SimpleQuantity extends Element implements Serializable
   
   public SimpleQuantity()
   {
+  }
+  
+  public SimpleQuantity(double value)
+  {
+    this.value = value;
+  }
+
+  public SimpleQuantity(double value, String unit)
+  {
+    this.value = value;
+    this.unit = unit;
+  }
+
+  public SimpleQuantity(double value, String unit, String system)
+  {
+    this.value = value;
+    this.unit = unit;
+    this.system = system;
+  }
+
+  public SimpleQuantity(double value, String unit, String system, String code)
+  {
+    this.value = value;
+    this.unit = unit;
+    this.system = system;
+    this.code = code;
   }
 
   public Double getValue() {
@@ -52,6 +78,16 @@ class SimpleQuantity extends Element implements Serializable
 
   public void setCode(String code) {
     this.code = code;
+  }
+  
+  public int intValue() {
+    if(value == null) return 0;
+    return value.intValue();
+  }
+  
+  public double doubleValue() {
+    if(value == null) return 0.0d;
+    return value.doubleValue();
   }
 
   @Override

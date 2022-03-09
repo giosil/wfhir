@@ -12,20 +12,20 @@ import java.util.Date;
 public 
 class Bundle extends Resource implements Serializable
 {
-  private static final long serialVersionUID = -3167337840158911358L;
+  private static final long serialVersionUID = -7561680620155153059L;
   
   protected Identifier identifier;
   protected String type;
   protected Date timestamp;
   protected Integer total;
-  protected BundleLink link;
+  protected BundleLink[] link;
   protected BundleEntry[] entry;
   protected Signature signature;
   
   public Bundle()
   {
   }
-
+  
   public Identifier getIdentifier() {
     return identifier;
   }
@@ -42,7 +42,7 @@ class Bundle extends Resource implements Serializable
     return total;
   }
 
-  public BundleLink getLink() {
+  public BundleLink[] getLink() {
     return link;
   }
 
@@ -70,7 +70,7 @@ class Bundle extends Resource implements Serializable
     this.total = total;
   }
 
-  public void setLink(BundleLink link) {
+  public void setLink(BundleLink[] link) {
     this.link = link;
   }
 
@@ -81,7 +81,7 @@ class Bundle extends Resource implements Serializable
   public void setSignature(Signature signature) {
     this.signature = signature;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof Bundle) {
@@ -98,6 +98,6 @@ class Bundle extends Resource implements Serializable
   
   @Override
   public String toString() {
-    return "BundleEntry(" + id + "," + identifier + "," + total + ")";
+    return "Bundle(" + id + "," + identifier + "," + total + ")";
   }
 }

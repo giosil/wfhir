@@ -12,12 +12,31 @@ import java.io.Serializable;
 public 
 class BackboneElement extends Element implements Serializable
 {
-  private static final long serialVersionUID = 2439835231724290521L;
+  private static final long serialVersionUID = -8654149705124430247L;
   
   protected Extension[] modifierExtension;
   
   public BackboneElement()
   {
+  }
+
+  public BackboneElement(String id)
+  {
+    this.id = id;
+  }
+  
+  public BackboneElement(String id, Extension extension)
+  {
+    this.id = id;
+    if(extension != null) {
+      modifierExtension = new Extension[] { extension };
+    }
+  }
+  
+  public BackboneElement(String id, Extension[] modifierExtension)
+  {
+    this.id = id;
+    this.modifierExtension = modifierExtension;
   }
 
   public Extension[] getModifierExtension() {

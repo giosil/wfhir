@@ -2,6 +2,8 @@ package org.dew.fhir.model;
 
 import java.io.Serializable;
 
+import org.dew.fhir.util.Base64Coder;
+
 /**
  * 
  * A resource that represents the data of a single raw artifact as digital content accessible in its native format. 
@@ -12,7 +14,7 @@ import java.io.Serializable;
 public 
 class Binary extends Resource implements Serializable
 {
-  private static final long serialVersionUID = -7612457658621138180L;
+  private static final long serialVersionUID = -2513545209866775964L;
   
   protected String contentType;
   protected Reference<Resource> securityContext;
@@ -50,6 +52,30 @@ class Binary extends Resource implements Serializable
 
   public void setData(String data) {
     this.data = data;
+  }
+  
+  public void encodeData(byte[] raw) {
+    if(raw == null || raw.length == 0) {
+      this.data = null;
+    }
+    else {
+      this.data = new String(Base64Coder.encode(raw));
+    }
+  }
+  
+  public byte[] decodeData() {
+    if(data == null || data.length() == 0) {
+      return new byte[0];
+    }
+    byte[] result = null;
+    try {
+      result = Base64Coder.decode(data);
+    }
+    catch(Exception ex) {
+      ex.printStackTrace();
+    }
+    if(result == null) result = new byte[0];
+    return result;
   }
 
   @Override

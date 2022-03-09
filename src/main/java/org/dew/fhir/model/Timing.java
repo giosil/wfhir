@@ -14,7 +14,7 @@ import java.util.Date;
 public 
 class Timing extends BackboneElement implements Serializable
 {
-  private static final long serialVersionUID = -6483017982427909521L;
+  private static final long serialVersionUID = -5659079428222456954L;
   
   protected Date[] event;
   protected TimingRepeat repeat;
@@ -22,6 +22,11 @@ class Timing extends BackboneElement implements Serializable
   
   public Timing()
   {
+  }
+  
+  public Timing(CodeableConcept code)
+  {
+    this.code = code;
   }
   
   public Date[] getEvent() {

@@ -11,17 +11,17 @@ import java.io.Serializable;
 public 
 class CodeSystemFilter extends BackboneElement implements Serializable 
 {
-  private static final long serialVersionUID = -4974762431409698900L;
+  private static final long serialVersionUID = -3872870626094532066L;
   
   protected String code;
   protected String description;
-  protected String operator;
+  protected String operator[];
   protected String value;
   
   public CodeSystemFilter()
   {
   }
-
+  
   public String getCode() {
     return code;
   }
@@ -30,7 +30,7 @@ class CodeSystemFilter extends BackboneElement implements Serializable
     return description;
   }
 
-  public String getOperator() {
+  public String[] getOperator() {
     return operator;
   }
 
@@ -46,14 +46,14 @@ class CodeSystemFilter extends BackboneElement implements Serializable
     this.description = description;
   }
 
-  public void setOperator(String operator) {
+  public void setOperator(String[] operator) {
     this.operator = operator;
   }
 
   public void setValue(String value) {
     this.value = value;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof CodeSystemFilter) {

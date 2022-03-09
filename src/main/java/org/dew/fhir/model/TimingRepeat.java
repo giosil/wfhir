@@ -13,7 +13,7 @@ import java.util.Date;
 public 
 class TimingRepeat extends Element implements Serializable
 {
-  private static final long serialVersionUID = 8182794633816339756L;
+  private static final long serialVersionUID = 7218560351640820256L;
   
   protected Duration boundsDuration;
   protected Range boundsRange;
@@ -28,9 +28,9 @@ class TimingRepeat extends Element implements Serializable
   protected Double period;
   protected Double periodMax;
   protected String periodUnit;
-  protected String dayOfWeek;
-  protected Date timeOfDay;
-  protected String when;
+  protected String[] dayOfWeek;
+  protected Date[] timeOfDay;
+  protected String[] when;
   protected Integer offset;
   
   public TimingRepeat()
@@ -89,15 +89,15 @@ class TimingRepeat extends Element implements Serializable
     return periodUnit;
   }
 
-  public String getDayOfWeek() {
+  public String[] getDayOfWeek() {
     return dayOfWeek;
   }
 
-  public Date getTimeOfDay() {
+  public Date[] getTimeOfDay() {
     return timeOfDay;
   }
 
-  public String getWhen() {
+  public String[] getWhen() {
     return when;
   }
 
@@ -157,15 +157,15 @@ class TimingRepeat extends Element implements Serializable
     this.periodUnit = periodUnit;
   }
 
-  public void setDayOfWeek(String dayOfWeek) {
+  public void setDayOfWeek(String[] dayOfWeek) {
     this.dayOfWeek = dayOfWeek;
   }
 
-  public void setTimeOfDay(Date timeOfDay) {
+  public void setTimeOfDay(Date[] timeOfDay) {
     this.timeOfDay = timeOfDay;
   }
 
-  public void setWhen(String when) {
+  public void setWhen(String[] when) {
     this.when = when;
   }
 
@@ -175,7 +175,7 @@ class TimingRepeat extends Element implements Serializable
 
   @Override
   public boolean equals(Object object) {
-    if(object instanceof Ratio) {
+    if(object instanceof TimingRepeat) {
       return this.hashCode() == object.hashCode();
     }
     return false;

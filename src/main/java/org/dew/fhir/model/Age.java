@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class Age extends Element implements Serializable
 {
-  private static final long serialVersionUID = -726267586501975517L;
+  private static final long serialVersionUID = 8976841018613020936L;
   
   protected String code;
   protected String system;
@@ -20,7 +20,14 @@ class Age extends Element implements Serializable
   public Age()
   {
   }
-  
+
+  public Age(String code, String system, Integer value)
+  {
+    this.code = code;
+    this.system = system;
+    this.value = value;
+  }
+
   public String getCode() {
     return code;
   }
@@ -55,6 +62,7 @@ class Age extends Element implements Serializable
   
   @Override
   public int hashCode() {
+    if(value == null) return 0;
     return value;
   }
   

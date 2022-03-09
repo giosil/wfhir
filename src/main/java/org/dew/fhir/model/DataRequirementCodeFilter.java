@@ -11,12 +11,12 @@ import java.io.Serializable;
 public 
 class DataRequirementCodeFilter extends Element implements Serializable
 {
-  private static final long serialVersionUID = 5056462602005576329L;
+  private static final long serialVersionUID = -913402495574110415L;
   
   protected String path;
   protected String searchParam;
   protected String valueSet;
-  protected Coding code;
+  protected Coding[] code;
   
   public DataRequirementCodeFilter()
   {
@@ -34,7 +34,7 @@ class DataRequirementCodeFilter extends Element implements Serializable
     return valueSet;
   }
 
-  public Coding getCode() {
+  public Coding[] getCode() {
     return code;
   }
 
@@ -50,7 +50,7 @@ class DataRequirementCodeFilter extends Element implements Serializable
     this.valueSet = valueSet;
   }
 
-  public void setCode(Coding code) {
+  public void setCode(Coding[] code) {
     this.code = code;
   }
 

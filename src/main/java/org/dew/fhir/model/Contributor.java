@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class Contributor extends Element implements Serializable
 {
-  private static final long serialVersionUID = -7860987903572076004L;
+  private static final long serialVersionUID = 3327511249122545904L;
   
   protected String name;
   protected String type;
@@ -19,6 +19,24 @@ class Contributor extends Element implements Serializable
   
   public Contributor()
   {
+  }
+
+  public Contributor(String name)
+  {
+    this.name = name;
+  }
+  
+  public Contributor(String name, String type)
+  {
+    this.name = name;
+    this.type = type;
+  }
+  
+  public Contributor(String name, String type, ContactDetail[] contact)
+  {
+    this.name = name;
+    this.type = type;
+    this.contact = contact;
   }
 
   public String getName() {

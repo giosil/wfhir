@@ -12,7 +12,7 @@ import java.io.Serializable;
 public 
 class Endpoint extends DomainResource implements Serializable 
 {
-  private static final long serialVersionUID = -7397416963000372468L;
+  private static final long serialVersionUID = 1355516068555033081L;
   
   protected Identifier[] identifier;
   protected String status;
@@ -28,6 +28,11 @@ class Endpoint extends DomainResource implements Serializable
   
   public Endpoint()
   {
+  }
+  
+  public Endpoint(String name)
+  {
+    this.name = name;
   }
   
   public Identifier[] getIdentifier() {

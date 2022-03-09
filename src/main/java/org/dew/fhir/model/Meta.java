@@ -14,7 +14,7 @@ import java.util.Date;
 public 
 class Meta extends Element implements Serializable
 {
-  private static final long serialVersionUID = 8496731416538300868L;
+  private static final long serialVersionUID = -165320454522184153L;
   
   protected String versionId;
   protected Date lastUpdated;
@@ -26,7 +26,18 @@ class Meta extends Element implements Serializable
   public Meta()
   {
   }
-  
+
+  public Meta(String versionId)
+  {
+    this.versionId = versionId;
+  }
+
+  public Meta(String versionId, String source)
+  {
+    this.versionId = versionId;
+    this.source = source;
+  }
+
   public String getVersionId() {
     return versionId;
   }

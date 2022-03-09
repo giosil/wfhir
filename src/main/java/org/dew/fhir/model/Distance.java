@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class Distance extends Element implements Serializable
 {
-  private static final long serialVersionUID = -726267586501975517L;
+  private static final long serialVersionUID = -6011244847783522710L;
   
   protected String code;
   protected String system;
@@ -19,6 +19,19 @@ class Distance extends Element implements Serializable
   
   public Distance()
   {
+  }
+  
+  public Distance(String code, int value)
+  {
+    this.code = code;
+    this.value = value;
+  }
+  
+  public Distance(String code, String system, int value)
+  {
+    this.code = code;
+    this.system = system;
+    this.value = value;
   }
   
   public String getCode() {
@@ -44,6 +57,11 @@ class Distance extends Element implements Serializable
   public void setValue(Integer value) {
     this.value = value;
   }
+  
+  public int intValue() {
+    if(value == null) return 0;
+    return value.intValue();
+  }
 
   @Override
   public boolean equals(Object object) {
@@ -55,6 +73,7 @@ class Distance extends Element implements Serializable
   
   @Override
   public int hashCode() {
+    if(value == null) return 0;
     return value;
   }
   

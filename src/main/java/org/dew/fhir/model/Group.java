@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class Group extends DomainResource implements Serializable
 {
-  private static final long serialVersionUID = -9028624104483647077L;
+  private static final long serialVersionUID = 2650346144407847970L;
   
   protected Identifier[] identifier;
   protected Boolean active;
@@ -26,22 +26,26 @@ class Group extends DomainResource implements Serializable
   
   public Group()
   {
+    this.resourceType = "Group";
   }
   
   public Group(Identifier singleIdentifier)
   {
+    this.resourceType = "Group";
     this.identifier = new Identifier[] { singleIdentifier };
     this.active = true;
   }
   
   public Group(Identifier[] identifier)
   {
+    this.resourceType = "Group";
     this.identifier = identifier;
     this.active = true;
   }
   
   public Group(Identifier singleIdentifier, String name)
   {
+    this.resourceType = "Group";
     this.identifier = new Identifier[] { singleIdentifier };
     this.name = name;
     this.active = true;
@@ -49,6 +53,7 @@ class Group extends DomainResource implements Serializable
   
   public Group(Identifier[] identifier, String name)
   {
+    this.resourceType = "Group";
     this.identifier = identifier;
     this.name = name;
     this.active = true;

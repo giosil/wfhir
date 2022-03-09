@@ -2,6 +2,8 @@ package org.dew.fhir.model;
 
 import java.io.Serializable;
 
+import java.util.Date;
+
 /**
  * 
  * A text note which also contains information about who made the statement and when.
@@ -11,56 +13,47 @@ import java.io.Serializable;
 public 
 class Annotation extends Element implements Serializable
 {
-  private static final long serialVersionUID = -171803550408425713L;
+  private static final long serialVersionUID = -3109439242234482088L;
   
-  protected Coding code;
-  protected CodeableConcept valueCodeableConcept;
-  protected Quantity valueQuantity;
-  protected Range valueRange;
-  protected Reference<Resource> valueReference;
+  protected Reference<Resource> authorReference;
+  protected String authorString;
+  protected Date time;
+  protected String text;
   
   public Annotation()
   {
   }
 
-  public Coding getCode() {
-    return code;
+  public Reference<Resource> getAuthorReference() {
+    return authorReference;
   }
 
-  public CodeableConcept getValueCodeableConcept() {
-    return valueCodeableConcept;
+  public String getAuthorString() {
+    return authorString;
   }
 
-  public Quantity getValueQuantity() {
-    return valueQuantity;
+  public Date getTime() {
+    return time;
   }
 
-  public Range getValueRange() {
-    return valueRange;
+  public String getText() {
+    return text;
   }
 
-  public Reference<Resource> getValueReference() {
-    return valueReference;
+  public void setAuthorReference(Reference<Resource> authorReference) {
+    this.authorReference = authorReference;
   }
 
-  public void setCode(Coding code) {
-    this.code = code;
+  public void setAuthorString(String authorString) {
+    this.authorString = authorString;
   }
 
-  public void setValueCodeableConcept(CodeableConcept valueCodeableConcept) {
-    this.valueCodeableConcept = valueCodeableConcept;
+  public void setTime(Date time) {
+    this.time = time;
   }
 
-  public void setValueQuantity(Quantity valueQuantity) {
-    this.valueQuantity = valueQuantity;
-  }
-
-  public void setValueRange(Range valueRange) {
-    this.valueRange = valueRange;
-  }
-
-  public void setValueReference(Reference<Resource> valueReference) {
-    this.valueReference = valueReference;
+  public void setText(String text) {
+    this.text = text;
   }
 
   @Override
@@ -73,13 +66,12 @@ class Annotation extends Element implements Serializable
   
   @Override
   public int hashCode() {
-    if(code == null) return 0;
-    return code.hashCode();
+    if(id == null) return 0;
+    return id.hashCode();
   }
   
   @Override
   public String toString() {
-    return "Annotation(" + code + ")";
+    return "Annotation(" + id + "," + authorReference + "," + authorString + "," + time + ")";
   }
 }
-

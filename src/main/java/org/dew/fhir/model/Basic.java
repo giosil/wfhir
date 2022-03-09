@@ -14,7 +14,7 @@ import java.util.Date;
 public 
 class Basic extends DomainResource implements Serializable
 {
-  private static final long serialVersionUID = 1213246381228834216L;
+  private static final long serialVersionUID = -6691009293801906173L;
   
   protected Identifier[] identifier;
   protected CodeableConcept code;

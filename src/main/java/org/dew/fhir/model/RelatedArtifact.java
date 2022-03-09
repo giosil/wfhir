@@ -13,7 +13,7 @@ import java.io.Serializable;
 public 
 class RelatedArtifact extends Element implements Serializable
 {
-  private static final long serialVersionUID = -8030722380538651915L;
+  private static final long serialVersionUID = -6505609053099443993L;
   
   protected String type;
   protected String label;
@@ -81,6 +81,13 @@ class RelatedArtifact extends Element implements Serializable
 
   public void setResource(String resource) {
     this.resource = resource;
+  }
+  
+  public byte[] decodeData() {
+    if(document == null) {
+      return new byte[0];
+    }
+    return document.decodeData();
   }
 
   @Override

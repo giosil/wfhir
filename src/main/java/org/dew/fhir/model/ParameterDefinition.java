@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class ParameterDefinition extends Element implements Serializable
 {
-  private static final long serialVersionUID = -8030722380538651915L;
+  private static final long serialVersionUID = -7499369813680662422L;
   
   protected String name;
   protected String use;
@@ -23,6 +23,11 @@ class ParameterDefinition extends Element implements Serializable
   
   public ParameterDefinition()
   {
+  }
+  
+  public ParameterDefinition(String name)
+  {
+    this.name = name;
   }
 
   public String getName() {

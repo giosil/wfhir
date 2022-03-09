@@ -13,7 +13,7 @@ import java.util.Date;
 public 
 class Extension extends Element implements Serializable
 {
-  private static final long serialVersionUID = 778338245940777371L;
+  private static final long serialVersionUID = -5997871651498476194L;
   
   protected String url;
   protected byte[] valueBase64Binary;

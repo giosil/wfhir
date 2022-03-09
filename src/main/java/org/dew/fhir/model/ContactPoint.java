@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class ContactPoint extends Element implements Serializable
 {
-  private static final long serialVersionUID = -8691034354536264687L;
+  private static final long serialVersionUID = 7428036606845910643L;
   
   protected String system;
   protected String value;

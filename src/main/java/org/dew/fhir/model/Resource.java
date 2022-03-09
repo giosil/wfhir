@@ -17,7 +17,7 @@ import java.io.Serializable;
 public 
 class Resource implements Serializable
 {
-  private static final long serialVersionUID = 7801750189213044024L;
+  private static final long serialVersionUID = 4521570479386842850L;
   
   protected String id;
   protected Meta meta;
@@ -29,6 +29,11 @@ class Resource implements Serializable
   
   public Resource()
   {
+  }
+  
+  public Resource(String id)
+  {
+    this.id = id;
   }
   
   public String getId() {

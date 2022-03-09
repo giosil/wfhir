@@ -13,7 +13,7 @@ import java.util.Date;
 public 
 class CodeSystemConceptProperty extends BackboneElement implements Serializable 
 {
-  private static final long serialVersionUID = 9039884041351536137L;
+  private static final long serialVersionUID = -3770686198224016042L;
   
   protected String code;
   protected String valueCode;
@@ -111,4 +111,3 @@ class CodeSystemConceptProperty extends BackboneElement implements Serializable
     return "CodeSystemConceptProperty(" + id + "," + code + "," + valueCode + "," + valueString + ")";
   }
 }
-

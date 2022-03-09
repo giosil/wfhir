@@ -11,13 +11,32 @@ import java.io.Serializable;
 public 
 class ContactDetail extends Element implements Serializable
 {
-  private static final long serialVersionUID = -7860987903572076004L;
+  private static final long serialVersionUID = -3951927793503334855L;
   
   protected String name;
   protected ContactPoint[] telecom;
   
   public ContactDetail()
   {
+  }
+  
+  public ContactDetail(String name)
+  {
+    this.name = name;
+  }
+  
+  public ContactDetail(String name, ContactPoint contactPoint)
+  {
+    this.name = name;
+    if(contactPoint != null) {
+      this.telecom = new ContactPoint[]{ contactPoint };
+    }
+  }
+  
+  public ContactDetail(String name, ContactPoint[] telecom)
+  {
+    this.name = name;
+    this.telecom = telecom;
   }
 
   public String getName() {

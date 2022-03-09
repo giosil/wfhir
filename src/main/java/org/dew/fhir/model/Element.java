@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class Element implements Serializable
 {
-  private static final long serialVersionUID = -5172687335571406399L;
+  private static final long serialVersionUID = 1711123913799493511L;
   
   protected String id;
   protected Extension[] extension;

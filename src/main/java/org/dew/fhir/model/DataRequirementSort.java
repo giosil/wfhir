@@ -11,13 +11,24 @@ import java.io.Serializable;
 public 
 class DataRequirementSort extends Element implements Serializable
 {
-  private static final long serialVersionUID = 5056462602005576329L;
+  private static final long serialVersionUID = 5213738429824903552L;
   
   protected String path;
   protected String direction;
   
   public DataRequirementSort()
   {
+  }
+  
+  public DataRequirementSort(String path)
+  {
+    this.path = path;
+  }
+  
+  public DataRequirementSort(String path, String direction)
+  {
+    this.path = path;
+    this.direction = direction;
   }
 
   public String getPath() {

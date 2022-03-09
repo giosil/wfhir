@@ -11,9 +11,9 @@ import java.io.Serializable;
 public 
 class GroupMember extends BackboneElement implements Serializable
 {
-  private static final long serialVersionUID = 6667844078279260817L;
+  private static final long serialVersionUID = -2113568141872759378L;
   
-  protected Reference<Resource> entity;
+  protected Reference<? extends Resource> entity;
   protected Period period;
   protected Boolean inactive;
   
@@ -21,7 +21,12 @@ class GroupMember extends BackboneElement implements Serializable
   {
   }
 
-  public Reference<Resource> getEntity() {
+  public GroupMember(Reference<? extends Resource> entity)
+  {
+    this.entity = entity;
+  }
+
+  public Reference<? extends Resource> getEntity() {
     return entity;
   }
 
@@ -29,11 +34,11 @@ class GroupMember extends BackboneElement implements Serializable
     return period;
   }
 
-  public Boolean isInactive() {
+  public Boolean getInactive() {
     return inactive;
   }
 
-  public void setEntity(Reference<Resource> entity) {
+  public void setEntity(Reference<? extends Resource> entity) {
     this.entity = entity;
   }
 

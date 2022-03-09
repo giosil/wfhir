@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 
+import org.dew.fhir.util.Base64Coder;
+
 /**
  * 
  * This type is for containing or referencing attachments - additional data content defined in other formats. 
@@ -28,6 +30,23 @@ class Attachment extends Element implements Serializable
   
   public Attachment()
   {
+  }
+  
+  public Attachment(String contentType)
+  {
+    this.contentType = contentType;
+  }
+  
+  public Attachment(String contentType, byte[] raw)
+  {
+    this.contentType = contentType;
+    this.encodeData(raw);
+  }
+  
+  public Attachment(String contentType, String data)
+  {
+    this.contentType = contentType;
+    this.data = data;
   }
 
   public String getContentType() {
@@ -92,6 +111,30 @@ class Attachment extends Element implements Serializable
 
   public void setCreation(Date creation) {
     this.creation = creation;
+  }
+  
+  public void encodeData(byte[] raw) {
+    if(raw == null || raw.length == 0) {
+      this.data = null;
+    }
+    else {
+      this.data = new String(Base64Coder.encode(raw));
+    }
+  }
+  
+  public byte[] decodeData() {
+    if(data == null || data.length() == 0) {
+      return new byte[0];
+    }
+    byte[] result = null;
+    try {
+      result = Base64Coder.decode(data);
+    }
+    catch(Exception ex) {
+      ex.printStackTrace();
+    }
+    if(result == null) result = new byte[0];
+    return result;
   }
 
   @Override

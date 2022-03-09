@@ -11,8 +11,8 @@ import java.io.Serializable;
 public 
 class Quantity extends Element implements Serializable
 {
-  private static final long serialVersionUID = -7860987903572076004L;
-  
+  private static final long serialVersionUID = 3100779512737121858L;
+
   protected Double value;
   protected String comparator;
   protected String unit;
@@ -21,6 +21,32 @@ class Quantity extends Element implements Serializable
   
   public Quantity()
   {
+  }
+  
+  public Quantity(double value)
+  {
+    this.value = value;
+  }
+
+  public Quantity(double value, String unit)
+  {
+    this.value = value;
+    this.unit = unit;
+  }
+
+  public Quantity(double value, String unit, String system)
+  {
+    this.value = value;
+    this.unit = unit;
+    this.system = system;
+  }
+
+  public Quantity(double value, String unit, String system, String code)
+  {
+    this.value = value;
+    this.unit = unit;
+    this.system = system;
+    this.code = code;
   }
 
   public Double getValue() {
@@ -61,6 +87,16 @@ class Quantity extends Element implements Serializable
 
   public void setCode(String code) {
     this.code = code;
+  }
+  
+  public int intValue() {
+    if(value == null) return 0;
+    return value.intValue();
+  }
+  
+  public double doubleValue() {
+    if(value == null) return 0.0d;
+    return value.doubleValue();
   }
 
   @Override

@@ -12,7 +12,7 @@ import java.io.Serializable;
 public 
 class CodeableConcept extends Element implements Serializable
 {
-  private static final long serialVersionUID = -740607037812373406L;
+  private static final long serialVersionUID = -5864491111948530793L;
   
   protected Coding[] coding;
   protected String text;

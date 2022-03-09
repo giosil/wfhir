@@ -16,7 +16,7 @@ import java.io.Serializable;
 public 
 class DomainResource extends Resource implements Serializable
 {
-  private static final long serialVersionUID = 3648663260154435858L;
+  private static final long serialVersionUID = -7656445250255957680L;
   
   protected Narrative text;
   protected Resource[] contained;

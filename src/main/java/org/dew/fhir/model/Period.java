@@ -13,13 +13,24 @@ import java.util.Date;
 public 
 class Period extends Element implements Serializable
 {
-  private static final long serialVersionUID = -7311603580309653793L;
+  private static final long serialVersionUID = 1312693649447820851L;
   
   protected Date start;
   protected Date end;
   
   public Period()
   {
+  }
+
+  public Period(Date start)
+  {
+    this.start = start;
+  }
+
+  public Period(Date start, Date end)
+  {
+    this.start = start;
+    this.end = end;
   }
 
   public Date getStart() {

@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class Coding extends Element implements Serializable
 {
-  private static final long serialVersionUID = 6269754276935411804L;
+  private static final long serialVersionUID = -4438727259854935572L;
   
   private String system;
   private String version;
