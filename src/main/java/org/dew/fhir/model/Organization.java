@@ -39,6 +39,7 @@ class Organization extends DomainResource implements Serializable
   
   public Organization(Identifier[] identifier)
   {
+    this.resourceType = "Organization";
     this.identifier = identifier;
     this.active = true;
   }
@@ -149,8 +150,8 @@ class Organization extends DomainResource implements Serializable
   
   @Override
   public int hashCode() {
-    if(name == null) return 0;
-    return name.hashCode();
+    if(id == null) return 0;
+    return id.hashCode();
   }
   
   @Override

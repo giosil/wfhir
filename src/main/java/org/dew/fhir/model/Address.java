@@ -168,8 +168,8 @@ class Address extends Element implements Serializable
   
   @Override
   public int hashCode() {
-    if(text == null) return 0;
-    return text.hashCode();
+    if(id == null) return 0;
+    return id.hashCode();
   }
   
   @Override

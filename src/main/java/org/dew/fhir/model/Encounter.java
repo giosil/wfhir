@@ -39,6 +39,7 @@ class Encounter extends DomainResource implements Serializable
   
   public Encounter()
   {
+    this.resourceType = "Encounter";
   }
 
   public Identifier[] getIdentifier() {

@@ -54,6 +54,7 @@ class Observation extends DomainResource implements Serializable
   
   public Observation()
   {
+    this.resourceType = "Observation";
   }
 
   public Identifier[] getIdentifier() {
@@ -354,8 +355,8 @@ class Observation extends DomainResource implements Serializable
   
   @Override
   public int hashCode() {
-    if(code == null) return 0;
-    return code.hashCode();
+    if(id == null) return 0;
+    return id.hashCode();
   }
   
   @Override

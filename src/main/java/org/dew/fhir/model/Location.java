@@ -33,10 +33,12 @@ class Location extends DomainResource implements Serializable
   
   public Location()
   {
+    this.resourceType = "Location";
   }
 
   public Location(String name)
   {
+    this.resourceType = "Location";
     this.name = name;
   }
   
@@ -186,8 +188,8 @@ class Location extends DomainResource implements Serializable
   
   @Override
   public int hashCode() {
-    if(name == null) return 0;
-    return name.hashCode();
+    if(id == null) return 0;
+    return id.hashCode();
   }
   
   @Override

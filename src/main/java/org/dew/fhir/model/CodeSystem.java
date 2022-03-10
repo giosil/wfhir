@@ -265,8 +265,8 @@ class CodeSystem extends DomainResource implements Serializable
   
   @Override
   public int hashCode() {
-    if(url == null) return 0;
-    return url.hashCode();
+    if(id == null) return 0;
+    return id.hashCode();
   }
   
   @Override

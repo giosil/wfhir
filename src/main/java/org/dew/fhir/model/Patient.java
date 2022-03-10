@@ -38,6 +38,14 @@ class Patient extends DomainResource implements Serializable
   {
     this.resourceType = "Patient";
   }
+  
+  public Patient(String family, String given)
+  {
+    this.resourceType = "Patient";
+    if(family != null) {
+      this.name = new HumanName(family, given);
+    }
+  }
 
   public Identifier[] getIdentifier() {
     return identifier;
@@ -193,8 +201,8 @@ class Patient extends DomainResource implements Serializable
   
   @Override
   public int hashCode() {
-    if(name == null) return 0;
-    return name.hashCode();
+    if(id == null) return 0;
+    return id.hashCode();
   }
   
   @Override

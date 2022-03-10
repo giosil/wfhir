@@ -28,10 +28,12 @@ class Endpoint extends DomainResource implements Serializable
   
   public Endpoint()
   {
+    this.resourceType = "Endpoint";
   }
   
   public Endpoint(String name)
   {
+    this.resourceType = "Endpoint";
     this.name = name;
   }
   
@@ -133,8 +135,8 @@ class Endpoint extends DomainResource implements Serializable
   
   @Override
   public int hashCode() {
-    if(address == null) return 0;
-    return address.hashCode();
+    if(id == null) return 0;
+    return id.hashCode();
   }
   
   @Override

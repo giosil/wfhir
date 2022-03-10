@@ -25,6 +25,7 @@ class DomainResource extends Resource implements Serializable
   
   public DomainResource()
   {
+    this.resourceType = "DomainResource";
   }
   
   public DomainResource(Resource[] contained)

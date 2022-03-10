@@ -24,6 +24,7 @@ class Basic extends DomainResource implements Serializable
   
   public Basic()
   {
+    this.resourceType = "Basic";
   }
 
   public Identifier[] getIdentifier() {
@@ -76,12 +77,12 @@ class Basic extends DomainResource implements Serializable
   
   @Override
   public int hashCode() {
-    if(code == null) return 0;
-    return code.hashCode();
+    if(id == null) return 0;
+    return id.hashCode();
   }
   
   @Override
   public String toString() {
-    return "Basic(" + code + ")";
+    return "Basic(" + id + "," + code + ")";
   }
 }

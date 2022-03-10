@@ -25,6 +25,14 @@ class HumanName extends Element implements Serializable
   {
   }
   
+  public HumanName(String family, String given)
+  {
+    this.family = family;
+    if(given != null) {
+      this.given = new String[] { given };
+    }
+  }
+  
   public String getUse() {
     return use;
   }
@@ -91,11 +99,16 @@ class HumanName extends Element implements Serializable
   
   @Override
   public int hashCode() {
-    return (family + ":" + text).hashCode();
+    String given0 = (given != null && given.length > 0) ? given[0] : null;
+    return (family + ":" + given0).hashCode();
   }
   
   @Override
   public String toString() {
-    return "HumanName(" + id + "," + use + "," + family + "," + text + ")";
+    String given0 = null;
+    if(given != null && given.length > 0) {
+      given0 = given[0];
+    }
+    return "HumanName(" + id + "," + use + "," + family + "," + given0 + "," + text + ")";
   }
 }
