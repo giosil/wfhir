@@ -23,7 +23,7 @@ class Condition extends DomainResource implements Serializable
   protected CodeableConcept code;
   protected CodeableConcept[] bodySite;
   protected Reference<Resource> subject;
-  protected Reference<Resource> encounter;
+  protected Reference<Encounter> encounter;
   protected Date onsetDateTime;
   protected Age onsetAge;
   protected Period onsetPeriod;
@@ -78,7 +78,7 @@ class Condition extends DomainResource implements Serializable
     return subject;
   }
 
-  public Reference<Resource> getEncounter() {
+  public Reference<Encounter> getEncounter() {
     return encounter;
   }
 
@@ -178,7 +178,7 @@ class Condition extends DomainResource implements Serializable
     this.subject = subject;
   }
 
-  public void setEncounter(Reference<Resource> encounter) {
+  public void setEncounter(Reference<Encounter> encounter) {
     this.encounter = encounter;
   }
 

@@ -18,7 +18,7 @@ class CareTeam extends DomainResource implements Serializable
   protected CodeableConcept[] category;
   protected String name;
   protected Reference<Resource> subject;
-  protected Reference<Resource> encounter;
+  protected Reference<Encounter> encounter;
   protected Period period;
   protected CareTeamParticipant[] partecipant;
   protected CodeableConcept[] reasonCode;
@@ -52,7 +52,7 @@ class CareTeam extends DomainResource implements Serializable
     return subject;
   }
 
-  public Reference<Resource> getEncounter() {
+  public Reference<Encounter> getEncounter() {
     return encounter;
   }
 
@@ -104,7 +104,7 @@ class CareTeam extends DomainResource implements Serializable
     this.subject = subject;
   }
 
-  public void setEncounter(Reference<Resource> encounter) {
+  public void setEncounter(Reference<Encounter> encounter) {
     this.encounter = encounter;
   }
 
