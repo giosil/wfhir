@@ -4,6 +4,12 @@ import java.io.Serializable;
 
 import java.util.Date;
 
+/**
+ * 
+ * Details concerning processing and processing steps for the specimen.
+ *
+ * @see <a href="https://www.hl7.org/fhir/specimen-definitions.html#Specimen.processing">Specimen.processing</a>
+ */
 public 
 class SpecimenProcessing extends BackboneElement implements Serializable 
 {
