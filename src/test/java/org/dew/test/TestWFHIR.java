@@ -42,10 +42,6 @@ public class TestWFHIR extends TestCase {
     Resource resource = buildValueSetIstatDug();
     
     doSerialize(resource);
-    
-    resource = buildTestOrganization();
-    
-    doSerialize(resource);
   }
   
   protected
