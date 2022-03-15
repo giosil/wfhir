@@ -24,8 +24,15 @@ class Bundle extends Resource implements Serializable
   
   public Bundle()
   {
+    this.resourceType = "Bundle";
   }
-  
+
+  public Bundle(Identifier identifier)
+  {
+    this.resourceType = "Bundle";
+    this.identifier = identifier;
+  }
+
   public Identifier getIdentifier() {
     return identifier;
   }

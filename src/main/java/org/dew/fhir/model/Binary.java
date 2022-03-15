@@ -22,10 +22,12 @@ class Binary extends Resource implements Serializable
   
   public Binary()
   {
+    this.resourceType = "Binary";
   }
   
   public Binary(String contentType, String data)
   {
+    this.resourceType = "Binary";
     this.contentType = contentType;
     this.data = data;
   }

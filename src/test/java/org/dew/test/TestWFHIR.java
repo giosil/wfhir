@@ -3,6 +3,7 @@ package org.dew.test;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 
 import org.dew.fhir.model.Address;
 import org.dew.fhir.model.CodeableConcept;
@@ -18,7 +19,7 @@ import org.dew.fhir.model.ValueSet;
 import org.dew.fhir.model.ValueSetCompose;
 import org.dew.fhir.model.ValueSetComposeInclude;
 
-import org.dew.fhir.xml.XmlSerializer;
+import org.dew.fhir.xml.FHIRXml;
 
 import org.dew.fhir.json.JSON;
 
@@ -41,7 +42,7 @@ public class TestWFHIR extends TestCase {
   {
     Resource resource = buildValueSetIstatDug();
     
-    doSerialize(resource);
+    doSerializeAndDeserialize(resource);
   }
   
   protected
@@ -49,13 +50,34 @@ public class TestWFHIR extends TestCase {
   {
     String serialized = null;
     
-    System.out.println(resource + " -> xml...");
-    serialized = XmlSerializer.serialize(resource);
-    System.out.println(serialized);
+    System.out.println(resource + " -> xml...\n");
+    serialized = FHIRXml.serialize(resource);
+    System.out.println(serialized + "\n");
     
-    System.out.println(resource + " -> json...");
+    System.out.println(resource + " -> json...\n");
     serialized = JSON.stringify(resource);
     System.out.println(serialized);
+    System.out.println("-------------------------------------------------");
+  }
+  
+  protected
+  void doSerializeAndDeserialize(Object resource)
+  {
+    String serialized = null;
+    
+    System.out.println(resource + " -> xml...\n");
+    serialized = FHIRXml.serialize(resource);
+    System.out.println(serialized + "\n");
+    
+    try {
+      System.out.println("FHIRXml.deserialize...\n");
+      Map<String, Object> root = FHIRXml.deserialize(serialized);
+      System.out.println(root);
+      System.out.println("-------------------------------------------------");
+    }
+    catch(Exception ex) {
+      ex.printStackTrace();
+    }
   }
   
   protected
