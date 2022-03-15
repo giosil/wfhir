@@ -45,6 +45,7 @@ class Device extends DomainResource implements Serializable
   
   public Device()
   {
+    this.resourceType = "Device";
   }
 
   public Identifier[] getIdentifier() {
