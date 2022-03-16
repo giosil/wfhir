@@ -38,7 +38,7 @@ import org.dew.fhir.json.JSONObject;
 
 @SuppressWarnings({"rawtypes","unchecked"})
 public
-class WUtil
+class FUtil
 {
   private static DecimalFormat dfIT;
   private static DecimalFormat dfEN;
@@ -2179,7 +2179,7 @@ class WUtil
             }
             else {
               params.set(0, mapValues.get(key));
-              Object[] parameters = DataUtil.getParametersExt(method, params);
+              Object[] parameters = FReflection.getParametersExt(method, params);
               if(parameters == null) continue;
               method.invoke(bean, parameters);
             }

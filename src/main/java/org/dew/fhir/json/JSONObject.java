@@ -1001,6 +1001,10 @@ public class JSONObject {
             key = name.substring(2);
           }
           if(key.length() > 0 && key.charAt(0) < 97 && method.getParameterTypes().length == 0) {
+            // FHIR
+            if(key.endsWith("_")) {
+              key = key.substring(0, key.length()-1);
+            }
             if(key.length() == 1) {
               key = key.toLowerCase();
             } 

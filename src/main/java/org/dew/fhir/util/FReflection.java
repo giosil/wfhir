@@ -25,7 +25,7 @@ import java.util.Vector;
 
 @SuppressWarnings({"rawtypes","unchecked"})
 public
-class DataUtil
+class FReflection
 {
   // Restituisce il tipo con generici SOLO in presenza di bean.
   // 1.5+
@@ -78,147 +78,124 @@ class DataUtil
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof String) {
+        else if(param instanceof String) {
           aoResult[i] = param;
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("int")) {
+      else if(sTypeName.equals("int")) {
         if(param == null) {
           aoResult[i] = new Integer(0);
         }
-        else
-        if(param instanceof Integer) {
+        else if(param instanceof Integer) {
           aoResult[i] = param;
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.lang.Number")) {
+      else if(sTypeName.equals("java.lang.Number")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof Number) {
+        else if(param instanceof Number) {
           aoResult[i] = param;
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.lang.Integer")) {
+      else if(sTypeName.equals("java.lang.Integer")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof Integer) {
+        else if(param instanceof Integer) {
           aoResult[i] = param;
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("long")) {
+      else if(sTypeName.equals("long")) {
         if(param == null) {
           aoResult[i] = new Long(0);
         }
-        else
-        if(param instanceof Number) {
+        else if(param instanceof Number) {
           aoResult[i] = new Long(((Number) param).longValue());
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.lang.Long")) {
+      else if(sTypeName.equals("java.lang.Long")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof Number) {
+        else if(param instanceof Number) {
           aoResult[i] = new Long(((Number) param).longValue());
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("double")) {
+      else if(sTypeName.equals("double")) {
         if(param == null) {
           aoResult[i] = new Double(0.0d);
         }
-        else
-        if(param instanceof Double) {
+        else if(param instanceof Double) {
           aoResult[i] = param;
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.lang.Double")) {
+      else if(sTypeName.equals("java.lang.Double")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof Double) {
+        else if(param instanceof Double) {
           aoResult[i] = param;
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("boolean")) {
+      else if(sTypeName.equals("boolean")) {
         if(param == null) {
           aoResult[i] = Boolean.FALSE;
         }
-        else
-        if(param instanceof Boolean) {
+        else if(param instanceof Boolean) {
           aoResult[i] = param;
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.lang.Boolean")) {
+      else if(sTypeName.equals("java.lang.Boolean")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof Boolean) {
+        else if(param instanceof Boolean) {
           aoResult[i] = param;
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.util.Date")) {
+      else if(sTypeName.equals("java.util.Date")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof java.util.Date) {
+        else if(param instanceof java.util.Date) {
           aoResult[i] = param;
         }
-        else
-        if(param instanceof java.util.Calendar) {
+        else if(param instanceof java.util.Calendar) {
           aoResult[i] = ((Calendar) param).getTime();
         }
-        else
-        if(param instanceof String) {
-          Calendar calDate = WUtil.stringToCalendar((String) param);
+        else if(param instanceof String) {
+          Calendar calDate = FUtil.stringToCalendar((String) param);
           if(calDate == null) return null;
           aoResult[i] = calDate.getTime();
         }
@@ -226,24 +203,20 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.util.Calendar")) {
+      else if(sTypeName.equals("java.util.Calendar")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof java.util.Date) {
+        else if(param instanceof java.util.Date) {
           Calendar cal = Calendar.getInstance();
           cal.setTimeInMillis(((java.util.Date) param).getTime());
           aoResult[i]  = cal;
         }
-        else
-        if(param instanceof java.util.Calendar) {
+        else if(param instanceof java.util.Calendar) {
           aoResult[i] = param;
         }
-        else
-        if(param instanceof String) {
-          Calendar calDate = WUtil.stringToCalendar((String) param);
+        else if(param instanceof String) {
+          Calendar calDate = FUtil.stringToCalendar((String) param);
           if(calDate == null) return null;
           aoResult[i] = calDate;
         }
@@ -251,79 +224,66 @@ class DataUtil
           return null;
         }
       }
-      else // 1.8+
-      if(sTypeName.equals("java.time.LocalDate")) {
+      else if(sTypeName.equals("java.time.LocalDate")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof java.time.LocalDate) {
+        else if(param instanceof java.time.LocalDate) {
           aoResult[i] = param;
         }
-        else
-        if(param instanceof java.util.Date) {
-          aoResult[i] = WUtil.toLocalDate(param, null);
+        else if(param instanceof java.util.Date) {
+          aoResult[i] = FUtil.toLocalDate(param, null);
         }
-        else
-        if(param instanceof java.util.Calendar) {
-          aoResult[i] = WUtil.toLocalDate(param, null);
+        else if(param instanceof java.util.Calendar) {
+          aoResult[i] = FUtil.toLocalDate(param, null);
         }
-        else
-        if(param instanceof String) {
-          Calendar calDate = WUtil.stringToCalendar((String) param);
+        else if(param instanceof String) {
+          Calendar calDate = FUtil.stringToCalendar((String) param);
           if(calDate == null) return null;
-          aoResult[i] = WUtil.toLocalDate(calDate, null);
+          aoResult[i] = FUtil.toLocalDate(calDate, null);
         }
         else {
           return null;
         }
       }
-      else // 1.8+
-      if(sTypeName.equals("java.time.LocalDateTime")) {
+      else if(sTypeName.equals("java.time.LocalDateTime")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof java.time.LocalDateTime) {
+        else if(param instanceof java.time.LocalDateTime) {
           aoResult[i] = param;
         }
-        else
-        if(param instanceof java.util.Date) {
-          aoResult[i] = WUtil.toLocalDateTime(param, null);
+        else if(param instanceof java.util.Date) {
+          aoResult[i] = FUtil.toLocalDateTime(param, null);
         }
-        else
-        if(param instanceof java.util.Calendar) {
-          aoResult[i] = WUtil.toLocalDateTime(param, null);
+        else if(param instanceof java.util.Calendar) {
+          aoResult[i] = FUtil.toLocalDateTime(param, null);
         }
-        else
-        if(param instanceof String) {
-          Calendar calDate = WUtil.stringToCalendar((String) param);
+        else if(param instanceof String) {
+          Calendar calDate = FUtil.stringToCalendar((String) param);
           if(calDate == null) return null;
-          aoResult[i] = WUtil.toLocalDateTime(calDate, null);
+          aoResult[i] = FUtil.toLocalDateTime(calDate, null);
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.util.Vector")) {
+      else if(sTypeName.equals("java.util.Vector")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof Vector) {
+        else if(param instanceof Vector) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = (Vector) param;
           }
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = new Vector((Collection) param);
@@ -333,25 +293,22 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.util.Stack")) {
+      else if(sTypeName.equals("java.util.Stack")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof Stack) {
+        else if(param instanceof Stack) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = (Stack) param;
           }
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             Stack stack = new Stack();
@@ -363,25 +320,22 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.util.List") || sTypeName.equals("java.util.ArrayList") || sTypeName.equals("java.util.Collection")) {
+      else if(sTypeName.equals("java.util.List") || sTypeName.equals("java.util.ArrayList") || sTypeName.equals("java.util.Collection")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof ArrayList) {
+        else if(param instanceof ArrayList) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = (ArrayList) param;
           }
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = new ArrayList((Collection) param);
@@ -391,25 +345,22 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.util.LinkedList")) {
+      else if(sTypeName.equals("java.util.LinkedList")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof LinkedList) {
+        else if(param instanceof LinkedList) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = (LinkedList) param;
           }
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = new LinkedList((Collection) param);
@@ -419,25 +370,22 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.util.Hashtable")) {
+      else if(sTypeName.equals("java.util.Hashtable")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof Hashtable) {
+        else if(param instanceof Hashtable) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = (Hashtable) param;
           }
         }
-        else
-        if(param instanceof Map) {
+        else if(param instanceof Map) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = new Hashtable((Map) param);
@@ -447,25 +395,22 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.util.Map") || sTypeName.equals("java.util.HashMap")) {
+      else if(sTypeName.equals("java.util.Map") || sTypeName.equals("java.util.HashMap")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof HashMap) {
+        else if(param instanceof HashMap) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = (HashMap) param;
           }
         }
-        else
-        if(param instanceof Map) {
+        else if(param instanceof Map) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = new HashMap((Map) param);
@@ -475,17 +420,14 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.util.Properties")) {
+      else if(sTypeName.equals("java.util.Properties")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof Properties) {
+        else if(param instanceof Properties) {
           aoResult[i] = (Properties) param;
         }
-        else
-        if(param instanceof Map) {
+        else if(param instanceof Map) {
           Properties properties = new Properties();
           Iterator iterator = ((Map) param).entrySet().iterator();
           while(iterator.hasNext()) {
@@ -500,25 +442,22 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.util.TreeSet")) {
+      else if(sTypeName.equals("java.util.TreeSet")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof TreeSet) {
+        else if(param instanceof TreeSet) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = (TreeSet) param;
           }
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = new TreeSet((Collection) param);
@@ -534,19 +473,17 @@ class DataUtil
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof TreeMap) {
+        else if(param instanceof TreeMap) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = (TreeMap) param;
           }
         }
-        else
-        if(param instanceof Map) {
+        else if(param instanceof Map) {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             aoResult[i] = new TreeMap((Map) param);
@@ -556,17 +493,14 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("[B")) { // byte[]
+      else if(sTypeName.equals("[B")) { // byte[]
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof byte[]) {
+        else if(param instanceof byte[]) {
           aoResult[i] = param;
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           byte[] array = Arrays.toArrayOfByte((Collection) param);
           if(array == null) return null;
           aoResult[i] = array;
@@ -575,17 +509,14 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("[I")) { // int[]
+      else if(sTypeName.equals("[I")) { // int[]
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof int[]) {
+        else if(param instanceof int[]) {
           aoResult[i] = param;
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           int[] array = Arrays.toArrayOfInt((Collection) param);
           if(array == null) return null;
           aoResult[i] = array;
@@ -594,23 +525,19 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("[C")) { // char[]
+      else if(sTypeName.equals("[C")) { // char[]
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof char[]) {
+        else if(param instanceof char[]) {
           aoResult[i] = param;
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           char[] array = Arrays.toArrayOfChar((Collection) param);
           if(array == null) return null;
           aoResult[i] = array;
         }
-        else
-        if(param instanceof String) {
+        else if(param instanceof String) {
           String sParam = (String) param;
           aoResult[i] = sParam.toCharArray();
         }
@@ -618,17 +545,14 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("[Z")) { // boolean[]
+      else if(sTypeName.equals("[Z")) { // boolean[]
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof boolean[]) {
+        else if(param instanceof boolean[]) {
           aoResult[i] = param;
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           boolean[] array = Arrays.toArrayOfBoolean((Collection) param);
           if(array == null) return null;
           aoResult[i] = array;
@@ -637,17 +561,14 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("[D")) { // double[]
+      else if(sTypeName.equals("[D")) { // double[]
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof double[]) {
+        else if(param instanceof double[]) {
           aoResult[i] = param;
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           double[] array = Arrays.toArrayOfDouble((Collection) param);
           if(array == null) return null;
           aoResult[i] = array;
@@ -656,52 +577,43 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.startsWith("[L") && sTypeName.endsWith(";")) {
+      else if(sTypeName.startsWith("[L") && sTypeName.endsWith(";")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else 
-        if(param.getClass().isArray()) {
-          aoResult[i] = WUtil.toObject(param, sTypeName);
+        else if(param.getClass().isArray()) {
+          aoResult[i] = FUtil.toObject(param, sTypeName);
         }
-        else
-        if(param instanceof Collection) {
-          aoResult[i] = WUtil.toObject(param, sTypeName);
+        else if(param instanceof Collection) {
+          aoResult[i] = FUtil.toObject(param, sTypeName);
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.util.Set") || sTypeName.equals("java.util.HashSet")) {
+      else if(sTypeName.equals("java.util.Set") || sTypeName.equals("java.util.HashSet")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           aoResult[i] = new HashSet((Collection) param);
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.sql.Date")) {
+      else if(sTypeName.equals("java.sql.Date")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof java.util.Date) {
+        else if(param instanceof java.util.Date) {
           aoResult[i] = new java.sql.Date(((java.util.Date) param).getTime());
         }
-        else
-        if(param instanceof java.util.Calendar) {
+        else if(param instanceof java.util.Calendar) {
           aoResult[i] = new java.sql.Date(((Calendar) param).getTimeInMillis());
         }
-        else
-        if(param instanceof String) {
-          Calendar calDate = WUtil.stringToCalendar((String) param);
+        else if(param instanceof String) {
+          Calendar calDate = FUtil.stringToCalendar((String) param);
           if(calDate == null) return null;
           aoResult[i] = new java.sql.Date(calDate.getTimeInMillis());
         }
@@ -709,22 +621,18 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.sql.Timestamp")) {
+      else if(sTypeName.equals("java.sql.Timestamp")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof java.util.Date) {
+        else if(param instanceof java.util.Date) {
           aoResult[i] = new java.sql.Timestamp(((java.util.Date) param).getTime());
         }
-        else
-        if(param instanceof java.util.Calendar) {
+        else if(param instanceof java.util.Calendar) {
           aoResult[i] = new java.sql.Timestamp(((Calendar) param).getTimeInMillis());
         }
-        else
-        if(param instanceof String) {
-          Calendar calDate = WUtil.stringToCalendar((String) param);
+        else if(param instanceof String) {
+          Calendar calDate = FUtil.stringToCalendar((String) param);
           if(calDate == null) return null;
           aoResult[i] = new java.sql.Timestamp(calDate.getTimeInMillis());
         }
@@ -732,22 +640,18 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.sql.Time")) {
+      else if(sTypeName.equals("java.sql.Time")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof java.util.Date) {
+        else if(param instanceof java.util.Date) {
           aoResult[i] = new java.sql.Time(((java.util.Date) param).getTime());
         }
-        else
-        if(param instanceof java.util.Calendar) {
+        else if(param instanceof java.util.Calendar) {
           aoResult[i] = new java.sql.Time(((Calendar) param).getTimeInMillis());
         }
-        else
-        if(param instanceof String) {
-          Calendar calDate = WUtil.stringToCalendar((String) param);
+        else if(param instanceof String) {
+          Calendar calDate = FUtil.stringToCalendar((String) param);
           if(calDate == null) return null;
           aoResult[i] = new java.sql.Time(calDate.getTimeInMillis());
         }
@@ -755,8 +659,7 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.math.BigDecimal")) {
+      else if(sTypeName.equals("java.math.BigDecimal")) {
         if(param == null) {
           aoResult[i] = null;
         }
@@ -768,21 +671,18 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.math.BigInteger")) {
+      else if(sTypeName.equals("java.math.BigInteger")) {
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof Number) {
+        else if(param instanceof Number) {
           aoResult[i] = new BigInteger(param.toString());
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.lang.Object")) {
+      else if(sTypeName.equals("java.lang.Object")) {
         if(param == null) {
           aoResult[i] = null;
         }
@@ -794,12 +694,10 @@ class DataUtil
         if(param == null) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof Map) {
-          aoResult[i] = WUtil.populateBean(types[i], (Map) param);
+        else if(param instanceof Map) {
+          aoResult[i] = FUtil.populateBean(types[i], (Map) param);
         }
-        else 
-        if(param instanceof String) {
+        else if(param instanceof String) {
           if(types[i].isEnum()) {
             try {
               aoResult[i] = Enum.valueOf(types[i], (String) param);
@@ -836,243 +734,220 @@ class DataUtil
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toString(param, null);
+          aoResult[i] = FUtil.toString(param, null);
         }
       }
-      else
-      if(sTypeName.equals("int")) {
+      else if(sTypeName.equals("int")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = new Integer(0);
         }
         else {
-          aoResult[i] = WUtil.toInteger(param, new Integer(0));
+          aoResult[i] = FUtil.toInteger(param, new Integer(0));
         }
       }
-      else
-      if(sTypeName.equals("java.lang.Number")) {
+      else if(sTypeName.equals("java.lang.Number")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toNumber(param, null);
+          aoResult[i] = FUtil.toNumber(param, null);
         }
       }
-      else
-      if(sTypeName.equals("java.lang.Integer")) {
+      else if(sTypeName.equals("java.lang.Integer")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toInteger(param, null);
+          aoResult[i] = FUtil.toInteger(param, null);
         }
       }
-      else
-      if(sTypeName.equals("long")) {
+      else if(sTypeName.equals("long")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = new Long(0);
         }
         else {
-          aoResult[i] = WUtil.toLongObj(param, new Long(0));
+          aoResult[i] = FUtil.toLongObj(param, new Long(0));
         }
       }
-      else
-      if(sTypeName.equals("java.lang.Long")) {
+      else if(sTypeName.equals("java.lang.Long")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toLongObj(param, null);
+          aoResult[i] = FUtil.toLongObj(param, null);
         }
       }
-      else
-      if(sTypeName.equals("double")) {
+      else if(sTypeName.equals("double")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = new Double(0.0d);
         }
         else {
-          aoResult[i] = WUtil.toDoubleObj(param, new Double(0.0d));
+          aoResult[i] = FUtil.toDoubleObj(param, new Double(0.0d));
         }
       }
-      else
-      if(sTypeName.equals("java.lang.Double")) {
+      else if(sTypeName.equals("java.lang.Double")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toDoubleObj(param, null);
+          aoResult[i] = FUtil.toDoubleObj(param, null);
         }
       }
-      else
-      if(sTypeName.equals("java.math.BigDecimal")) {
+      else if(sTypeName.equals("java.math.BigDecimal")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toBigDecimal(param, null);
+          aoResult[i] = FUtil.toBigDecimal(param, null);
         }
       }
-      else
-      if(sTypeName.equals("java.math.BigInteger")) {
+      else if(sTypeName.equals("java.math.BigInteger")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toBigInteger(param, null);
+          aoResult[i] = FUtil.toBigInteger(param, null);
         }
       }
-      else
-      if(sTypeName.equals("boolean")) {
+      else if(sTypeName.equals("boolean")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = Boolean.FALSE;
         }
         else {
-          aoResult[i] = WUtil.toBooleanObj(param, Boolean.FALSE);
+          aoResult[i] = FUtil.toBooleanObj(param, Boolean.FALSE);
         }
       }
-      else
-      if(sTypeName.equals("java.lang.Boolean")) {
+      else if(sTypeName.equals("java.lang.Boolean")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toBooleanObj(param, null);
+          aoResult[i] = FUtil.toBooleanObj(param, null);
         }
       }
-      else
-      if(sTypeName.equals("java.util.Date")) {
+      else if(sTypeName.equals("java.util.Date")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toDate(param, null);
+          aoResult[i] = FUtil.toDate(param, null);
         }
       }
-      else
-      if(sTypeName.equals("java.util.Calendar")) {
+      else if(sTypeName.equals("java.util.Calendar")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toCalendar(param, null);
+          aoResult[i] = FUtil.toCalendar(param, null);
         }
       }
-      else // 1.8+
-      if(sTypeName.equals("java.time.LocalDate")) {
+      else if(sTypeName.equals("java.time.LocalDate")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toLocalDate(param, null);
+          aoResult[i] = FUtil.toLocalDate(param, null);
         }
       }
-      else // 1.8+
-      if(sTypeName.equals("java.time.LocalDateTime")) {
+      else if(sTypeName.equals("java.time.LocalDateTime")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toLocalDateTime(param, null);
+          aoResult[i] = FUtil.toLocalDateTime(param, null);
         }
       }
-      else
-      if(sTypeName.equals("java.util.Vector")) {
+      else if(sTypeName.equals("java.util.Vector")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
-            aoResult[i] = WUtil.toVector(param, null);
+            aoResult[i] = FUtil.toVector(param, null);
           }
         }
       }
-      else
-      if(sTypeName.equals("java.util.Stack")) {
+      else if(sTypeName.equals("java.util.Stack")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
             Stack stack = new Stack();
-            stack.addAll(WUtil.toVector(param, true));
+            stack.addAll(FUtil.toVector(param, true));
             aoResult[i] = stack;
           }
         }
       }
-      else
-      if(sTypeName.equals("java.util.List") || sTypeName.equals("java.util.ArrayList") || sTypeName.equals("java.util.Collection")) {
+      else if(sTypeName.equals("java.util.List") || sTypeName.equals("java.util.ArrayList") || sTypeName.equals("java.util.Collection")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
-            aoResult[i] = WUtil.toList(param, null);
+            aoResult[i] = FUtil.toList(param, null);
           }
         }
       }
-      else
-      if(sTypeName.equals("java.util.LinkedList")) {
+      else if(sTypeName.equals("java.util.LinkedList")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
-            aoResult[i] = new LinkedList(WUtil.toList(param, true));
+            aoResult[i] = new LinkedList(FUtil.toList(param, true));
           }
         }
       }
-      else
-      if(sTypeName.equals("java.util.Hashtable")) {
+      else if(sTypeName.equals("java.util.Hashtable")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
-            aoResult[i] = WUtil.toHashtable(param, false);
+            aoResult[i] = FUtil.toHashtable(param, false);
           }
         }
       }
-      else
-      if(sTypeName.equals("java.util.Map") || sTypeName.equals("java.util.HashMap")) {
+      else if(sTypeName.equals("java.util.Map") || sTypeName.equals("java.util.HashMap")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
-            aoResult[i] = WUtil.toMap(param, false);
+            aoResult[i] = FUtil.toMap(param, false);
           }
         }
       }
-      else
-      if(sTypeName.equals("java.util.Properties")) {
+      else if(sTypeName.equals("java.util.Properties")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof Map) {
+        else if(param instanceof Map) {
           Properties properties = new Properties();
           Iterator iterator = ((Map) param).entrySet().iterator();
           while(iterator.hasNext()) {
@@ -1087,47 +962,42 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.util.TreeSet")) {
+      else if(sTypeName.equals("java.util.TreeSet")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
-            aoResult[i] = new TreeSet(WUtil.toList(param, true));
+            aoResult[i] = new TreeSet(FUtil.toList(param, true));
           }
         }
       }
-      else
-      if(sTypeName.equals("java.util.TreeMap")) {
+      else if(sTypeName.equals("java.util.TreeMap")) {
         String sBeanGenericType = getBeanGenericType(method, i);
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
           if(sBeanGenericType != null) {
-            aoResult[i] = WUtil.toObject(param, sBeanGenericType);
+            aoResult[i] = FUtil.toObject(param, sBeanGenericType);
           }
           else {
-            aoResult[i] = new TreeMap(WUtil.toMap(param, true));
+            aoResult[i] = new TreeMap(FUtil.toMap(param, true));
           }
         }
       }
-      else
-      if(sTypeName.equals("[B")) { // byte[]
+      else if(sTypeName.equals("[B")) { // byte[]
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof byte[]) {
+        else if(param instanceof byte[]) {
           aoResult[i] = param;
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           byte[] array = Arrays.toArrayOfByte((Collection) param);
           if(array == null) return null;
           aoResult[i] = array;
@@ -1136,17 +1006,14 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("[I")) { // int[]
+      else if(sTypeName.equals("[I")) { // int[]
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof int[]) {
+        else if(param instanceof int[]) {
           aoResult[i] = param;
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           int[] array = Arrays.toArrayOfInt((Collection) param);
           if(array == null) return null;
           aoResult[i] = array;
@@ -1155,23 +1022,19 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("[C")) { // char[]
+      else if(sTypeName.equals("[C")) { // char[]
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof char[]) {
+        else if(param instanceof char[]) {
           aoResult[i] = param;
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           char[] array = Arrays.toArrayOfChar((Collection) param);
           if(array == null) return null;
           aoResult[i] = array;
         }
-        else
-        if(param instanceof String) {
+        else if(param instanceof String) {
           String sParam = (String) param;
           aoResult[i] = sParam.toCharArray();
         }
@@ -1179,17 +1042,14 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("[Z")) { // boolean[]
+      else if(sTypeName.equals("[Z")) { // boolean[]
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof boolean[]) {
+        else if(param instanceof boolean[]) {
           aoResult[i] = param;
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           boolean[] array = Arrays.toArrayOfBoolean((Collection) param);
           if(array == null) return null;
           aoResult[i] = array;
@@ -1198,17 +1058,14 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.equals("[D")) { // double[]
+      else if(sTypeName.equals("[D")) { // double[]
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof double[]) {
+        else if(param instanceof double[]) {
           aoResult[i] = param;
         }
-        else
-        if(param instanceof Collection) {
+        else if(param instanceof Collection) {
           double[] array = Arrays.toArrayOfDouble((Collection) param);
           if(array == null) return null;
           aoResult[i] = array;
@@ -1217,61 +1074,53 @@ class DataUtil
           return null;
         }
       }
-      else
-      if(sTypeName.startsWith("[L") && sTypeName.endsWith(";")) {
+      else if(sTypeName.startsWith("[L") && sTypeName.endsWith(";")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
-        else 
-        if(param.getClass().isArray()) {
-          aoResult[i] = WUtil.toObject(param, sTypeName);
+        else if(param.getClass().isArray()) {
+          aoResult[i] = FUtil.toObject(param, sTypeName);
         }
-        else
-        if(param instanceof Collection) {
-          aoResult[i] = WUtil.toObject(param, sTypeName);
+        else if(param instanceof Collection) {
+          aoResult[i] = FUtil.toObject(param, sTypeName);
         }
         else {
           return null;
         }
       }
-      else
-      if(sTypeName.equals("java.util.Set") || sTypeName.equals("java.util.HashSet")) {
+      else if(sTypeName.equals("java.util.Set") || sTypeName.equals("java.util.HashSet")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toSet(param, false);
+          aoResult[i] = FUtil.toSet(param, false);
         }
       }
-      else
-      if(sTypeName.equals("java.sql.Date")) {
+      else if(sTypeName.equals("java.sql.Date")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toSQLDate(param, null);
+          aoResult[i] = FUtil.toSQLDate(param, null);
         }
       }
-      else
-      if(sTypeName.equals("java.sql.Time")) {
+      else if(sTypeName.equals("java.sql.Time")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toSQLTime(param, null);
+          aoResult[i] = FUtil.toSQLTime(param, null);
         }
       }
-      else
-      if(sTypeName.equals("java.sql.Timestamp")) {
+      else if(sTypeName.equals("java.sql.Timestamp")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
         else {
-          aoResult[i] = WUtil.toSQLTimestamp(param, null);
+          aoResult[i] = FUtil.toSQLTimestamp(param, null);
         }
       }
-      else
-      if(sTypeName.equals("java.lang.Object")) {
+      else if(sTypeName.equals("java.lang.Object")) {
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
@@ -1283,9 +1132,8 @@ class DataUtil
         if(param == null || param.equals("null")) {
           aoResult[i] = null;
         }
-        else
-        if(param instanceof Map) {
-          aoResult[i] = WUtil.populateBean(types[i], (Map) param);
+        else if(param instanceof Map) {
+          aoResult[i] = FUtil.populateBean(types[i], (Map) param);
         }
         else 
         if(param instanceof String) {

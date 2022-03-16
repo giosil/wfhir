@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
-import org.dew.fhir.util.WUtil;
+import org.dew.fhir.util.FUtil;
 
 /**
  * Utility class to parse JSON text and/or to convert in JSON text.
@@ -107,7 +107,7 @@ class JSON
   {
     Object result = parse(sText);
     if(result instanceof Map) {
-      return WUtil.populateBean(beanClass, (Map<String,Object>) result);
+      return FUtil.populateBean(beanClass, (Map<String,Object>) result);
     }
     return null;
   }
@@ -117,7 +117,7 @@ class JSON
   {
     Object result = parse(sText);
     if(result instanceof Map) {
-      return WUtil.populateBean(beanClass, (Map<String,Object>) result, classLoader);
+      return FUtil.populateBean(beanClass, (Map<String,Object>) result, classLoader);
     }
     return null;
   }
@@ -174,7 +174,7 @@ class JSON
       List<Map<String,Object>> listOfMap = (List<Map<String,Object>>) listResult;
       List<T> listOfBean = new ArrayList<T>(listOfMap.size());
       for(int i = 0; i < listOfMap.size(); i++) {
-        listOfBean.add(WUtil.populateBean(beanClass, listOfMap.get(i), classLoader));
+        listOfBean.add(FUtil.populateBean(beanClass, listOfMap.get(i), classLoader));
       }
       return listOfBean;
     }
@@ -196,7 +196,7 @@ class JSON
       List<Map<String,Object>> listOfMap = (List<Map<String,Object>>) listResult;
       List<T> listOfBean = new ArrayList<T>(listOfMap.size());
       for(int i = 0; i < listOfMap.size(); i++) {
-        listOfBean.add(WUtil.populateBean(beanClass, listOfMap.get(i)));
+        listOfBean.add(FUtil.populateBean(beanClass, listOfMap.get(i)));
       }
       return listOfBean;
     }

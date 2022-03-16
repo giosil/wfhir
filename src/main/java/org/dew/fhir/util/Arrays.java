@@ -255,7 +255,7 @@ class Arrays
         aResult[i++] = ((java.util.Calendar) oValue).getTime();
       }
       else if(oValue instanceof String) {
-        Calendar cal = WUtil.stringToCalendar((String) oValue);
+        Calendar cal = FUtil.stringToCalendar((String) oValue);
         if(cal == null) return null;
         aResult[i++] = new java.util.Date(cal.getTimeInMillis());
       }
@@ -301,7 +301,7 @@ class Arrays
         aResult[i++] = cal;
       }
       else if(oValue instanceof String) {
-        cal = WUtil.stringToCalendar((String) oValue);
+        cal = FUtil.stringToCalendar((String) oValue);
         if(cal == null) return null;
         aResult[i++] = cal;
       }
@@ -328,10 +328,10 @@ class Arrays
         aResult[i++] = (BigDecimal) oValue;
       }
       else if(oValue instanceof Number) {
-        aResult[i++] = WUtil.toBigDecimal(oValue, null);
+        aResult[i++] = FUtil.toBigDecimal(oValue, null);
       }
       else if(oValue instanceof String) {
-        aResult[i++] = WUtil.toBigDecimal(oValue, null);
+        aResult[i++] = FUtil.toBigDecimal(oValue, null);
       }
       else {
         return null;
@@ -356,10 +356,10 @@ class Arrays
         aResult[i++] = (BigInteger) oValue;
       }
       else if(oValue instanceof Number) {
-        aResult[i++] = WUtil.toBigInteger(oValue, null);
+        aResult[i++] = FUtil.toBigInteger(oValue, null);
       }
       else if(oValue instanceof String) {
-        aResult[i++] = WUtil.toBigInteger(oValue, null);
+        aResult[i++] = FUtil.toBigInteger(oValue, null);
       }
       else {
         return null;

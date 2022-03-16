@@ -50,6 +50,10 @@ class XmlSerializer
             key = name.substring(2);
           }
           if(key.length() > 0 && key.charAt(0) < 97 && method.getParameterTypes().length == 0) {
+            // FHIR
+            if(key.endsWith("_")) {
+              key = key.substring(0, key.length()-1);
+            }
             if(key.length() == 1) {
               key = key.toLowerCase();
             }
@@ -74,9 +78,7 @@ class XmlSerializer
   String value(String tagName, Object value)
   {
     if(value == null || tagName.length() == 0 || tagName.equals("resourceType")) return "";
-    if(tagName.endsWith("_")) {
-      tagName = tagName.substring(0, tagName.length()-1);
-    }
+    
     Class<?> klass = value.getClass();
     
     StringBuilder result = new StringBuilder();
