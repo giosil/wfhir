@@ -1084,6 +1084,12 @@ class FReflection
         else if(param instanceof Collection) {
           aoResult[i] = FUtil.toObject(param, sTypeName);
         }
+        else if(param instanceof Map) {
+          // FHIR
+          List<Object> colParam = new ArrayList<Object>(1);
+          colParam.add(param);
+          aoResult[i] = FUtil.toObject(colParam, sTypeName);
+        }
         else {
           return null;
         }
@@ -1135,8 +1141,7 @@ class FReflection
         else if(param instanceof Map) {
           aoResult[i] = FUtil.populateBean(types[i], (Map) param);
         }
-        else 
-        if(param instanceof String) {
+        else if(param instanceof String) {
           if(types[i].isEnum()) {
             try {
               aoResult[i] = Enum.valueOf(types[i], (String) param);

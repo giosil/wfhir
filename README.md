@@ -1,6 +1,24 @@
 # WFHIR
 
-A simple HL7&copy; FHIR&copy; implementation. Preliminary project.
+A simple HL7&copy; FHIR&copy; implementation.
+The project is in a preliminary phase, therefore the implementation is incomplete and not sufficiently tested.
+
+## Example
+
+```java
+import org.dew.fhir.model.*;
+import org.dew.fhir.util.FHIRUtil;
+
+Organization res = new Organization("asl-120201", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
+  
+String json = FHIRUtil.serialize(res, "application/fhir+json");
+  
+String xml  = FHIRUtil.serialize(res, "application/fhir+xml");
+  
+Organization o1 = FHIRUtil.deserialize(json, Organization.class);
+  
+Organization o2 = FHIRUtil.deserialize(xml, Organization.class);
+```
 
 ## Build
 

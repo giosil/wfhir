@@ -2,6 +2,8 @@ package org.dew.fhir.xml;
 
 import java.util.Map;
 
+import org.dew.fhir.util.FUtil;
+
 public 
 class FHIRXml 
 {
@@ -47,5 +49,28 @@ class FHIRXml
     }
     
     return null;
+  }
+  
+  public static
+  <T> T deserialize(byte[] xml, Class<T> beanClass)
+  {
+    if(xml == null || xml.length == 0) {
+      return null;
+    }
+    if(beanClass == null) {
+      return null;
+    }
+    
+    Map<String, Object> map = null;
+    try {
+      XmlDeserializer xmlDeserializer = new XmlDeserializer();
+      xmlDeserializer.load(xml);
+      map = xmlDeserializer.getRoot();
+    }
+    catch(Exception ex) {
+      ex.printStackTrace();
+    }
+    
+    return FUtil.populateBean(beanClass, map);
   }
 }

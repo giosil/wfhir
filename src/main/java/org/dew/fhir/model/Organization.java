@@ -30,32 +30,40 @@ class Organization extends DomainResource implements Serializable
     this.resourceType = "Organization";
   }
   
-  public Organization(Identifier singleIdentifier)
+  public Organization(String id, String identifierSystem, String identifierValue)
   {
     this.resourceType = "Organization";
+    this.id = id;
+    if(identifierValue != null) {
+      this.identifier = new Identifier[] { new Identifier(identifierSystem, identifierValue) };
+    }
+    this.active = true;
+  }
+  
+  public Organization(String id, Identifier singleIdentifier)
+  {
+    this.resourceType = "Organization";
+    this.id = id;
     this.identifier = new Identifier[] { singleIdentifier };
     this.active = true;
   }
   
-  public Organization(Identifier[] identifier)
+  public Organization(String id, String identifierSystem, String identifierValue, String name)
   {
     this.resourceType = "Organization";
-    this.identifier = identifier;
-    this.active = true;
-  }
-  
-  public Organization(Identifier singleIdentifier, String name)
-  {
-    this.resourceType = "Organization";
-    this.identifier = new Identifier[] { singleIdentifier };
+    this.id = id;
+    if(identifierValue != null) {
+      this.identifier = new Identifier[] { new Identifier(identifierSystem, identifierValue) };
+    }
     this.name = name;
     this.active = true;
   }
   
-  public Organization(Identifier[] identifier, String name)
+  public Organization(String id, Identifier singleIdentifier, String name)
   {
     this.resourceType = "Organization";
-    this.identifier = identifier;
+    this.id = id;
+    this.identifier = new Identifier[] { singleIdentifier };
     this.name = name;
     this.active = true;
   }

@@ -3,32 +3,18 @@ package org.dew.test;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 
-import org.dew.fhir.model.Address;
-import org.dew.fhir.model.CodeableConcept;
-import org.dew.fhir.model.Coding;
-import org.dew.fhir.model.ContactDetail;
-import org.dew.fhir.model.ContactPoint;
-import org.dew.fhir.model.Element;
-import org.dew.fhir.model.Identifier;
-import org.dew.fhir.model.Narrative;
-import org.dew.fhir.model.Organization;
-import org.dew.fhir.model.Resource;
-import org.dew.fhir.model.ValueSet;
-import org.dew.fhir.model.ValueSetCompose;
-import org.dew.fhir.model.ValueSetComposeInclude;
+import org.dew.fhir.model.*;
 
-import org.dew.fhir.xml.FHIRXml;
-
-import org.dew.fhir.json.JSON;
+import org.dew.fhir.util.FHIRUtil;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public class TestWFHIR extends TestCase {
-  
+public 
+class TestWFHIR extends TestCase 
+{
   public TestWFHIR(String testName) {
     super(testName);
   }
@@ -40,9 +26,31 @@ public class TestWFHIR extends TestCase {
   public 
   void testApp() 
   {
-    Resource resource = buildValueSetIstatDug();
-    
-    doSerializeAndDeserialize(resource);
+    example();
+  }
+  
+  public 
+  void example() 
+  {
+    try {
+      Organization res = new Organization("asl-120201", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
+      System.out.println(res);
+      
+      String json = FHIRUtil.serialize(res, "application/fhir+json");
+      System.out.println(json);
+      
+      String xml  = FHIRUtil.serialize(res, "application/fhir+xml");
+      System.out.println(xml);
+      
+      Organization o1 = FHIRUtil.deserialize(json, Organization.class);
+      System.out.println(o1);
+      
+      Organization o2 = FHIRUtil.deserialize(xml, Organization.class);
+      System.out.println(o2);
+    }
+    catch(Exception ex) {
+      ex.printStackTrace();
+    }
   }
   
   protected
@@ -51,33 +59,13 @@ public class TestWFHIR extends TestCase {
     String serialized = null;
     
     System.out.println(resource + " -> xml...\n");
-    serialized = FHIRXml.serialize(resource);
+    serialized = FHIRUtil.serialize(resource, FHIRUtil.CONTENT_TYPE_XML);
     System.out.println(serialized + "\n");
     
     System.out.println(resource + " -> json...\n");
-    serialized = JSON.stringify(resource);
+    serialized = FHIRUtil.serialize(resource, FHIRUtil.CONTENT_TYPE_JSON);
     System.out.println(serialized);
     System.out.println("-------------------------------------------------");
-  }
-  
-  protected
-  void doSerializeAndDeserialize(Object resource)
-  {
-    String serialized = null;
-    
-    System.out.println(resource + " -> xml...\n");
-    serialized = FHIRXml.serialize(resource);
-    System.out.println(serialized + "\n");
-    
-    try {
-      System.out.println("FHIRXml.deserialize...\n");
-      Map<String, Object> root = FHIRXml.deserialize(serialized);
-      System.out.println(root);
-      System.out.println("-------------------------------------------------");
-    }
-    catch(Exception ex) {
-      ex.printStackTrace();
-    }
   }
   
   protected
