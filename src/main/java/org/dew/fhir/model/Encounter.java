@@ -22,10 +22,10 @@ class Encounter extends DomainResource implements Serializable
   protected CodeableConcept serviceType;
   protected CodeableConcept priority;
   protected Reference<Resource> subject;
-  protected Reference<Resource> episodeOfCare;
-  protected Reference<Resource> basedOn;
+  protected Reference<EpisodeOfCare> episodeOfCare;
+  protected Reference<ServiceRequest> basedOn;
   protected EncounterParticipant[] participant;
-  protected Reference<Resource>[] appointment;
+  protected Reference<Appointment>[] appointment;
   protected Period period;
   protected Duration length;
   protected CodeableConcept[] reasonCode;
@@ -78,11 +78,11 @@ class Encounter extends DomainResource implements Serializable
     return subject;
   }
 
-  public Reference<Resource> getEpisodeOfCare() {
+  public Reference<EpisodeOfCare> getEpisodeOfCare() {
     return episodeOfCare;
   }
 
-  public Reference<Resource> getBasedOn() {
+  public Reference<ServiceRequest> getBasedOn() {
     return basedOn;
   }
 
@@ -90,7 +90,7 @@ class Encounter extends DomainResource implements Serializable
     return participant;
   }
 
-  public Reference<Resource>[] getAppointment() {
+  public Reference<Appointment>[] getAppointment() {
     return appointment;
   }
 
@@ -170,11 +170,11 @@ class Encounter extends DomainResource implements Serializable
     this.subject = subject;
   }
 
-  public void setEpisodeOfCare(Reference<Resource> episodeOfCare) {
+  public void setEpisodeOfCare(Reference<EpisodeOfCare> episodeOfCare) {
     this.episodeOfCare = episodeOfCare;
   }
 
-  public void setBasedOn(Reference<Resource> basedOn) {
+  public void setBasedOn(Reference<ServiceRequest> basedOn) {
     this.basedOn = basedOn;
   }
 
@@ -182,7 +182,7 @@ class Encounter extends DomainResource implements Serializable
     this.participant = participant;
   }
 
-  public void setAppointment(Reference<Resource>[] appointment) {
+  public void setAppointment(Reference<Appointment>[] appointment) {
     this.appointment = appointment;
   }
 
