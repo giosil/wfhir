@@ -12,6 +12,7 @@ import java.io.Serializable;
  * </ul>
  * 
  *  @see <a href="https://www.hl7.org/fhir/domainresource.html">DomainResource</a>
+ *  @see <a href="https://www.hl7.org/fhir/resourcelist.html">Resource Index</a>
  */
 public 
 class DomainResource extends Resource implements Serializable
