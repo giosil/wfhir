@@ -40,6 +40,7 @@ class MedicationStatement extends DomainResource implements Serializable
   
   public MedicationStatement()
   {
+    this.resourceType = "MedicationStatement";
   }
 
   public Identifier[] getIdentifier() {

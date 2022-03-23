@@ -49,6 +49,7 @@ class Task extends DomainResource implements Serializable
   
   public Task()
   {
+    this.resourceType = "Task";
   }
 
   public Identifier[] getIdentifier() {
