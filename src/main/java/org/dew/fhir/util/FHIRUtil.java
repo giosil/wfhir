@@ -96,6 +96,15 @@ class FHIRUtil
   }
   
   public static
+  Map<String, Object> toMap(Object object)
+    throws Exception
+  {
+    if(object == null) return null;
+    
+    return FUtil.beanToMap(object);
+  }
+  
+  public static
   <T> T createInstance(Map<String, Object> map, Class<T> beanClass)
     throws Exception
   {

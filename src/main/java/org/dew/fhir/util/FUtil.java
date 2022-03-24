@@ -2020,31 +2020,31 @@ class FUtil
               key = methodName.substring(3);
             }
           } 
-          else
-          if(methodName.startsWith("is")) {
+          else if(methodName.startsWith("is")) {
             key = methodName.substring(2);
           }
           if(key.length() > 0 && key.charAt(0) < 97 && method.getParameterTypes().length == 0) {
+            // FHIR
+            if(key.endsWith("_")) {
+              key = key.substring(0, key.length()-1);
+            }
             if(key.length() == 1) {
               key = key.toLowerCase();
             } 
-            else
-            if(!Character.isUpperCase(key.charAt(1))) {
+            else if(!Character.isUpperCase(key.charAt(1))) {
               key = key.substring(0, 1).toLowerCase() + key.substring(1);
             }
             Object result = method.invoke(bean,(Object[]) null);
             if(result instanceof Collection) {
               mapResult.put(key, collectionToNormalizedList((Collection) result));
             }
-            else
-            if(result != null) {
+            else if(result != null) {
               Class klassResult = result.getClass();
               // 1.5+
               if(klassResult.isEnum()) {
                 mapResult.put(key, result.toString());
               }
-              else
-              if(klassResult.isArray()) {
+              else if(klassResult.isArray()) {
                 mapResult.put(key, arrayToNormalizedList(result));
               }
               else {
