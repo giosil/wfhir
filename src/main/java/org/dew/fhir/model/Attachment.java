@@ -152,6 +152,6 @@ class Attachment extends Element implements Serializable
   
   @Override
   public String toString() {
-    return "Attachment(" + contentType + "," + url + "," + title + ")";
+    return "Attachment(" + id + "," + contentType + "," + url + "," + title + ")";
   }
 }
