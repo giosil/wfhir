@@ -35,6 +35,7 @@ class Composition extends DomainResource implements Serializable
   
   public Composition()
   {
+    this.resourceType = "Composition";
   }
   
   public Composition(Identifier identifier)

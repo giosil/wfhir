@@ -57,11 +57,11 @@ class Money extends Element implements Serializable
   
   @Override
   public int hashCode() {
-    return (currency + ":" + value).hashCode();
+    return (value + ":" + currency).hashCode();
   }
   
   @Override
   public String toString() {
-    return "Money(" + currency + "," + value + ")";
+    return "Money(" + value + "," + currency + ")";
   }
 }
