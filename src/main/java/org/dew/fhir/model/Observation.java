@@ -13,7 +13,7 @@ import java.util.Date;
 public 
 class Observation extends DomainResource implements Serializable
 {
-  private static final long serialVersionUID = -3663844663877139794L;
+  private static final long serialVersionUID = 6867305569169639646L;
   
   protected Identifier[] identifier;
   protected Reference<Resource>[] basedOn;
@@ -29,6 +29,7 @@ class Observation extends DomainResource implements Serializable
   protected Timing effectiveTiming;
   protected Date effectiveInstant;
   protected Date issued;
+  protected Reference<Resource>[] performer;
   protected Quantity valueQuantity;
   protected CodeableConcept valueCodeableConcept;
   protected String valueString;
@@ -111,6 +112,10 @@ class Observation extends DomainResource implements Serializable
 
   public Date getIssued() {
     return issued;
+  }
+
+  public Reference<Resource>[] getPerformer() {
+    return performer;
   }
 
   public Quantity getValueQuantity() {
@@ -257,6 +262,10 @@ class Observation extends DomainResource implements Serializable
     this.issued = issued;
   }
 
+  public void setPerformer(Reference<Resource>[] performer) {
+    this.performer = performer;
+  }
+
   public void setValueQuantity(Quantity valueQuantity) {
     this.valueQuantity = valueQuantity;
   }
@@ -344,7 +353,7 @@ class Observation extends DomainResource implements Serializable
   public void setComponent(ObservationComponent[] component) {
     this.component = component;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof Observation) {

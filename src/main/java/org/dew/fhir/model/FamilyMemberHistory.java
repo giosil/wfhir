@@ -13,7 +13,7 @@ import java.util.Date;
 public 
 class FamilyMemberHistory extends DomainResource implements Serializable 
 {
-  private static final long serialVersionUID = -5254646426510591441L;
+  private static final long serialVersionUID = 1104956400619995850L;
   
   protected Identifier[] identifier;
   protected String[] instantiatesCanonical;
@@ -21,7 +21,7 @@ class FamilyMemberHistory extends DomainResource implements Serializable
   protected String status;
   protected CodeableConcept dataAbsentReason;
   protected Reference<Patient> patient;
-  protected Date dateTime;
+  protected Date date;
   protected String name;
   protected CodeableConcept relationship;
   protected CodeableConcept sex;
@@ -71,8 +71,8 @@ class FamilyMemberHistory extends DomainResource implements Serializable
     return patient;
   }
 
-  public Date getDateTime() {
-    return dateTime;
+  public Date getDate() {
+    return date;
   }
 
   public String getName() {
@@ -175,8 +175,8 @@ class FamilyMemberHistory extends DomainResource implements Serializable
     this.patient = patient;
   }
 
-  public void setDateTime(Date dateTime) {
-    this.dateTime = dateTime;
+  public void setDate(Date date) {
+    this.date = date;
   }
 
   public void setName(String name) {
@@ -254,7 +254,7 @@ class FamilyMemberHistory extends DomainResource implements Serializable
   public void setCondition(FamilyMemberHistoryCondition[] condition) {
     this.condition = condition;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof FamilyMemberHistory) {

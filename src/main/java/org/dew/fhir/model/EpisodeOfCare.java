@@ -12,7 +12,7 @@ import java.io.Serializable;
 public 
 class EpisodeOfCare extends DomainResource implements Serializable 
 {
-  private static final long serialVersionUID = -5695433846888729295L;
+  private static final long serialVersionUID = 6031013307833125799L;
   
   protected Identifier[] identifier;
   protected String status;
@@ -24,14 +24,14 @@ class EpisodeOfCare extends DomainResource implements Serializable
   protected Period period;
   protected Reference<ServiceRequest> referralRequest;
   protected Reference<Resource> careManager;
-  protected Reference<CareTeam>[] careTeam;
+  protected Reference<CareTeam>[] team;
   protected Reference<Account>[] account;
   
   public EpisodeOfCare()
   {
     this.resourceType = "EpisodeOfCare";
   }
-
+ 
   public Identifier[] getIdentifier() {
     return identifier;
   }
@@ -72,8 +72,8 @@ class EpisodeOfCare extends DomainResource implements Serializable
     return careManager;
   }
 
-  public Reference<CareTeam>[] getCareTeam() {
-    return careTeam;
+  public Reference<CareTeam>[] getTeam() {
+    return team;
   }
 
   public Reference<Account>[] getAccount() {
@@ -120,14 +120,14 @@ class EpisodeOfCare extends DomainResource implements Serializable
     this.careManager = careManager;
   }
 
-  public void setCareTeam(Reference<CareTeam>[] careTeam) {
-    this.careTeam = careTeam;
+  public void setTeam(Reference<CareTeam>[] team) {
+    this.team = team;
   }
 
   public void setAccount(Reference<Account>[] account) {
     this.account = account;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof EpisodeOfCare) {

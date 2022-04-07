@@ -1,9 +1,21 @@
 package org.dew.test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+import java.lang.reflect.Method;
+
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import org.dew.fhir.json.JSON;
 import org.dew.fhir.model.*;
 
 import org.dew.fhir.util.FHIRUtil;
@@ -15,6 +27,32 @@ import junit.framework.TestSuite;
 public 
 class TestWFHIR extends TestCase 
 {
+  public static final String[] ALL_OBJECTS = {"Account","ActivityDefinition","AdverseEvent","AllergyIntolerance","Appointment","AppointmentResponse","AuditEvent","Basic",
+      "Binary","BiologicallyDerivedProduct","BodyStructure","Bundle","CapabilityStatement","CarePlan","CareTeam","CatalogEntry","ChargeItem",
+      "ChargeItemDefinition","Claim","ClaimResponse","ClinicalImpression","CodeSystem","Communication","CommunicationRequest",
+      "CompartmentDefinition","Composition","ConceptMap","Condition","Consent","Contract","Coverage","CoverageEligibilityRequest",
+      "CoverageEligibilityResponse","DetectedIssue","Device","DeviceDefinition","DeviceMetric","DeviceRequest","DeviceUseStatement",
+      "DiagnosticReport","DocumentManifest","DocumentReference","EffectEvidenceSynthesis","Encounter","Endpoint","EnrollmentRequest",
+      "EnrollmentResponse","EpisodeOfCare","EventDefinition","Evidence","EvidenceVariable","ExampleScenario","ExplanationOfBenefit",
+      "FamilyMemberHistory","Flag","Goal","GraphDefinition","Group","GuidanceResponse","HealthcareService","ImagingStudy","Immunization",
+      "ImmunizationEvaluation","ImmunizationRecommendation","ImplementationGuide","InsurancePlan","Invoice","Library","Linkage","List",
+      "Location","Measure","MeasureReport","Media","Medication","MedicationAdministration","MedicationDispense","MedicationKnowledge",
+      "MedicationRequest","MedicationStatement","MedicinalProduct","MedicinalProductAuthorization","MedicinalProductContraindication",
+      "MedicinalProductIndication","MedicinalProductIngredient","MedicinalProductInteraction","MedicinalProductManufactured","MedicinalProductPackaged",
+      "MedicinalProductPharmaceutical","MedicinalProductUndesirableEffect","MessageDefinition","MessageHeader","MolecularSequence","NamingSystem",
+      "NutritionOrder","Observation","ObservationDefinition","OperationDefinition","OperationOutcome","Organization","OrganizationAffiliation",
+      "Parameters","Patient","PaymentNotice","PaymentReconciliation","Person","PlanDefinition","Practitioner","PractitionerRole","Procedure",
+      "Provenance","Questionnaire","QuestionnaireResponse","RelatedPerson","RequestGroup","ResearchDefinition","ResearchElementDefinition",
+      "ResearchStudy","ResearchSubject","RiskAssessment","RiskEvidenceSynthesis","Schedule","SearchParameter","ServiceRequest","Slot",
+      "Specimen","SpecimenDefinition","StructureDefinition","StructureMap","Subscription","Substance","SubstanceNucleicAcid","SubstancePolymer",
+      "SubstanceProtein","SubstanceReferenceInformation","SubstanceSourceMaterial","SubstanceSpecification","SupplyDelivery","SupplyRequest","Task",
+      "TerminologyCapabilities","TestReport","TestScript","ValueSet","VerificationResult","VisionPrescription"};
+  
+  //                                           DomainResource                                         Resource
+  public static final String[] BASE_FIELDS = {"text", "contained", "extension", "modifierExtension", "id", "meta", "implicitRules", "language", "resourceType"};
+
+  public static final String[] KEYWORDS = {"class", "abstract", "for"};
+
   public TestWFHIR(String testName) {
     super(testName);
   }
@@ -26,7 +64,9 @@ class TestWFHIR extends TestCase
   public 
   void testApp() 
   {
-    example();
+    // example();
+    
+    checkModel();
   }
   
   public 
@@ -186,6 +226,181 @@ class TestWFHIR extends TestCase
     
     for(int i = 0; i < listContactPoint.size(); i++) {
       result[i] = listContactPoint.get(i);
+    }
+    
+    return result;
+  }
+  
+  protected
+  void checkModel()
+  {
+    List<String> missingObj = new ArrayList<String>();
+    List<String> missingFld = new ArrayList<String>();
+    
+    Map<String, Object> mapSchema = loadSchema();
+    
+    for(int i = 0; i < ALL_OBJECTS.length; i++) {
+      String objectName = ALL_OBJECTS[i];
+      try {
+        Class<?> objectClass = Class.forName("org.dew.fhir.model." + objectName);
+        System.out.println(objectName);
+        
+        Method[] methods = objectClass.getMethods();
+        
+        if(mapSchema != null) {
+          List<String> fields = getObjectFields(mapSchema, objectName);
+          
+          if(fields != null && fields.size() > 0) {
+            for(int j = 0; j < fields.size(); j++) {
+              String field = fields.get(j);
+              
+              String setMethod = null;
+              if(field.length() > 1) {
+                setMethod = "set" + field.substring(0, 1).toUpperCase() + field.substring(1);
+              }
+              else {
+                setMethod = "set" + field.toUpperCase();
+              }
+              
+              boolean found = false;
+              for(int k = 0; k < methods.length; k++) {
+                Method method = methods[k];
+                String methodName = method.getName();
+                
+                
+                if(methodName.equals(setMethod)) {
+                  found = true;
+                  break;
+                }
+              }
+              
+              if(found) {
+                System.out.println("\t" + field);
+              }
+              else {
+                System.out.println("\t" + field + " (missing)");
+                missingFld.add(objectName + "." + field);
+              }
+            }
+          }
+        }
+      }
+      catch(Exception ex) {
+        System.out.println(objectName + " (missing)");
+        missingObj.add(objectName);
+      }
+    }
+    
+    System.out.println("\nMissing objects:\n");
+    for(int i = 0; i < missingObj.size(); i++) {
+      System.out.println(missingObj.get(i));
+    }
+    
+    System.out.println("\nMissing fields:\n");
+    for(int i = 0; i < missingFld.size(); i++) {
+      System.out.println(missingFld.get(i));
+    }
+  }
+  
+  protected
+  Map<String, Object> loadSchema()
+  {
+    Map<String, Object> result = null;
+    try {
+      byte[] fhir_schema = readFile("fhir.schema.json");
+      
+      result = JSON.parseObj(new String(fhir_schema));
+    }
+    catch(Exception ex) {
+      ex.printStackTrace();
+    }
+    
+    return result;
+  }
+  
+  protected static
+  byte[] readFile(String sFile)
+    throws Exception
+  {
+    int iFileSep = sFile.indexOf('/');
+    if(iFileSep < 0) iFileSep = sFile.indexOf('\\');
+    InputStream is = null;
+    if(iFileSep < 0) {
+      URL url = Thread.currentThread().getContextClassLoader().getResource(sFile);
+      is = url.openStream();
+    }
+    else {
+      is = new FileInputStream(sFile);
+    }
+    try {
+      int n;
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      byte[] buff = new byte[1024];
+      while((n = is.read(buff)) > 0) baos.write(buff, 0, n);
+      return baos.toByteArray();
+    }
+    finally {
+      if(is != null) try{ is.close(); } catch(Exception ex) {}
+    }
+  }
+  
+  protected static
+  List<String> getObjectFields(Map<String, Object> mapSchema, String objName)
+    throws Exception
+  {
+    Map<String, Object> definitions = getMap(mapSchema, "definitions");
+    
+    Map<String, Object> resourceDef = getMap(definitions, objName);
+    
+    return getFields(resourceDef, "properties");
+  }
+  
+  @SuppressWarnings("unchecked")
+  protected static
+  Map<String, Object> getMap(Map<String, Object> map, String key)
+    throws Exception
+  {
+    if(map == null) return new HashMap<String, Object>();
+    Object result = map.get(key);
+    if(result instanceof Map) {
+      return (Map<String, Object>) result;
+    }
+    return new HashMap<String, Object>(); 
+  }
+  
+  protected static
+  List<String> getFields(Map<String, Object> map, String key)
+    throws Exception
+  {
+    Map<String, Object> mapResult = getMap(map, key);
+    
+    List<String> result = new ArrayList<String>();
+    
+    Iterator<String> iterator = mapResult.keySet().iterator();
+    while(iterator.hasNext()) {
+      String field = iterator.next();
+      
+      if(field.startsWith("_")) continue;
+      
+      boolean isBaseField = false;
+      for(int i = 0; i < BASE_FIELDS.length; i++) {
+        if(field.equals(BASE_FIELDS[i])) {
+          isBaseField = true;
+          break;
+        }
+      }
+      if(isBaseField) continue;
+      
+      boolean isKeyword = false;
+      for(int i = 0; i < KEYWORDS.length; i++) {
+        if(field.equals(KEYWORDS[i])) {
+          isKeyword = true;
+          break;
+        }
+      }
+      if(isKeyword) field += "_";
+      
+      result.add(field);
     }
     
     return result;

@@ -13,11 +13,11 @@ import java.util.Date;
 public 
 class Task extends DomainResource implements Serializable
 {
-  private static final long serialVersionUID = 2079594465917759045L;
+  private static final long serialVersionUID = 6524825595020788333L;
   
   protected Identifier[] identifier;
   protected String instantiatesCanonical;
-  protected String uri;
+  protected String instantiatesUri;
   protected Reference<Resource>[] basedOn;
   protected Identifier groupIdentifier;
   protected Reference<Task>[] partOf;
@@ -60,8 +60,8 @@ class Task extends DomainResource implements Serializable
     return instantiatesCanonical;
   }
 
-  public String getUri() {
-    return uri;
+  public String getInstantiatesUri() {
+    return instantiatesUri;
   }
 
   public Reference<Resource>[] getBasedOn() {
@@ -184,8 +184,8 @@ class Task extends DomainResource implements Serializable
     this.instantiatesCanonical = instantiatesCanonical;
   }
 
-  public void setUri(String uri) {
-    this.uri = uri;
+  public void setInstantiatesUri(String instantiatesUri) {
+    this.instantiatesUri = instantiatesUri;
   }
 
   public void setBasedOn(Reference<Resource>[] basedOn) {
@@ -299,7 +299,7 @@ class Task extends DomainResource implements Serializable
   public void setOutput(TaskOutput[] output) {
     this.output = output;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof Task) {
@@ -316,6 +316,6 @@ class Task extends DomainResource implements Serializable
   
   @Override
   public String toString() {
-    return "Task(" + id + "," + uri + ")";
+    return "Task(" + id + "," + instantiatesCanonical + "," + instantiatesUri + "," + groupIdentifier + ")";
   }
 }

@@ -14,7 +14,7 @@ import java.util.Date;
 public 
 class Appointment extends DomainResource implements Serializable 
 {
-  private static final long serialVersionUID = -8997495731063985216L;
+  private static final long serialVersionUID = 5411822824303571252L;
   
   protected Identifier[] identifier;
   protected String status;
@@ -35,6 +35,7 @@ class Appointment extends DomainResource implements Serializable
   protected Date created;
   protected String comment;
   protected String patientInstruction;
+  protected Reference<ServiceRequest>[] basedOn;
   protected AppointmentParticipant[] participant;
   protected Period[] requestedPeriod;
   
@@ -42,7 +43,7 @@ class Appointment extends DomainResource implements Serializable
   {
     this.resourceType = "Appointment";
   }
-
+  
   public Identifier[] getIdentifier() {
     return identifier;
   }
@@ -117,6 +118,10 @@ class Appointment extends DomainResource implements Serializable
 
   public String getPatientInstruction() {
     return patientInstruction;
+  }
+
+  public Reference<ServiceRequest>[] getBasedOn() {
+    return basedOn;
   }
 
   public AppointmentParticipant[] getParticipant() {
@@ -203,6 +208,10 @@ class Appointment extends DomainResource implements Serializable
     this.patientInstruction = patientInstruction;
   }
 
+  public void setBasedOn(Reference<ServiceRequest>[] basedOn) {
+    this.basedOn = basedOn;
+  }
+
   public void setParticipant(AppointmentParticipant[] participant) {
     this.participant = participant;
   }
@@ -210,7 +219,7 @@ class Appointment extends DomainResource implements Serializable
   public void setRequestedPeriod(Period[] requestedPeriod) {
     this.requestedPeriod = requestedPeriod;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof Appointment) {

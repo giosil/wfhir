@@ -13,7 +13,7 @@ import java.util.Date;
 public 
 class ServiceRequest extends DomainResource implements Serializable 
 {
-  private static final long serialVersionUID = 6726275600234572393L;
+  private static final long serialVersionUID = -2594342923310316218L;
   
   protected Identifier[] identifier;
   protected String[] instantiatesCanonical;
@@ -34,6 +34,7 @@ class ServiceRequest extends DomainResource implements Serializable
   protected Reference<Resource> subject;
   protected Reference<Encounter> encounter;
   protected Date occurrenceDateTime;
+  protected Period occurrencePeriod;
   protected Timing occurrenceTiming;
   protected Boolean asNeededBoolean;
   protected CodeableConcept asNeededCodeableConcept;
@@ -132,6 +133,10 @@ class ServiceRequest extends DomainResource implements Serializable
 
   public Date getOccurrenceDateTime() {
     return occurrenceDateTime;
+  }
+
+  public Period getOccurrencePeriod() {
+    return occurrencePeriod;
   }
 
   public Timing getOccurrenceTiming() {
@@ -280,6 +285,10 @@ class ServiceRequest extends DomainResource implements Serializable
 
   public void setOccurrenceDateTime(Date occurrenceDateTime) {
     this.occurrenceDateTime = occurrenceDateTime;
+  }
+
+  public void setOccurrencePeriod(Period occurrencePeriod) {
+    this.occurrencePeriod = occurrencePeriod;
   }
 
   public void setOccurrenceTiming(Timing occurrenceTiming) {

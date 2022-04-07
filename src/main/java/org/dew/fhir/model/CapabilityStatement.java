@@ -13,7 +13,7 @@ import java.util.Date;
 public 
 class CapabilityStatement extends DomainResource implements Serializable 
 {
-  private static final long serialVersionUID = 3997068840301507050L;
+  private static final long serialVersionUID = -1008942371761052551L;
   
   protected String url;
   protected String version;
@@ -29,7 +29,7 @@ class CapabilityStatement extends DomainResource implements Serializable
   protected CodeableConcept[] jurisdiction;
   protected String purpose;
   protected String copyright;
-  protected String code;
+  protected String kind;
   protected String[] instantiates;
   protected String[] imports;
   protected CapabilityStatementSoftware software;
@@ -103,8 +103,8 @@ class CapabilityStatement extends DomainResource implements Serializable
     return copyright;
   }
 
-  public String getCode() {
-    return code;
+  public String getKind() {
+    return kind;
   }
 
   public String[] getInstantiates() {
@@ -207,8 +207,8 @@ class CapabilityStatement extends DomainResource implements Serializable
     this.copyright = copyright;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setKind(String kind) {
+    this.kind = kind;
   }
 
   public void setInstantiates(String[] instantiates) {
@@ -254,7 +254,7 @@ class CapabilityStatement extends DomainResource implements Serializable
   public void setDocument(CapabilityStatementDocument[] document) {
     this.document = document;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof CapabilityStatement) {

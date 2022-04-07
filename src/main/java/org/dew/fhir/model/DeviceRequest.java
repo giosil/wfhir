@@ -13,7 +13,7 @@ import java.util.Date;
 public 
 class DeviceRequest extends DomainResource implements Serializable
 {
-  private static final long serialVersionUID = -7429587717066971719L;
+  private static final long serialVersionUID = -6723405528414823691L;
   
   protected Identifier[] identifier;
   protected String[] instantiatesCanonical;
@@ -33,6 +33,7 @@ class DeviceRequest extends DomainResource implements Serializable
   protected Period occurrencePeriod;
   protected Timing occurrenceTiming;
   protected Date authoredOn;
+  protected Reference<Resource> requester;
   protected CodeableConcept performerType;
   protected Reference<Resource> performer;
   protected CodeableConcept[] reasonCode;
@@ -46,7 +47,7 @@ class DeviceRequest extends DomainResource implements Serializable
   {
     this.resourceType = "DeviceRequest";
   }
-
+  
   public Identifier[] getIdentifier() {
     return identifier;
   }
@@ -117,6 +118,10 @@ class DeviceRequest extends DomainResource implements Serializable
 
   public Date getAuthoredOn() {
     return authoredOn;
+  }
+
+  public Reference<Resource> getRequester() {
+    return requester;
   }
 
   public CodeableConcept getPerformerType() {
@@ -223,6 +228,10 @@ class DeviceRequest extends DomainResource implements Serializable
     this.authoredOn = authoredOn;
   }
 
+  public void setRequester(Reference<Resource> requester) {
+    this.requester = requester;
+  }
+
   public void setPerformerType(CodeableConcept performerType) {
     this.performerType = performerType;
   }
@@ -254,7 +263,7 @@ class DeviceRequest extends DomainResource implements Serializable
   public void setRelevantHistory(Reference<Provenance>[] relevantHistory) {
     this.relevantHistory = relevantHistory;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof DeviceRequest) {

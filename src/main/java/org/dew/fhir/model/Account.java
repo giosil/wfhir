@@ -11,12 +11,13 @@ import java.io.Serializable;
 public 
 class Account extends DomainResource implements Serializable 
 {
-  private static final long serialVersionUID = 6159493795392825437L;
+  private static final long serialVersionUID = 3198659198485853936L;
   
   protected Identifier[] identifier;
   protected String status;
   protected CodeableConcept type;
   protected String name;
+  protected AccountCoverage[] coverage;
   protected Reference<Resource>[] subject;
   protected Period servicePeriod;
   protected Reference<Organization> owner;
@@ -58,6 +59,10 @@ class Account extends DomainResource implements Serializable
     return name;
   }
 
+  public AccountCoverage[] getCoverage() {
+    return coverage;
+  }
+
   public Reference<Resource>[] getSubject() {
     return subject;
   }
@@ -96,6 +101,10 @@ class Account extends DomainResource implements Serializable
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public void setCoverage(AccountCoverage[] coverage) {
+    this.coverage = coverage;
   }
 
   public void setSubject(Reference<Resource>[] subject) {

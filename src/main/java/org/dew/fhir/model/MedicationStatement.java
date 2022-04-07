@@ -17,8 +17,8 @@ import java.util.Date;
 public 
 class MedicationStatement extends DomainResource implements Serializable 
 {
-  private static final long serialVersionUID = 4142543778391309579L;
-
+  private static final long serialVersionUID = 996625859436101287L;
+  
   protected Identifier[] identifier;
   protected Reference<Resource>[] basedOn;
   protected Reference<Resource>[] partOf;
@@ -34,6 +34,7 @@ class MedicationStatement extends DomainResource implements Serializable
   protected Date dateAsserted;
   protected Reference<Resource> informationSource;
   protected Reference<Resource>[] derivedFrom;
+  protected CodeableConcept[] reasonCode;
   protected Reference<Resource>[] reasonReference;
   protected Annotation[] note;
   protected Dosage[] dosage;
@@ -101,6 +102,10 @@ class MedicationStatement extends DomainResource implements Serializable
 
   public Reference<Resource>[] getDerivedFrom() {
     return derivedFrom;
+  }
+
+  public CodeableConcept[] getReasonCode() {
+    return reasonCode;
   }
 
   public Reference<Resource>[] getReasonReference() {
@@ -175,6 +180,10 @@ class MedicationStatement extends DomainResource implements Serializable
     this.derivedFrom = derivedFrom;
   }
 
+  public void setReasonCode(CodeableConcept[] reasonCode) {
+    this.reasonCode = reasonCode;
+  }
+
   public void setReasonReference(Reference<Resource>[] reasonReference) {
     this.reasonReference = reasonReference;
   }
@@ -186,7 +195,7 @@ class MedicationStatement extends DomainResource implements Serializable
   public void setDosage(Dosage[] dosage) {
     this.dosage = dosage;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof MedicationStatement) {

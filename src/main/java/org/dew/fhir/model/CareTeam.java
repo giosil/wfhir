@@ -11,7 +11,7 @@ import java.io.Serializable;
 public
 class CareTeam extends DomainResource implements Serializable 
 {
-  private static final long serialVersionUID = -4495721774074348906L;
+  private static final long serialVersionUID = -5890468390422121336L;
   
   protected Identifier[] identifier;
   protected String status;
@@ -20,7 +20,7 @@ class CareTeam extends DomainResource implements Serializable
   protected Reference<Resource> subject;
   protected Reference<Encounter> encounter;
   protected Period period;
-  protected CareTeamParticipant[] partecipant;
+  protected CareTeamParticipant[] participant;
   protected CodeableConcept[] reasonCode;
   protected Reference<Condition>[] reasonReference;
   protected Reference<Organization>[] managingOrganization;
@@ -31,7 +31,7 @@ class CareTeam extends DomainResource implements Serializable
   {
     this.resourceType = "CareTeam";
   }
-
+  
   public Identifier[] getIdentifier() {
     return identifier;
   }
@@ -60,8 +60,8 @@ class CareTeam extends DomainResource implements Serializable
     return period;
   }
 
-  public CareTeamParticipant[] getPartecipant() {
-    return partecipant;
+  public CareTeamParticipant[] getParticipant() {
+    return participant;
   }
 
   public CodeableConcept[] getReasonCode() {
@@ -112,8 +112,8 @@ class CareTeam extends DomainResource implements Serializable
     this.period = period;
   }
 
-  public void setPartecipant(CareTeamParticipant[] partecipant) {
-    this.partecipant = partecipant;
+  public void setParticipant(CareTeamParticipant[] participant) {
+    this.participant = participant;
   }
 
   public void setReasonCode(CodeableConcept[] reasonCode) {
@@ -135,7 +135,7 @@ class CareTeam extends DomainResource implements Serializable
   public void setNote(Annotation[] note) {
     this.note = note;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof CareTeam) {
