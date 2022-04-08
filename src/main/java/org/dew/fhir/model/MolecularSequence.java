@@ -31,7 +31,7 @@ class MolecularSequence extends DomainResource implements Serializable
   protected Integer readCoverage;
   protected MolecularSequenceRepository[] repository;
   protected Reference<MolecularSequence>[] pointer;
-  protected MolecularSequenceStructureVariant structureVariant;
+  protected MolecularSequenceStructureVariant[] structureVariant;
   
   public MolecularSequence()
   {
@@ -98,7 +98,7 @@ class MolecularSequence extends DomainResource implements Serializable
     return pointer;
   }
 
-  public MolecularSequenceStructureVariant getStructureVariant() {
+  public MolecularSequenceStructureVariant[] getStructureVariant() {
     return structureVariant;
   }
 
@@ -162,10 +162,10 @@ class MolecularSequence extends DomainResource implements Serializable
     this.pointer = pointer;
   }
 
-  public void setStructureVariant(MolecularSequenceStructureVariant structureVariant) {
+  public void setStructureVariant(MolecularSequenceStructureVariant[] structureVariant) {
     this.structureVariant = structureVariant;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof MolecularSequence) {

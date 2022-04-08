@@ -11,14 +11,14 @@ import java.io.Serializable;
 public 
 class Dosage extends BackboneElement implements Serializable
 {
-  private static final long serialVersionUID = -3359643875215496796L;
+  private static final long serialVersionUID = 3732354988289576396L;
   
   protected Integer sequence;
   protected String text;
   protected CodeableConcept[] additionalInstruction;
   protected String patientInstruction;
   protected Timing timing;
-  protected boolean asNeededBoolean;
+  protected Boolean asNeededBoolean;
   protected CodeableConcept asNeededCodeableConcept;
   protected CodeableConcept site;
   protected CodeableConcept route;
@@ -52,7 +52,7 @@ class Dosage extends BackboneElement implements Serializable
     return timing;
   }
 
-  public boolean isAsNeededBoolean() {
+  public Boolean getAsNeededBoolean() {
     return asNeededBoolean;
   }
 
@@ -108,7 +108,7 @@ class Dosage extends BackboneElement implements Serializable
     this.timing = timing;
   }
 
-  public void setAsNeededBoolean(boolean asNeededBoolean) {
+  public void setAsNeededBoolean(Boolean asNeededBoolean) {
     this.asNeededBoolean = asNeededBoolean;
   }
 

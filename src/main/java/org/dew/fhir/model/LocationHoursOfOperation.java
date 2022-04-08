@@ -13,10 +13,10 @@ import java.util.Date;
 public 
 class LocationHoursOfOperation extends BackboneElement implements Serializable
 {
-  private static final long serialVersionUID = 3634537110663483879L;
+  private static final long serialVersionUID = -420776768962775933L;
   
   protected String[] daysOfWeek;
-  protected boolean allDay;
+  protected Boolean allDay;
   protected Date openingTime;
   protected Date closingTime;
   
@@ -28,7 +28,7 @@ class LocationHoursOfOperation extends BackboneElement implements Serializable
     return daysOfWeek;
   }
 
-  public boolean isAllDay() {
+  public Boolean getAllDay() {
     return allDay;
   }
 
@@ -44,7 +44,7 @@ class LocationHoursOfOperation extends BackboneElement implements Serializable
     this.daysOfWeek = daysOfWeek;
   }
 
-  public void setAllDay(boolean allDay) {
+  public void setAllDay(Boolean allDay) {
     this.allDay = allDay;
   }
 
@@ -55,7 +55,7 @@ class LocationHoursOfOperation extends BackboneElement implements Serializable
   public void setClosingTime(Date closingTime) {
     this.closingTime = closingTime;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof LocationHoursOfOperation) {

@@ -37,7 +37,7 @@ class ValueSet extends DomainResource implements Serializable
   {
     this.resourceType = "ValueSet";
   }
-  
+
   public String getUrl() {
     return url;
   }
@@ -62,7 +62,7 @@ class ValueSet extends DomainResource implements Serializable
     return status;
   }
 
-  public Boolean isExperimental() {
+  public Boolean getExperimental() {
     return experimental;
   }
 
@@ -90,7 +90,7 @@ class ValueSet extends DomainResource implements Serializable
     return jurisdiction;
   }
 
-  public Boolean isImmutable() {
+  public Boolean getImmutable() {
     return immutable;
   }
 

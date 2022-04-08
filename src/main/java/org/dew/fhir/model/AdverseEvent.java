@@ -13,9 +13,9 @@ import java.util.Date;
 public 
 class AdverseEvent extends DomainResource implements Serializable 
 {
-  private static final long serialVersionUID = -4889582990737748705L;
+  private static final long serialVersionUID = -452854700260594249L;
   
-  protected Identifier[] identifier;
+  protected Identifier identifier;
   protected String actuality;
   protected CodeableConcept[] category;
   protected CodeableConcept event;
@@ -24,13 +24,13 @@ class AdverseEvent extends DomainResource implements Serializable
   protected Date date;
   protected Date detected;
   protected Date recordedDate;
-  protected Reference<Condition> resultingCondition;
+  protected Reference<Condition>[] resultingCondition;
   protected Reference<Location> location;
   protected CodeableConcept seriousness;
   protected CodeableConcept severity;
   protected CodeableConcept outcome;
   protected Reference<Resource> recorder;
-  protected Reference<Resource> contributor;
+  protected Reference<Resource>[] contributor;
   protected AdverseEventSuspectEntity[] suspectEntity;
   protected Reference<Resource>[] subjectMedicalHistory;
   protected Reference<DocumentReference>[] referenceDocument;
@@ -40,8 +40,8 @@ class AdverseEvent extends DomainResource implements Serializable
   {
     this.resourceType = "AdverseEvent";
   }
-
-  public Identifier[] getIdentifier() {
+  
+  public Identifier getIdentifier() {
     return identifier;
   }
 
@@ -77,7 +77,7 @@ class AdverseEvent extends DomainResource implements Serializable
     return recordedDate;
   }
 
-  public Reference<Condition> getResultingCondition() {
+  public Reference<Condition>[] getResultingCondition() {
     return resultingCondition;
   }
 
@@ -101,7 +101,7 @@ class AdverseEvent extends DomainResource implements Serializable
     return recorder;
   }
 
-  public Reference<Resource> getContributor() {
+  public Reference<Resource>[] getContributor() {
     return contributor;
   }
 
@@ -121,7 +121,7 @@ class AdverseEvent extends DomainResource implements Serializable
     return study;
   }
 
-  public void setIdentifier(Identifier[] identifier) {
+  public void setIdentifier(Identifier identifier) {
     this.identifier = identifier;
   }
 
@@ -157,7 +157,7 @@ class AdverseEvent extends DomainResource implements Serializable
     this.recordedDate = recordedDate;
   }
 
-  public void setResultingCondition(Reference<Condition> resultingCondition) {
+  public void setResultingCondition(Reference<Condition>[] resultingCondition) {
     this.resultingCondition = resultingCondition;
   }
 
@@ -181,7 +181,7 @@ class AdverseEvent extends DomainResource implements Serializable
     this.recorder = recorder;
   }
 
-  public void setContributor(Reference<Resource> contributor) {
+  public void setContributor(Reference<Resource>[] contributor) {
     this.contributor = contributor;
   }
 
@@ -200,7 +200,7 @@ class AdverseEvent extends DomainResource implements Serializable
   public void setStudy(Reference<ResearchStudy>[] study) {
     this.study = study;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof AdverseEvent) {

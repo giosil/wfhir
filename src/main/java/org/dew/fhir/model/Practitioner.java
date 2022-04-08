@@ -16,15 +16,15 @@ class Practitioner extends DomainResource implements Serializable
   private static final long serialVersionUID = 607114238760110468L;
   
   protected Identifier[] identifier;
-  protected boolean active;
+  protected Boolean active;
   protected HumanName[] name;
   protected ContactPoint[] telecom;
   protected Address[] address;
   protected String gender;
   protected Date birthDate;
-  protected Attachment photo;
-  protected PractitionerQualification qualification;
-  protected CodeableConcept communication;
+  protected Attachment[] photo;
+  protected PractitionerQualification[] qualification;
+  protected CodeableConcept[] communication;
   
   public Practitioner()
   {
@@ -35,7 +35,7 @@ class Practitioner extends DomainResource implements Serializable
     return identifier;
   }
 
-  public boolean isActive() {
+  public Boolean getActive() {
     return active;
   }
 
@@ -59,15 +59,15 @@ class Practitioner extends DomainResource implements Serializable
     return birthDate;
   }
 
-  public Attachment getPhoto() {
+  public Attachment[] getPhoto() {
     return photo;
   }
 
-  public PractitionerQualification getQualification() {
+  public PractitionerQualification[] getQualification() {
     return qualification;
   }
 
-  public CodeableConcept getCommunication() {
+  public CodeableConcept[] getCommunication() {
     return communication;
   }
 
@@ -75,7 +75,7 @@ class Practitioner extends DomainResource implements Serializable
     this.identifier = identifier;
   }
 
-  public void setActive(boolean active) {
+  public void setActive(Boolean active) {
     this.active = active;
   }
 
@@ -99,18 +99,18 @@ class Practitioner extends DomainResource implements Serializable
     this.birthDate = birthDate;
   }
 
-  public void setPhoto(Attachment photo) {
+  public void setPhoto(Attachment[] photo) {
     this.photo = photo;
   }
 
-  public void setQualification(PractitionerQualification qualification) {
+  public void setQualification(PractitionerQualification[] qualification) {
     this.qualification = qualification;
   }
 
-  public void setCommunication(CodeableConcept communication) {
+  public void setCommunication(CodeableConcept[] communication) {
     this.communication = communication;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof Practitioner) {

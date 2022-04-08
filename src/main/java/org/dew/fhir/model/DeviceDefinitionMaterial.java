@@ -11,25 +11,25 @@ import java.io.Serializable;
 public 
 class DeviceDefinitionMaterial extends BackboneElement implements Serializable
 {
-  private static final long serialVersionUID = 132147892417676434L;
+  private static final long serialVersionUID = -9107035039441043177L;
   
   protected CodeableConcept substance;
-  protected boolean alternate;
-  protected boolean allergenicIndicator;
+  protected Boolean alternate;
+  protected Boolean allergenicIndicator;
   
   public DeviceDefinitionMaterial()
   {
   }
-
+ 
   public CodeableConcept getSubstance() {
     return substance;
   }
 
-  public boolean isAlternate() {
+  public Boolean getAlternate() {
     return alternate;
   }
 
-  public boolean isAllergenicIndicator() {
+  public Boolean getAllergenicIndicator() {
     return allergenicIndicator;
   }
 
@@ -37,14 +37,14 @@ class DeviceDefinitionMaterial extends BackboneElement implements Serializable
     this.substance = substance;
   }
 
-  public void setAlternate(boolean alternate) {
+  public void setAlternate(Boolean alternate) {
     this.alternate = alternate;
   }
 
-  public void setAllergenicIndicator(boolean allergenicIndicator) {
+  public void setAllergenicIndicator(Boolean allergenicIndicator) {
     this.allergenicIndicator = allergenicIndicator;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof DeviceDefinitionMaterial) {

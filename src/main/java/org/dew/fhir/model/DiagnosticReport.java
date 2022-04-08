@@ -17,7 +17,7 @@ class DiagnosticReport extends DomainResource implements Serializable
   private static final long serialVersionUID = 2400854766504735870L;
   
   protected Identifier[] identifier;
-  protected Reference<Resource> basedOn;
+  protected Reference<Resource>[] basedOn;
   protected String status;
   protected CodeableConcept[] category;
   protected CodeableConcept code;
@@ -45,7 +45,7 @@ class DiagnosticReport extends DomainResource implements Serializable
     return identifier;
   }
 
-  public Reference<Resource> getBasedOn() {
+  public Reference<Resource>[] getBasedOn() {
     return basedOn;
   }
 
@@ -121,7 +121,7 @@ class DiagnosticReport extends DomainResource implements Serializable
     this.identifier = identifier;
   }
 
-  public void setBasedOn(Reference<Resource> basedOn) {
+  public void setBasedOn(Reference<Resource>[] basedOn) {
     this.basedOn = basedOn;
   }
 
@@ -192,7 +192,7 @@ class DiagnosticReport extends DomainResource implements Serializable
   public void setPresentedForm(Attachment[] presentedForm) {
     this.presentedForm = presentedForm;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof DiagnosticReport) {

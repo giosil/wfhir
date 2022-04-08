@@ -27,7 +27,7 @@ class MedicationAdministration extends DomainResource implements Serializable
   protected Reference<Medication> medicationReference;
   protected Reference<Resource> subject;
   protected Reference<Resource> context;
-  protected Reference<Resource> supportingInformation;
+  protected Reference<Resource>[] supportingInformation;
   protected Date effectiveDateTime;
   protected Period effectivePeriod;
   protected MedicationAdministrationPerformer[] performer;
@@ -84,7 +84,7 @@ class MedicationAdministration extends DomainResource implements Serializable
     return context;
   }
 
-  public Reference<Resource> getSupportingInformation() {
+  public Reference<Resource>[] getSupportingInformation() {
     return supportingInformation;
   }
 
@@ -168,7 +168,7 @@ class MedicationAdministration extends DomainResource implements Serializable
     this.context = context;
   }
 
-  public void setSupportingInformation(Reference<Resource> supportingInformation) {
+  public void setSupportingInformation(Reference<Resource>[] supportingInformation) {
     this.supportingInformation = supportingInformation;
   }
 
@@ -211,7 +211,7 @@ class MedicationAdministration extends DomainResource implements Serializable
   public void setEventHistory(Reference<Provenance>[] eventHistory) {
     this.eventHistory = eventHistory;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof MedicationAdministration) {

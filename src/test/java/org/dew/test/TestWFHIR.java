@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -124,7 +125,7 @@ class TestWFHIR extends TestCase
     address.set_city(new Element("http://hl7.org/fhir/StructureDefinition/iso21090-SC-coding", "http://terminology.hl7.it/CodeSystem/istat-unitaAmministrativeTerritoriali", "007003", "AOSTA"));
     address.set_state(new Element("http://hl7.org/fhir/StructureDefinition/iso21090-SC-coding", "http://terminology.hl7.it/CodeSystem/minsan-regione", "020", "VALLE D'AOSTA"));
     
-    organization.setAddress(address);
+    organization.setAddress(new Address[] { address });
     
     return organization;
   }
@@ -234,8 +235,9 @@ class TestWFHIR extends TestCase
   protected
   void checkModel()
   {
-    List<String> missingObj = new ArrayList<String>();
-    List<String> missingFld = new ArrayList<String>();
+    List<String> missingObj   = new ArrayList<String>();
+    List<String> missingFld   = new ArrayList<String>();
+    List<String> incorrectFld = new ArrayList<String>();
     int countObj = 0;
     
     Map<String, Object> mapSchema = loadSchema();
@@ -256,28 +258,64 @@ class TestWFHIR extends TestCase
             for(int j = 0; j < fields.size(); j++) {
               String field = fields.get(j);
               
-              String setMethod = null;
+              String getMethod = null;
               if(field.length() > 1) {
-                setMethod = "set" + field.substring(0, 1).toUpperCase() + field.substring(1);
+                getMethod = "get" + field.substring(0, 1).toUpperCase() + field.substring(1);
               }
               else {
-                setMethod = "set" + field.toUpperCase();
+                getMethod = "get" + field.toUpperCase();
               }
               
               boolean found = false;
+              String fiedNote = "";
               for(int k = 0; k < methods.length; k++) {
                 Method method = methods[k];
                 String methodName = method.getName();
                 
-                
-                if(methodName.equals(setMethod)) {
+                if(methodName.equals(getMethod)) {
                   found = true;
+                  
+                  Class<?> returnType = method.getReturnType();
+                  
+                  String type = getTypeField(mapSchema, objectName, field);
+                  if(type != null && type.length() != 0) {
+                    if(type.equals("array")) {
+                      if(!returnType.isArray()) {
+                        fiedNote = " (is not array)";
+                        incorrectFld.add(objectName + "." + field  + " (is not array)");
+                      }
+                    }
+                    else if(type.equals("string")) {
+                      if(!returnType.equals(String.class) && !returnType.equals(Date.class)) {
+                        fiedNote = " (is not string)";
+                        incorrectFld.add(objectName + "." + field  + " (is not string)");
+                      }
+                    }
+                    else if(type.equals("number")) {
+                      if(!returnType.equals(Integer.class) && !returnType.equals(Double.class)) {
+                        fiedNote = " (is not number)";
+                        incorrectFld.add(objectName + "." + field  + " (is not number)");
+                      }
+                    }
+                    else if(type.equals("boolean")) {
+                      if(!returnType.equals(Boolean.class)) {
+                        fiedNote = " (is not boolean)";
+                        incorrectFld.add(objectName + "." + field  + " (is not boolean)");
+                      }
+                    }
+                  }
+                  else {
+                    if(returnType.isArray()) {
+                      fiedNote = " (is not scalar)";
+                      incorrectFld.add(objectName + "." + field  + " (is not scalar)");
+                    }
+                  }
                   break;
                 }
               }
               
               if(found) {
-                System.out.println("\t" + field);
+                System.out.println("\t" + field + fiedNote);
               }
               else {
                 System.out.println("\t" + field + " (missing)");
@@ -293,19 +331,26 @@ class TestWFHIR extends TestCase
       }
     }
     
-    System.out.println("\nMissing objects:\n");
+    System.out.println("\n### Missing objects: ###\n");
     for(int i = 0; i < missingObj.size(); i++) {
       System.out.println(missingObj.get(i));
     }
     
-    System.out.println("\nMissing fields:\n");
+    System.out.println("\n### Missing fields: ###\n");
     for(int i = 0; i < missingFld.size(); i++) {
       System.out.println(missingFld.get(i));
     }
     
-    System.out.println("Implemented    : " + countObj);
-    System.out.println("Missing        : " + missingObj.size());
-    System.out.println("Missing fields : " + missingFld.size());
+    System.out.println("\n### Incorrect fields: ###\n");
+    for(int i = 0; i < incorrectFld.size(); i++) {
+      System.out.println(incorrectFld.get(i));
+    }
+    
+    System.out.println("\nReport\n");
+    System.out.println("Implemented      : " + countObj);
+    System.out.println("Missing          : " + missingObj.size());
+    System.out.println("Missing fields   : " + missingFld.size());
+    System.out.println("Incorrect fields : " + incorrectFld.size());
   }
   
   protected
@@ -359,6 +404,27 @@ class TestWFHIR extends TestCase
     Map<String, Object> resourceDef = getMap(definitions, objName);
     
     return getFields(resourceDef, "properties");
+  }
+  
+  protected static
+  String getTypeField(Map<String, Object> mapSchema, String objName, String fieldName)
+    throws Exception
+  {
+    Map<String, Object> definitions = getMap(mapSchema, "definitions");
+    
+    Map<String, Object> resourceDef = getMap(definitions, objName);
+    
+    Map<String, Object> properties = getMap(resourceDef, "properties");
+    
+    Map<String, Object> fieldDef = getMap(properties, fieldName);
+    
+    Object result = fieldDef.get("type");
+    
+    if(result instanceof String) {
+      return (String) result;
+    }
+    
+    return null;
   }
   
   @SuppressWarnings("unchecked")

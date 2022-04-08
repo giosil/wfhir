@@ -37,7 +37,7 @@ class MedicationDispense extends DomainResource implements Serializable
   protected Date whenPrepared;
   protected Date whenHandedOver;
   protected Reference<Location> destination;
-  protected Reference<Resource> receiver;
+  protected Reference<Resource>[] receiver;
   protected Annotation[] note;
   protected Dosage[] dosageInstruction;
   protected MedicationDispenseSubstitution substitution;
@@ -48,7 +48,7 @@ class MedicationDispense extends DomainResource implements Serializable
   {
     this.resourceType = "MedicationDispense";
   }
-
+  
   public Identifier[] getIdentifier() {
     return identifier;
   }
@@ -129,7 +129,7 @@ class MedicationDispense extends DomainResource implements Serializable
     return destination;
   }
 
-  public Reference<Resource> getReceiver() {
+  public Reference<Resource>[] getReceiver() {
     return receiver;
   }
 
@@ -233,7 +233,7 @@ class MedicationDispense extends DomainResource implements Serializable
     this.destination = destination;
   }
 
-  public void setReceiver(Reference<Resource> receiver) {
+  public void setReceiver(Reference<Resource>[] receiver) {
     this.receiver = receiver;
   }
 
@@ -256,7 +256,7 @@ class MedicationDispense extends DomainResource implements Serializable
   public void setEventHistory(Reference<Provenance>[] eventHistory) {
     this.eventHistory = eventHistory;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof MedicationDispense) {

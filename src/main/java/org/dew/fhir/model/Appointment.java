@@ -24,7 +24,7 @@ class Appointment extends DomainResource implements Serializable
   protected CodeableConcept[] specialty;
   protected CodeableConcept appointmentType;
   protected CodeableConcept[] reasonCode;
-  protected Reference<Resource> reasonReference;
+  protected Reference<Resource>[] reasonReference;
   protected Integer priority;
   protected String description;
   protected Reference<Resource>[] supportingInformation;
@@ -76,7 +76,7 @@ class Appointment extends DomainResource implements Serializable
     return reasonCode;
   }
 
-  public Reference<Resource> getReasonReference() {
+  public Reference<Resource>[] getReasonReference() {
     return reasonReference;
   }
 
@@ -164,7 +164,7 @@ class Appointment extends DomainResource implements Serializable
     this.reasonCode = reasonCode;
   }
 
-  public void setReasonReference(Reference<Resource> reasonReference) {
+  public void setReasonReference(Reference<Resource>[] reasonReference) {
     this.reasonReference = reasonReference;
   }
 

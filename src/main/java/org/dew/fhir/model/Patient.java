@@ -17,8 +17,8 @@ class Patient extends DomainResource implements Serializable
   
   protected Identifier[] identifier;
   protected Boolean active;
-  protected HumanName name;
-  protected ContactPoint telecom;
+  protected HumanName[] name;
+  protected ContactPoint[] telecom;
   protected String gender;
   protected Date birthDate;
   protected Boolean deceasedBoolean;
@@ -27,12 +27,12 @@ class Patient extends DomainResource implements Serializable
   protected CodeableConcept maritalStatus;
   protected Boolean multipleBirthBoolean;
   protected Integer multipleBirthInteger;
-  protected Attachment photo;
-  protected PatientContact contact;
-  protected PatientCommunication communication;
-  protected Reference<Resource> generalPractitioner;
+  protected Attachment[] photo;
+  protected PatientContact[] contact;
+  protected PatientCommunication[] communication;
+  protected Reference<Resource>[] generalPractitioner;
   protected Reference<Organization> managingOrganization;
-  protected PatientLink link;
+  protected PatientLink[] link;
   
   public Patient()
   {
@@ -43,7 +43,7 @@ class Patient extends DomainResource implements Serializable
   {
     this.resourceType = "Patient";
     if(family != null) {
-      this.name = new HumanName(family, given);
+      this.name = new HumanName[] { new HumanName(family, given) };
     }
   }
 
@@ -51,15 +51,15 @@ class Patient extends DomainResource implements Serializable
     return identifier;
   }
 
-  public Boolean isActive() {
+  public Boolean getActive() {
     return active;
   }
 
-  public HumanName getName() {
+  public HumanName[] getName() {
     return name;
   }
 
-  public ContactPoint getTelecom() {
+  public ContactPoint[] getTelecom() {
     return telecom;
   }
 
@@ -71,7 +71,7 @@ class Patient extends DomainResource implements Serializable
     return birthDate;
   }
 
-  public Boolean isDeceasedBoolean() {
+  public Boolean getDeceasedBoolean() {
     return deceasedBoolean;
   }
 
@@ -87,7 +87,7 @@ class Patient extends DomainResource implements Serializable
     return maritalStatus;
   }
 
-  public Boolean isMultipleBirthBoolean() {
+  public Boolean getMultipleBirthBoolean() {
     return multipleBirthBoolean;
   }
 
@@ -95,19 +95,19 @@ class Patient extends DomainResource implements Serializable
     return multipleBirthInteger;
   }
 
-  public Attachment getPhoto() {
+  public Attachment[] getPhoto() {
     return photo;
   }
 
-  public PatientContact getContact() {
+  public PatientContact[] getContact() {
     return contact;
   }
 
-  public PatientCommunication getCommunication() {
+  public PatientCommunication[] getCommunication() {
     return communication;
   }
 
-  public Reference<Resource> getGeneralPractitioner() {
+  public Reference<Resource>[] getGeneralPractitioner() {
     return generalPractitioner;
   }
 
@@ -115,7 +115,7 @@ class Patient extends DomainResource implements Serializable
     return managingOrganization;
   }
 
-  public PatientLink getLink() {
+  public PatientLink[] getLink() {
     return link;
   }
 
@@ -127,11 +127,11 @@ class Patient extends DomainResource implements Serializable
     this.active = active;
   }
 
-  public void setName(HumanName name) {
+  public void setName(HumanName[] name) {
     this.name = name;
   }
 
-  public void setTelecom(ContactPoint telecom) {
+  public void setTelecom(ContactPoint[] telecom) {
     this.telecom = telecom;
   }
 
@@ -167,19 +167,19 @@ class Patient extends DomainResource implements Serializable
     this.multipleBirthInteger = multipleBirthInteger;
   }
 
-  public void setPhoto(Attachment photo) {
+  public void setPhoto(Attachment[] photo) {
     this.photo = photo;
   }
 
-  public void setContact(PatientContact contact) {
+  public void setContact(PatientContact[] contact) {
     this.contact = contact;
   }
 
-  public void setCommunication(PatientCommunication communication) {
+  public void setCommunication(PatientCommunication[] communication) {
     this.communication = communication;
   }
 
-  public void setGeneralPractitioner(Reference<Resource> generalPractitioner) {
+  public void setGeneralPractitioner(Reference<Resource>[] generalPractitioner) {
     this.generalPractitioner = generalPractitioner;
   }
 
@@ -187,7 +187,7 @@ class Patient extends DomainResource implements Serializable
     this.managingOrganization = managingOrganization;
   }
 
-  public void setLink(PatientLink link) {
+  public void setLink(PatientLink[] link) {
     this.link = link;
   }
 
@@ -207,6 +207,6 @@ class Patient extends DomainResource implements Serializable
   
   @Override
   public String toString() {
-    return "Patient(" + id + "," + name + ")";
+    return "Patient(" + id + ")";
   }
 }

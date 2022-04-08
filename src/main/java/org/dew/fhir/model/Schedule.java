@@ -40,12 +40,12 @@ class Schedule extends DomainResource implements Serializable
     this.identifier = identifier;
     this.active = true;
   }
-  
+
   public Identifier[] getIdentifier() {
     return identifier;
   }
 
-  public Boolean isActive() {
+  public Boolean getActive() {
     return active;
   }
 

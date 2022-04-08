@@ -17,8 +17,8 @@ class ResearchStudy extends DomainResource implements Serializable
   
   protected Identifier[] identifier;
   protected String title;
-  protected Reference<PlanDefinition> protocol;
-  protected Reference<ResearchStudy> partOf;
+  protected Reference<PlanDefinition>[] protocol;
+  protected Reference<ResearchStudy>[] partOf;
   protected String status;
   protected CodeableConcept primaryPurposeType;
   protected CodeableConcept phase;
@@ -30,7 +30,7 @@ class ResearchStudy extends DomainResource implements Serializable
   protected CodeableConcept[] keyword;
   protected CodeableConcept[] location;
   protected String description;
-  protected Reference<Group> enrollment;
+  protected Reference<Group>[] enrollment;
   protected Period period;
   protected Reference<Organization> sponsor;
   protected Reference<Resource> principalInvestigator;
@@ -44,7 +44,7 @@ class ResearchStudy extends DomainResource implements Serializable
   {
     this.resourceType = "ResearchStudy";
   }
-
+  
   public Identifier[] getIdentifier() {
     return identifier;
   }
@@ -53,11 +53,11 @@ class ResearchStudy extends DomainResource implements Serializable
     return title;
   }
 
-  public Reference<PlanDefinition> getProtocol() {
+  public Reference<PlanDefinition>[] getProtocol() {
     return protocol;
   }
 
-  public Reference<ResearchStudy> getPartOf() {
+  public Reference<ResearchStudy>[] getPartOf() {
     return partOf;
   }
 
@@ -105,7 +105,7 @@ class ResearchStudy extends DomainResource implements Serializable
     return description;
   }
 
-  public Reference<Group> getEnrollment() {
+  public Reference<Group>[] getEnrollment() {
     return enrollment;
   }
 
@@ -149,11 +149,11 @@ class ResearchStudy extends DomainResource implements Serializable
     this.title = title;
   }
 
-  public void setProtocol(Reference<PlanDefinition> protocol) {
+  public void setProtocol(Reference<PlanDefinition>[] protocol) {
     this.protocol = protocol;
   }
 
-  public void setPartOf(Reference<ResearchStudy> partOf) {
+  public void setPartOf(Reference<ResearchStudy>[] partOf) {
     this.partOf = partOf;
   }
 
@@ -201,7 +201,7 @@ class ResearchStudy extends DomainResource implements Serializable
     this.description = description;
   }
 
-  public void setEnrollment(Reference<Group> enrollment) {
+  public void setEnrollment(Reference<Group>[] enrollment) {
     this.enrollment = enrollment;
   }
 
@@ -236,7 +236,7 @@ class ResearchStudy extends DomainResource implements Serializable
   public void setObjective(ResearchStudyObjective[] objective) {
     this.objective = objective;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof ResearchStudy) {

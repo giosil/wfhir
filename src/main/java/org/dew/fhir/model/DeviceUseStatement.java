@@ -16,7 +16,7 @@ class DeviceUseStatement extends DomainResource implements Serializable
   private static final long serialVersionUID = -7353643628738492087L;
   
   protected Identifier[] identifier;
-  protected Reference<ServiceRequest> basedOn;
+  protected Reference<ServiceRequest>[] basedOn;
   protected String status;
   protected Reference<Resource> subject;
   protected Reference<Resource>[] derivedFrom;
@@ -40,7 +40,7 @@ class DeviceUseStatement extends DomainResource implements Serializable
     return identifier;
   }
 
-  public Reference<ServiceRequest> getBasedOn() {
+  public Reference<ServiceRequest>[] getBasedOn() {
     return basedOn;
   }
 
@@ -100,7 +100,7 @@ class DeviceUseStatement extends DomainResource implements Serializable
     this.identifier = identifier;
   }
 
-  public void setBasedOn(Reference<ServiceRequest> basedOn) {
+  public void setBasedOn(Reference<ServiceRequest>[] basedOn) {
     this.basedOn = basedOn;
   }
 
@@ -155,7 +155,7 @@ class DeviceUseStatement extends DomainResource implements Serializable
   public void setNote(Annotation[] note) {
     this.note = note;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof DeviceUseStatement) {

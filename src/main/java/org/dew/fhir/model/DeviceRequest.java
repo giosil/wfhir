@@ -18,8 +18,8 @@ class DeviceRequest extends DomainResource implements Serializable
   protected Identifier[] identifier;
   protected String[] instantiatesCanonical;
   protected String[] instantiatesUri;
-  protected Reference<Resource> basedOn;
-  protected Reference<Resource> priorRequest;
+  protected Reference<Resource>[] basedOn;
+  protected Reference<Resource>[] priorRequest;
   protected Identifier groupIdentifier;
   protected String status;
   protected String intent;
@@ -60,11 +60,11 @@ class DeviceRequest extends DomainResource implements Serializable
     return instantiatesUri;
   }
 
-  public Reference<Resource> getBasedOn() {
+  public Reference<Resource>[] getBasedOn() {
     return basedOn;
   }
 
-  public Reference<Resource> getPriorRequest() {
+  public Reference<Resource>[] getPriorRequest() {
     return priorRequest;
   }
 
@@ -168,11 +168,11 @@ class DeviceRequest extends DomainResource implements Serializable
     this.instantiatesUri = instantiatesUri;
   }
 
-  public void setBasedOn(Reference<Resource> basedOn) {
+  public void setBasedOn(Reference<Resource>[] basedOn) {
     this.basedOn = basedOn;
   }
 
-  public void setPriorRequest(Reference<Resource> priorRequest) {
+  public void setPriorRequest(Reference<Resource>[] priorRequest) {
     this.priorRequest = priorRequest;
   }
 

@@ -34,7 +34,7 @@ class AllergyIntolerance extends DomainResource implements Serializable
   protected Reference<Resource> asserter;
   protected Date lastOccurrence;
   protected Annotation[] note;
-  protected AllergyIntoleranceReaction reaction;
+  protected AllergyIntoleranceReaction[] reaction;
   
   public AllergyIntolerance()
   {
@@ -46,7 +46,7 @@ class AllergyIntolerance extends DomainResource implements Serializable
     this.resourceType = "AllergyIntolerance";
     this.type = type;
   }
-
+  
   public Identifier[] getIdentifier() {
     return identifier;
   }
@@ -123,7 +123,7 @@ class AllergyIntolerance extends DomainResource implements Serializable
     return note;
   }
 
-  public AllergyIntoleranceReaction getReaction() {
+  public AllergyIntoleranceReaction[] getReaction() {
     return reaction;
   }
 
@@ -203,10 +203,10 @@ class AllergyIntolerance extends DomainResource implements Serializable
     this.note = note;
   }
 
-  public void setReaction(AllergyIntoleranceReaction reaction) {
+  public void setReaction(AllergyIntoleranceReaction[] reaction) {
     this.reaction = reaction;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof AllergyIntolerance) {

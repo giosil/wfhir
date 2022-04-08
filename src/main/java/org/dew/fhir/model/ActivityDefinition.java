@@ -13,7 +13,7 @@ import java.util.Date;
 public
 class ActivityDefinition extends DomainResource implements Serializable
 {
-  private static final long serialVersionUID = -4181134526262347770L;
+  private static final long serialVersionUID = 7353758378894024223L;
   
   protected String url;
   protected Identifier[] identifier;
@@ -43,7 +43,7 @@ class ActivityDefinition extends DomainResource implements Serializable
   protected ContactDetail[] reviewer;
   protected ContactDetail[] endorser;
   protected RelatedArtifact[] relatedArtifact;
-  protected String library;
+  protected String[] library;
   protected String kind;
   protected String profile;
   protected CodeableConcept code;
@@ -63,9 +63,9 @@ class ActivityDefinition extends DomainResource implements Serializable
   protected SimpleQuantity quantity;
   protected Dosage[] dosage;
   protected CodeableConcept[] bodySite;
-  protected Reference<Resource> specimenRequirement;
-  protected Reference<ObservationDefinition> observationRequirement;
-  protected Reference<ObservationDefinition> observationResultRequirement;
+  protected Reference<Resource>[] specimenRequirement;
+  protected Reference<ObservationDefinition>[] observationRequirement;
+  protected Reference<ObservationDefinition>[] observationResultRequirement;
   protected String transform;
   protected ActivityDefinitionDynamicValue[] dynamicValue;
   
@@ -186,7 +186,7 @@ class ActivityDefinition extends DomainResource implements Serializable
     return relatedArtifact;
   }
 
-  public String getLibrary() {
+  public String[] getLibrary() {
     return library;
   }
 
@@ -266,15 +266,15 @@ class ActivityDefinition extends DomainResource implements Serializable
     return bodySite;
   }
 
-  public Reference<Resource> getSpecimenRequirement() {
+  public Reference<Resource>[] getSpecimenRequirement() {
     return specimenRequirement;
   }
 
-  public Reference<ObservationDefinition> getObservationRequirement() {
+  public Reference<ObservationDefinition>[] getObservationRequirement() {
     return observationRequirement;
   }
 
-  public Reference<ObservationDefinition> getObservationResultRequirement() {
+  public Reference<ObservationDefinition>[] getObservationResultRequirement() {
     return observationResultRequirement;
   }
 
@@ -398,7 +398,7 @@ class ActivityDefinition extends DomainResource implements Serializable
     this.relatedArtifact = relatedArtifact;
   }
 
-  public void setLibrary(String library) {
+  public void setLibrary(String[] library) {
     this.library = library;
   }
 
@@ -478,15 +478,15 @@ class ActivityDefinition extends DomainResource implements Serializable
     this.bodySite = bodySite;
   }
 
-  public void setSpecimenRequirement(Reference<Resource> specimenRequirement) {
+  public void setSpecimenRequirement(Reference<Resource>[] specimenRequirement) {
     this.specimenRequirement = specimenRequirement;
   }
 
-  public void setObservationRequirement(Reference<ObservationDefinition> observationRequirement) {
+  public void setObservationRequirement(Reference<ObservationDefinition>[] observationRequirement) {
     this.observationRequirement = observationRequirement;
   }
 
-  public void setObservationResultRequirement(Reference<ObservationDefinition> observationResultRequirement) {
+  public void setObservationResultRequirement(Reference<ObservationDefinition>[] observationResultRequirement) {
     this.observationResultRequirement = observationResultRequirement;
   }
 
@@ -497,7 +497,7 @@ class ActivityDefinition extends DomainResource implements Serializable
   public void setDynamicValue(ActivityDefinitionDynamicValue[] dynamicValue) {
     this.dynamicValue = dynamicValue;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof ActivityDefinition) {

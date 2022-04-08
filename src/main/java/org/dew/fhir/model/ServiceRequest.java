@@ -41,9 +41,9 @@ class ServiceRequest extends DomainResource implements Serializable
   protected Date authoredOn;
   protected Reference<Resource> requester;
   protected CodeableConcept performerType;
-  protected Reference<Resource> performer;
+  protected Reference<Resource>[] performer;
   protected CodeableConcept[] locationCode;
-  protected Reference<Location> locationReference;
+  protected Reference<Location>[] locationReference;
   protected CodeableConcept[] reasonCode;
   protected Reference<Resource>[] reasonReference;
   protected Reference<Resource>[] insurance;
@@ -163,7 +163,7 @@ class ServiceRequest extends DomainResource implements Serializable
     return performerType;
   }
 
-  public Reference<Resource> getPerformer() {
+  public Reference<Resource>[] getPerformer() {
     return performer;
   }
 
@@ -171,7 +171,7 @@ class ServiceRequest extends DomainResource implements Serializable
     return locationCode;
   }
 
-  public Reference<Location> getLocationReference() {
+  public Reference<Location>[] getLocationReference() {
     return locationReference;
   }
 
@@ -315,7 +315,7 @@ class ServiceRequest extends DomainResource implements Serializable
     this.performerType = performerType;
   }
 
-  public void setPerformer(Reference<Resource> performer) {
+  public void setPerformer(Reference<Resource>[] performer) {
     this.performer = performer;
   }
 
@@ -323,7 +323,7 @@ class ServiceRequest extends DomainResource implements Serializable
     this.locationCode = locationCode;
   }
 
-  public void setLocationReference(Reference<Location> locationReference) {
+  public void setLocationReference(Reference<Location>[] locationReference) {
     this.locationReference = locationReference;
   }
 

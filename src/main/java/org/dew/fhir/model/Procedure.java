@@ -18,8 +18,8 @@ class Procedure extends DomainResource implements Serializable
   protected Identifier[] identifier;
   protected String[] instantiatesCanonical;
   protected String[] instantiatesUri;
-  protected Reference<Resource> basedOn;
-  protected Reference<Resource> partOf;
+  protected Reference<Resource>[] basedOn;
+  protected Reference<Resource>[] partOf;
   protected String status;
   protected CodeableConcept statusReason;
   protected CodeableConcept category;
@@ -65,11 +65,11 @@ class Procedure extends DomainResource implements Serializable
     return instantiatesUri;
   }
 
-  public Reference<Resource> getBasedOn() {
+  public Reference<Resource>[] getBasedOn() {
     return basedOn;
   }
 
-  public Reference<Resource> getPartOf() {
+  public Reference<Resource>[] getPartOf() {
     return partOf;
   }
 
@@ -193,11 +193,11 @@ class Procedure extends DomainResource implements Serializable
     this.instantiatesUri = instantiatesUri;
   }
 
-  public void setBasedOn(Reference<Resource> basedOn) {
+  public void setBasedOn(Reference<Resource>[] basedOn) {
     this.basedOn = basedOn;
   }
 
-  public void setPartOf(Reference<Resource> partOf) {
+  public void setPartOf(Reference<Resource>[] partOf) {
     this.partOf = partOf;
   }
 

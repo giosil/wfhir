@@ -22,7 +22,7 @@ class ImagingStudy extends DomainResource implements Serializable
   protected Reference<Resource> subject;
   protected Reference<Encounter> encounter;
   protected Date started;
-  protected Reference<Resource> basedOn;
+  protected Reference<Resource>[] basedOn;
   protected Reference<Resource> referrer;
   protected Reference<Resource>[] interpreter;
   protected Reference<Endpoint>[] endpoint;
@@ -32,13 +32,14 @@ class ImagingStudy extends DomainResource implements Serializable
   protected CodeableConcept[] procedureCode;
   protected Reference<Location> location;
   protected CodeableConcept[] reasonCode;
-  protected Reference<Resource> reasonReference;
+  protected Reference<Resource>[] reasonReference;
   protected Annotation[] note;
   protected String description;
   protected ImagingStudySeries[] series;
   
   public ImagingStudy()
   {
+    this.resourceType = "ImagingStudy";
   }
   
   public Identifier[] getIdentifier() {
@@ -65,7 +66,7 @@ class ImagingStudy extends DomainResource implements Serializable
     return started;
   }
 
-  public Reference<Resource> getBasedOn() {
+  public Reference<Resource>[] getBasedOn() {
     return basedOn;
   }
 
@@ -105,7 +106,7 @@ class ImagingStudy extends DomainResource implements Serializable
     return reasonCode;
   }
 
-  public Reference<Resource> getReasonReference() {
+  public Reference<Resource>[] getReasonReference() {
     return reasonReference;
   }
 
@@ -145,7 +146,7 @@ class ImagingStudy extends DomainResource implements Serializable
     this.started = started;
   }
 
-  public void setBasedOn(Reference<Resource> basedOn) {
+  public void setBasedOn(Reference<Resource>[] basedOn) {
     this.basedOn = basedOn;
   }
 
@@ -185,7 +186,7 @@ class ImagingStudy extends DomainResource implements Serializable
     this.reasonCode = reasonCode;
   }
 
-  public void setReasonReference(Reference<Resource> reasonReference) {
+  public void setReasonReference(Reference<Resource>[] reasonReference) {
     this.reasonReference = reasonReference;
   }
 

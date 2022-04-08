@@ -28,7 +28,7 @@ class GuidanceResponse extends DomainResource implements Serializable
   protected CodeableConcept[] reasonCode;
   protected Reference<Resource>[] reasonReference;
   protected Annotation[] note;
-  protected Reference<OperationOutcome> evaluationMessage;
+  protected Reference<OperationOutcome>[] evaluationMessage;
   protected Reference<Parameters> outputParameters;
   protected Reference<Resource> result;
   protected DataRequirement[] dataRequirement;
@@ -96,7 +96,7 @@ class GuidanceResponse extends DomainResource implements Serializable
     return note;
   }
 
-  public Reference<OperationOutcome> getEvaluationMessage() {
+  public Reference<OperationOutcome>[] getEvaluationMessage() {
     return evaluationMessage;
   }
 
@@ -164,7 +164,7 @@ class GuidanceResponse extends DomainResource implements Serializable
     this.note = note;
   }
 
-  public void setEvaluationMessage(Reference<OperationOutcome> evaluationMessage) {
+  public void setEvaluationMessage(Reference<OperationOutcome>[] evaluationMessage) {
     this.evaluationMessage = evaluationMessage;
   }
 
@@ -179,7 +179,7 @@ class GuidanceResponse extends DomainResource implements Serializable
   public void setDataRequirement(DataRequirement[] dataRequirement) {
     this.dataRequirement = dataRequirement;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof GuidanceResponse) {

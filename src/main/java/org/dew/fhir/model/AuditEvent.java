@@ -24,7 +24,7 @@ class AuditEvent extends DomainResource implements Serializable
   protected String outcome;
   protected String outcomeDesc;
   protected CodeableConcept[] purposeOfEvent;
-  protected AuditEventAgent agent;
+  protected AuditEventAgent[] agent;
   protected AuditEventSource source;
   protected AuditEventEntity[] entity;
   
@@ -65,7 +65,7 @@ class AuditEvent extends DomainResource implements Serializable
     return purposeOfEvent;
   }
 
-  public AuditEventAgent getAgent() {
+  public AuditEventAgent[] getAgent() {
     return agent;
   }
 
@@ -109,7 +109,7 @@ class AuditEvent extends DomainResource implements Serializable
     this.purposeOfEvent = purposeOfEvent;
   }
 
-  public void setAgent(AuditEventAgent agent) {
+  public void setAgent(AuditEventAgent[] agent) {
     this.agent = agent;
   }
 
@@ -120,7 +120,7 @@ class AuditEvent extends DomainResource implements Serializable
   public void setEntity(AuditEventEntity[] entity) {
     this.entity = entity;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof AuditEvent) {

@@ -29,7 +29,7 @@ class SearchParameter extends DomainResource implements Serializable
   protected CodeableConcept[] jurisdiction;
   protected String purpose;
   protected String code;
-  protected String base;
+  protected String[] base;
   protected String type;
   protected String expression;
   protected String xpath;
@@ -46,7 +46,7 @@ class SearchParameter extends DomainResource implements Serializable
   {
     this.resourceType = "SearchParameter";
   }
-
+  
   public String getUrl() {
     return url;
   }
@@ -103,7 +103,7 @@ class SearchParameter extends DomainResource implements Serializable
     return code;
   }
 
-  public String getBase() {
+  public String[] getBase() {
     return base;
   }
 
@@ -207,7 +207,7 @@ class SearchParameter extends DomainResource implements Serializable
     this.code = code;
   }
 
-  public void setBase(String base) {
+  public void setBase(String[] base) {
     this.base = base;
   }
 
@@ -254,7 +254,7 @@ class SearchParameter extends DomainResource implements Serializable
   public void setComponent(SearchParameterComponent[] component) {
     this.component = component;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof SearchParameter) {

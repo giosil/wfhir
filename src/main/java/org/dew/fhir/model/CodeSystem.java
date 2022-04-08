@@ -27,7 +27,7 @@ class CodeSystem extends DomainResource implements Serializable
   protected ContactDetail[] contact;
   protected String description;
   protected UsageContext[] useContext;
-  protected CodeableConcept jurisdiction;
+  protected CodeableConcept[] jurisdiction;
   protected String purpose;
   protected String copyright;
   protected Boolean caseSensitive;
@@ -46,7 +46,7 @@ class CodeSystem extends DomainResource implements Serializable
   {
     this.resourceType = "CodeSystem";
   }
-
+  
   public String getUrl() {
     return url;
   }
@@ -71,7 +71,7 @@ class CodeSystem extends DomainResource implements Serializable
     return status;
   }
 
-  public Boolean isExperimental() {
+  public Boolean getExperimental() {
     return experimental;
   }
 
@@ -95,7 +95,7 @@ class CodeSystem extends DomainResource implements Serializable
     return useContext;
   }
 
-  public CodeableConcept getJurisdiction() {
+  public CodeableConcept[] getJurisdiction() {
     return jurisdiction;
   }
 
@@ -107,7 +107,7 @@ class CodeSystem extends DomainResource implements Serializable
     return copyright;
   }
 
-  public Boolean isCaseSensitive() {
+  public Boolean getCaseSensitive() {
     return caseSensitive;
   }
 
@@ -119,11 +119,11 @@ class CodeSystem extends DomainResource implements Serializable
     return hierarchyMeaning;
   }
 
-  public Boolean isCompositional() {
+  public Boolean getCompositional() {
     return compositional;
   }
 
-  public Boolean isVersionNeeded() {
+  public Boolean getVersionNeeded() {
     return versionNeeded;
   }
 
@@ -199,7 +199,7 @@ class CodeSystem extends DomainResource implements Serializable
     this.useContext = useContext;
   }
 
-  public void setJurisdiction(CodeableConcept jurisdiction) {
+  public void setJurisdiction(CodeableConcept[] jurisdiction) {
     this.jurisdiction = jurisdiction;
   }
 
@@ -254,7 +254,7 @@ class CodeSystem extends DomainResource implements Serializable
   public void setConcept(CodeSystemConcept[] concept) {
     this.concept = concept;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof CodeSystem) {

@@ -30,7 +30,7 @@ class RiskAssessment extends DomainResource implements Serializable
   protected CodeableConcept[] reasonCode;
   protected Reference<Resource>[] reasonReference;
   protected Reference<Resource>[] basis;
-  protected RiskAssessmentPrediction prediction;
+  protected RiskAssessmentPrediction[] prediction;
   protected String mitigation;
   protected Annotation[] note;
   
@@ -38,7 +38,7 @@ class RiskAssessment extends DomainResource implements Serializable
   {
     this.resourceType = "RiskAssessment";
   }
-
+  
   public Identifier[] getIdentifier() {
     return identifier;
   }
@@ -99,7 +99,7 @@ class RiskAssessment extends DomainResource implements Serializable
     return basis;
   }
 
-  public RiskAssessmentPrediction getPrediction() {
+  public RiskAssessmentPrediction[] getPrediction() {
     return prediction;
   }
 
@@ -171,7 +171,7 @@ class RiskAssessment extends DomainResource implements Serializable
     this.basis = basis;
   }
 
-  public void setPrediction(RiskAssessmentPrediction prediction) {
+  public void setPrediction(RiskAssessmentPrediction[] prediction) {
     this.prediction = prediction;
   }
 
@@ -182,7 +182,7 @@ class RiskAssessment extends DomainResource implements Serializable
   public void setNote(Annotation[] note) {
     this.note = note;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof RiskAssessment) {

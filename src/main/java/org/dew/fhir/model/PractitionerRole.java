@@ -21,7 +21,7 @@ class PractitionerRole extends DomainResource implements Serializable
   protected CodeableConcept[] code;
   protected CodeableConcept[] specialty;
   protected Reference<Location>[] location;
-  protected Reference<HealthcareService> healthcareService;
+  protected Reference<HealthcareService>[] healthcareService;
   protected ExtendedContactDetail[] contact;
   protected ContactPoint[] telecom;
   protected PractitionerRoleAvailableTime[] availableTime;
@@ -46,7 +46,7 @@ class PractitionerRole extends DomainResource implements Serializable
     this.practitioner = practitioner;
     this.organization = organization;
   }
-
+  
   public Identifier[] getIdentifier() {
     return identifier;
   }
@@ -79,7 +79,7 @@ class PractitionerRole extends DomainResource implements Serializable
     return location;
   }
 
-  public Reference<HealthcareService> getHealthcareService() {
+  public Reference<HealthcareService>[] getHealthcareService() {
     return healthcareService;
   }
 
@@ -139,7 +139,7 @@ class PractitionerRole extends DomainResource implements Serializable
     this.location = location;
   }
 
-  public void setHealthcareService(Reference<HealthcareService> healthcareService) {
+  public void setHealthcareService(Reference<HealthcareService>[] healthcareService) {
     this.healthcareService = healthcareService;
   }
 
@@ -166,7 +166,7 @@ class PractitionerRole extends DomainResource implements Serializable
   public void setEndpoint(Reference<Endpoint>[] endpoint) {
     this.endpoint = endpoint;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof PractitionerRole) {

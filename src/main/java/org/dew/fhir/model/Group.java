@@ -58,12 +58,12 @@ class Group extends DomainResource implements Serializable
     this.name = name;
     this.active = true;
   }
-  
+
   public Identifier[] getIdentifier() {
     return identifier;
   }
 
-  public Boolean isActive() {
+  public Boolean getActive() {
     return active;
   }
 
@@ -71,7 +71,7 @@ class Group extends DomainResource implements Serializable
     return type;
   }
 
-  public Boolean isActual() {
+  public Boolean getActual() {
     return actual;
   }
 

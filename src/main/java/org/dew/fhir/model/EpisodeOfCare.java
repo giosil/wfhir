@@ -22,7 +22,7 @@ class EpisodeOfCare extends DomainResource implements Serializable
   protected Reference<Patient> patient;
   protected Reference<Organization> managingOrganization;
   protected Period period;
-  protected Reference<ServiceRequest> referralRequest;
+  protected Reference<ServiceRequest>[] referralRequest;
   protected Reference<Resource> careManager;
   protected Reference<CareTeam>[] team;
   protected Reference<Account>[] account;
@@ -64,7 +64,7 @@ class EpisodeOfCare extends DomainResource implements Serializable
     return period;
   }
 
-  public Reference<ServiceRequest> getReferralRequest() {
+  public Reference<ServiceRequest>[] getReferralRequest() {
     return referralRequest;
   }
 
@@ -112,7 +112,7 @@ class EpisodeOfCare extends DomainResource implements Serializable
     this.period = period;
   }
 
-  public void setReferralRequest(Reference<ServiceRequest> referralRequest) {
+  public void setReferralRequest(Reference<ServiceRequest>[] referralRequest) {
     this.referralRequest = referralRequest;
   }
 

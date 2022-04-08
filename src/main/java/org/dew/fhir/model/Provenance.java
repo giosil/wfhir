@@ -18,7 +18,7 @@ class Provenance extends DomainResource implements Serializable
 {
   private static final long serialVersionUID = 8709187220595697958L;
   
-  protected Reference<Resource> target;
+  protected Reference<Resource>[] target;
   protected Period occurredPeriod;
   protected Date occurredDateTime;
   protected Date recorded;
@@ -34,8 +34,8 @@ class Provenance extends DomainResource implements Serializable
   {
     this.resourceType = "Provenance";
   }
-
-  public Reference<Resource> getTarget() {
+  
+  public Reference<Resource>[] getTarget() {
     return target;
   }
 
@@ -79,7 +79,7 @@ class Provenance extends DomainResource implements Serializable
     return signature;
   }
 
-  public void setTarget(Reference<Resource> target) {
+  public void setTarget(Reference<Resource>[] target) {
     this.target = target;
   }
 
@@ -122,7 +122,7 @@ class Provenance extends DomainResource implements Serializable
   public void setSignature(Signature[] signature) {
     this.signature = signature;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof Provenance) {

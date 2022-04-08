@@ -22,8 +22,8 @@ class Encounter extends DomainResource implements Serializable
   protected CodeableConcept serviceType;
   protected CodeableConcept priority;
   protected Reference<Resource> subject;
-  protected Reference<EpisodeOfCare> episodeOfCare;
-  protected Reference<ServiceRequest> basedOn;
+  protected Reference<EpisodeOfCare>[] episodeOfCare;
+  protected Reference<ServiceRequest>[] basedOn;
   protected EncounterParticipant[] participant;
   protected Reference<Appointment>[] appointment;
   protected Period period;
@@ -78,11 +78,11 @@ class Encounter extends DomainResource implements Serializable
     return subject;
   }
 
-  public Reference<EpisodeOfCare> getEpisodeOfCare() {
+  public Reference<EpisodeOfCare>[] getEpisodeOfCare() {
     return episodeOfCare;
   }
 
-  public Reference<ServiceRequest> getBasedOn() {
+  public Reference<ServiceRequest>[] getBasedOn() {
     return basedOn;
   }
 
@@ -170,11 +170,11 @@ class Encounter extends DomainResource implements Serializable
     this.subject = subject;
   }
 
-  public void setEpisodeOfCare(Reference<EpisodeOfCare> episodeOfCare) {
+  public void setEpisodeOfCare(Reference<EpisodeOfCare>[] episodeOfCare) {
     this.episodeOfCare = episodeOfCare;
   }
 
-  public void setBasedOn(Reference<ServiceRequest> basedOn) {
+  public void setBasedOn(Reference<ServiceRequest>[] basedOn) {
     this.basedOn = basedOn;
   }
 
@@ -225,7 +225,7 @@ class Encounter extends DomainResource implements Serializable
   public void setPartOf(Reference<Encounter> partOf) {
     this.partOf = partOf;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof Encounter) {

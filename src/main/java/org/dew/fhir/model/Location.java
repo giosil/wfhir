@@ -29,7 +29,7 @@ class Location extends DomainResource implements Serializable
   protected Reference<Location> partOf;
   protected LocationHoursOfOperation[] hoursOfOperation;
   protected String availabilityExceptions;
-  protected Reference<Endpoint> endpoint;
+  protected Reference<Endpoint>[] endpoint;
   
   public Location()
   {
@@ -106,7 +106,7 @@ class Location extends DomainResource implements Serializable
     return availabilityExceptions;
   }
 
-  public Reference<Endpoint> getEndpoint() {
+  public Reference<Endpoint>[] getEndpoint() {
     return endpoint;
   }
 
@@ -174,10 +174,10 @@ class Location extends DomainResource implements Serializable
     this.availabilityExceptions = availabilityExceptions;
   }
 
-  public void setEndpoint(Reference<Endpoint> endpoint) {
+  public void setEndpoint(Reference<Endpoint>[] endpoint) {
     this.endpoint = endpoint;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof Location) {

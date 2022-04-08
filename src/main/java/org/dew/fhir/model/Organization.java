@@ -20,10 +20,10 @@ class Organization extends DomainResource implements Serializable
   protected String name;
   protected String[] alias;
   protected ContactPoint[] telecom;
-  protected Address address;
+  protected Address[] address;
   protected Reference<Organization> partOf;
   protected OrganizationContact[] contact;
-  protected Reference<Endpoint> endpoint;
+  protected Reference<Endpoint>[] endpoint;
   
   public Organization()
   {
@@ -72,7 +72,7 @@ class Organization extends DomainResource implements Serializable
     return identifier;
   }
 
-  public Boolean isActive() {
+  public Boolean getActive() {
     return active;
   }
 
@@ -92,7 +92,7 @@ class Organization extends DomainResource implements Serializable
     return telecom;
   }
 
-  public Address getAddress() {
+  public Address[] getAddress() {
     return address;
   }
 
@@ -104,7 +104,7 @@ class Organization extends DomainResource implements Serializable
     return contact;
   }
 
-  public Reference<Endpoint> getEndpoint() {
+  public Reference<Endpoint>[] getEndpoint() {
     return endpoint;
   }
 
@@ -132,7 +132,7 @@ class Organization extends DomainResource implements Serializable
     this.telecom = telecom;
   }
 
-  public void setAddress(Address address) {
+  public void setAddress(Address[] address) {
     this.address = address;
   }
 
@@ -144,7 +144,7 @@ class Organization extends DomainResource implements Serializable
     this.contact = contact;
   }
 
-  public void setEndpoint(Reference<Endpoint> endpoint) {
+  public void setEndpoint(Reference<Endpoint>[] endpoint) {
     this.endpoint = endpoint;
   }
 
