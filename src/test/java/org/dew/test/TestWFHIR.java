@@ -236,6 +236,7 @@ class TestWFHIR extends TestCase
   {
     List<String> missingObj = new ArrayList<String>();
     List<String> missingFld = new ArrayList<String>();
+    int countObj = 0;
     
     Map<String, Object> mapSchema = loadSchema();
     
@@ -244,6 +245,7 @@ class TestWFHIR extends TestCase
       try {
         Class<?> objectClass = Class.forName("org.dew.fhir.model." + objectName);
         System.out.println(objectName);
+        countObj++;
         
         Method[] methods = objectClass.getMethods();
         
@@ -300,6 +302,10 @@ class TestWFHIR extends TestCase
     for(int i = 0; i < missingFld.size(); i++) {
       System.out.println(missingFld.get(i));
     }
+    
+    System.out.println("Implemented    : " + countObj);
+    System.out.println("Missing        : " + missingObj.size());
+    System.out.println("Missing fields : " + missingFld.size());
   }
   
   protected
