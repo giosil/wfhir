@@ -26,7 +26,7 @@ class Invoice extends DomainResource implements Serializable
   protected Reference<Organization> issuer;
   protected Reference<Account> account;
   protected InvoiceLineItem[] lineItem;
-  protected InvoiceLineItemPriceComponent[] totalPriceComponent;
+  protected InvoicePriceComponent[] totalPriceComponent;
   protected Money totalNet;
   protected Money totalGross;
   protected String paymentTerms;
@@ -81,7 +81,7 @@ class Invoice extends DomainResource implements Serializable
     return lineItem;
   }
 
-  public InvoiceLineItemPriceComponent[] getTotalPriceComponent() {
+  public InvoicePriceComponent[] getTotalPriceComponent() {
     return totalPriceComponent;
   }
 
@@ -145,7 +145,7 @@ class Invoice extends DomainResource implements Serializable
     this.lineItem = lineItem;
   }
 
-  public void setTotalPriceComponent(InvoiceLineItemPriceComponent[] totalPriceComponent) {
+  public void setTotalPriceComponent(InvoicePriceComponent[] totalPriceComponent) {
     this.totalPriceComponent = totalPriceComponent;
   }
 
@@ -164,7 +164,7 @@ class Invoice extends DomainResource implements Serializable
   public void setNote(Annotation[] note) {
     this.note = note;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof Invoice) {

@@ -1,15 +1,17 @@
 package org.dew.test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
-
+import java.io.PrintStream;
 import java.lang.reflect.Method;
 
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -53,6 +55,8 @@ class TestWFHIR extends TestCase
   public static final String[] BASE_FIELDS = {"text", "contained", "extension", "modifierExtension", "id", "meta", "implicitRules", "language", "resourceType"};
 
   public static final String[] KEYWORDS = {"class", "abstract", "for"};
+  
+  public static final String SRC_FOLDER = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "src";
 
   public TestWFHIR(String testName) {
     super(testName);
@@ -65,9 +69,9 @@ class TestWFHIR extends TestCase
   public 
   void testApp() 
   {
-    // example();
+    example();
     
-    checkModel();
+    // buildJavaClasses(SRC_FOLDER, checkModel());
   }
   
   public 
@@ -233,7 +237,7 @@ class TestWFHIR extends TestCase
   }
   
   protected
-  void checkModel()
+  List<String> checkModel()
   {
     List<String> missingObj   = new ArrayList<String>();
     List<String> missingFld   = new ArrayList<String>();
@@ -256,7 +260,9 @@ class TestWFHIR extends TestCase
           
           if(fields != null && fields.size() > 0) {
             for(int j = 0; j < fields.size(); j++) {
-              String field = fields.get(j);
+              String field    = fields.get(j);
+              String fhirType = null;
+              String javaType = null;
               
               String getMethod = null;
               if(field.length() > 1) {
@@ -277,48 +283,31 @@ class TestWFHIR extends TestCase
                   
                   Class<?> returnType = method.getReturnType();
                   
-                  String type = getTypeField(mapSchema, objectName, field);
-                  if(type != null && type.length() != 0) {
-                    if(type.equals("array")) {
-                      if(!returnType.isArray()) {
-                        fiedNote = " (is not array)";
-                        incorrectFld.add(objectName + "." + field  + " (is not array)");
+                  fhirType = getTypeField(mapSchema, objectName, field);
+                  javaType = returnType == null ? "void" : returnType.getCanonicalName();
+                  
+                  if(!fhirType.equals(javaType)) {
+                    if(fhirType.equals("org.dew.fhir.model.Quantity")) {
+                      if(!javaType.equals("org.dew.fhir.model.SimpleQuantity")) {
+                        fiedNote = " (fhirType=" + fhirType + ", javaType=" + javaType + ")";
+                        incorrectFld.add(objectName + "." + field + " " + fiedNote);
                       }
                     }
-                    else if(type.equals("string")) {
-                      if(!returnType.equals(String.class) && !returnType.equals(Date.class)) {
-                        fiedNote = " (is not string)";
-                        incorrectFld.add(objectName + "." + field  + " (is not string)");
-                      }
-                    }
-                    else if(type.equals("number")) {
-                      if(!returnType.equals(Integer.class) && !returnType.equals(Double.class)) {
-                        fiedNote = " (is not number)";
-                        incorrectFld.add(objectName + "." + field  + " (is not number)");
-                      }
-                    }
-                    else if(type.equals("boolean")) {
-                      if(!returnType.equals(Boolean.class)) {
-                        fiedNote = " (is not boolean)";
-                        incorrectFld.add(objectName + "." + field  + " (is not boolean)");
-                      }
+                    else {
+                      fiedNote = " (fhirType=" + fhirType + ", javaType=" + javaType + ")";
+                      incorrectFld.add(objectName + "." + field + " " + fiedNote);
                     }
                   }
-                  else {
-                    if(returnType.isArray()) {
-                      fiedNote = " (is not scalar)";
-                      incorrectFld.add(objectName + "." + field  + " (is not scalar)");
-                    }
-                  }
+                  
                   break;
                 }
               }
               
               if(found) {
-                System.out.println("\t" + field + fiedNote);
+                System.out.println("\t" + field + "\t" + fhirType + "\t" + javaType + "\t" + fiedNote);
               }
               else {
-                System.out.println("\t" + field + " (missing)");
+                System.out.println("\t" + field + "\t " + fhirType + "\t" + javaType + "\t" + " (missing)");
                 missingFld.add(objectName + "." + field);
               }
             }
@@ -351,6 +340,176 @@ class TestWFHIR extends TestCase
     System.out.println("Missing          : " + missingObj.size());
     System.out.println("Missing fields   : " + missingFld.size());
     System.out.println("Incorrect fields : " + incorrectFld.size());
+    
+    return missingObj;
+  }
+  
+  protected
+  void buildJavaClasses(String folder, List<String> objectNames)
+  {
+    buildJavaClasses(folder, objectNames, null);
+  }
+  
+  protected
+  void buildJavaClasses(String folder, List<String> objectNames, List<String> backboneElements)
+  {
+    if(objectNames == null || objectNames.size() == 0) {
+      return;
+    }
+    for(int i = 0; i < objectNames.size(); i++) {
+      buildJavaClass(folder, objectNames.get(i), backboneElements);
+    }
+  }
+  
+  protected
+  void buildJavaClass(String folder, String objectName, List<String> backboneElements)
+  {
+    if(objectName == null || objectName.length() == 0) {
+      System.out.println("// [buildJavaClass] objectName = " + objectName);
+      return;
+    }
+    Map<String, Object> mapSchema = loadSchema();
+    if(mapSchema == null || mapSchema.isEmpty()) {
+      System.out.println("// [buildJavaClass] mapSchema = " + mapSchema);
+      return;
+    }
+    List<String> fields = getObjectFields(mapSchema, objectName);
+    if(fields == null || fields.size() == 0) {
+      System.out.println("// [buildJavaClass] fields = " + fields);
+      return;
+    }
+    if(backboneElements == null) {
+      backboneElements = new ArrayList<String>();
+    }
+    
+    boolean isBackboneElement = objectName.indexOf('_') > 0;
+    String className = objectName;
+    if(isBackboneElement) {
+      StringBuilder sbClassName = new StringBuilder(objectName.length());
+      for(int i = 0; i < objectName.length(); i++) {
+        char ci = objectName.charAt(i);
+        if(ci == '_') continue;
+        sbClassName.append(ci);
+      }
+      className = sbClassName.toString();
+    }
+    
+    PrintStream ps = getPrintStream(folder, className + ".java");
+    
+    String sDescription = getObjectDescription(mapSchema, objectName, "Bean " + objectName + ".");
+    
+    ps.println("package org.dew.fhir.model;");
+    ps.println();
+    ps.println("import java.io.Serializable;");
+    ps.println();
+    ps.println("import java.util.Date;");
+    ps.println();
+    ps.println("/**");
+    ps.println(" *");
+    ps.println(" * " + sDescription);
+    ps.println(" *");
+    ps.println(" * @see <a href=\"https://www.hl7.org/fhir\">" + objectName + "</a>");
+    ps.println(" *");
+    ps.println(" */");
+    ps.println("public");
+    if(isBackboneElement) {
+      ps.println("class " + className + " extends BackboneElement implements Serializable");
+    }
+    else {
+      ps.println("class " + className + " extends DomainResource implements Serializable");
+    }
+    ps.println("{");
+    
+    for(int j = 0; j < fields.size(); j++) {
+      String field    = fields.get(j);
+      
+      int sizeBackboneElements1 = backboneElements.size();
+      String fhirType = getTypeField(mapSchema, objectName, field, backboneElements);
+      int sizeBackboneElements2 = backboneElements.size();
+      
+      if(sizeBackboneElements1 != sizeBackboneElements2) {
+        buildJavaClass(folder, backboneElements.get(backboneElements.size()-1), backboneElements);
+      }
+      
+      int lastDot = fhirType.lastIndexOf('.');
+      if(lastDot > 0) {
+        fhirType = fhirType.substring(lastDot + 1);
+      }
+      if(fhirType.equals("Reference")) {
+        fhirType = "Reference<Resource>";
+      }
+      else if(fhirType.equals("Reference[]")) {
+        fhirType = "Reference<Resource>[]";
+      }
+      ps.println("  protected " + fhirType + " " + field + ";");
+    }
+    ps.println("  ");
+    if(isBackboneElement) {
+      ps.println("  public " + className + "()");
+      ps.println("  {");
+      ps.println("  }");
+      ps.println("  ");
+    }
+    else {
+      ps.println("  public " + className + "()");
+      ps.println("  {");
+      ps.println("    this.resourceType = \"" + objectName + "\";");
+      ps.println("  }");
+      ps.println("  ");
+    }
+    for(int j = 0; j < fields.size(); j++) {
+      String field    = fields.get(j);
+      String fhirType = getTypeField(mapSchema, objectName, field);
+      int lastDot = fhirType.lastIndexOf('.');
+      if(lastDot > 0) {
+        fhirType = fhirType.substring(lastDot + 1);
+      }
+      if(fhirType.equals("Reference")) {
+        fhirType = "Reference<Resource>";
+      }
+      else if(fhirType.equals("Reference[]")) {
+        fhirType = "Reference<Resource>[]";
+      }
+      String methodField = null;
+      if(field.length() > 1) {
+        methodField = field.substring(0, 1).toUpperCase() + field.substring(1);
+      }
+      else {
+        methodField = field.toUpperCase();
+      }
+      
+      ps.println("  public " + fhirType + " get" + methodField + "() {");
+      ps.println("    return " + field + ";");
+      ps.println("  }");
+      ps.println("  ");
+      ps.println("  public void set" + methodField + "(" + fhirType + " " + field + ") {");
+      ps.println("    this." + field + "=" + field + ";");
+      ps.println("  }");
+      ps.println("  ");
+    }
+    ps.println("  @Override");
+    ps.println("  public boolean equals(Object object) {");
+    ps.println("    if(object instanceof " + className + ") {");
+    ps.println("      return this.hashCode() == object.hashCode();");
+    ps.println("    }");
+    ps.println("    return false;");
+    ps.println("  }");
+    ps.println("  ");
+    ps.println("  @Override");
+    ps.println("  public int hashCode() {");
+    ps.println("    if(id == null) return 0;");
+    ps.println("    return id.hashCode();");
+    ps.println("  }");
+    ps.println("  ");
+    ps.println("  @Override");
+    ps.println("  public String toString() {");
+    ps.println("    return \"" + className + "(\" + id + \")\";");
+    ps.println("  }");
+    ps.println("}");
+    
+    if(!ps.equals(System.out)) {
+      try { ps.close(); } catch(Exception ex) {}
+    }
   }
   
   protected
@@ -397,7 +556,6 @@ class TestWFHIR extends TestCase
   
   protected static
   List<String> getObjectFields(Map<String, Object> mapSchema, String objName)
-    throws Exception
   {
     Map<String, Object> definitions = getMap(mapSchema, "definitions");
     
@@ -407,8 +565,36 @@ class TestWFHIR extends TestCase
   }
   
   protected static
+  String getObjectDescription(Map<String, Object> mapSchema, String objName, String sDefault)
+  {
+    Map<String, Object> definitions = getMap(mapSchema, "definitions");
+    
+    Map<String, Object> resourceDef = getMap(definitions, objName);
+    
+    String sResult = null;
+    
+    Object description = resourceDef.get("description");
+    
+    if(description instanceof String) {
+      sResult = (String) description;
+      sResult = sResult.replace('\n', ' ');
+    }
+    
+    if(sResult == null || sResult.length() == 0) {
+      return sDefault;
+    }
+    
+    return sResult;
+  }
+  
+  protected static
   String getTypeField(Map<String, Object> mapSchema, String objName, String fieldName)
-    throws Exception
+  {
+    return getTypeField(mapSchema, objName, fieldName, null);
+  }
+  
+  protected static
+  String getTypeField(Map<String, Object> mapSchema, String objName, String fieldName, List<String> backboneElements)
   {
     Map<String, Object> definitions = getMap(mapSchema, "definitions");
     
@@ -416,21 +602,170 @@ class TestWFHIR extends TestCase
     
     Map<String, Object> properties = getMap(resourceDef, "properties");
     
-    Map<String, Object> fieldDef = getMap(properties, fieldName);
-    
-    Object result = fieldDef.get("type");
-    
-    if(result instanceof String) {
-      return (String) result;
+    if(fieldName.endsWith("_")) {
+      fieldName = fieldName.substring(0, fieldName.length()-1);
     }
     
-    return null;
+    Map<String, Object> fieldDef = getMap(properties, fieldName);
+    
+    String fhirType = "";
+    
+    Object type = fieldDef.get("type");
+    if(type instanceof String) {
+      fhirType = (String) type;
+      
+      if(fhirType.equals("array")) {
+        String itemType = null;
+        Map<String, Object> items = getMap(fieldDef, "items");
+        Object ref = items.get("$ref");
+        if(ref instanceof String) {
+          itemType = (String) ref;
+          if(itemType.length() > 0) {
+            int sep = itemType.lastIndexOf('/');
+            if(sep >= 0) {
+              itemType = itemType.substring(sep + 1);
+            }
+          }
+        }
+        else {
+          Object enumValues = items.get("enum");
+          if(enumValues != null) {
+            itemType = "string";
+          }
+        }
+        
+        if(itemType.indexOf('_') > 0) {
+          if(backboneElements != null) {
+            if(!backboneElements.contains(itemType)) {
+              backboneElements.add(itemType);
+            }
+          }
+        }
+        
+        return getClassName(itemType) + "[]";
+      }
+      
+      if(fhirType.equals("string")) {
+        Object pattern = fieldDef.get("pattern");
+        if(pattern instanceof String) {
+          String sPattern = (String) pattern;
+          if(sPattern.startsWith("^([0")) {
+            return "java.util.Date";
+          }
+        }
+      }
+    }
+    else {
+      Object ref = fieldDef.get("$ref");
+      if(ref instanceof String) {
+        fhirType = (String) ref;
+        if(fhirType.length() > 0) {
+          int sep = fhirType.lastIndexOf('/');
+          if(sep >= 0) {
+            fhirType = fhirType.substring(sep + 1);
+          }
+        }
+      }
+      else {
+        Object enumValues = fieldDef.get("enum");
+        if(enumValues != null) {
+          fhirType = "string";
+        }
+      }
+    }
+    
+    if(fhirType.indexOf('_') > 0) {
+      if(backboneElements != null) {
+        if(!backboneElements.contains(fhirType)) {
+          backboneElements.add(fhirType);
+        }
+      }
+    }
+    
+    return getClassName(fhirType);
+  }
+  
+  protected static
+  String getClassName(String fhirType) 
+  {
+    if(fhirType == null || fhirType.length() == 0 || fhirType.equals("*")) {
+      return "java.lang.Object";
+    }
+    
+    char c0 = fhirType.charAt(0);
+    if(Character.isUpperCase(c0)) {
+      StringBuilder sbClassName = new StringBuilder(fhirType.length());
+      for(int i = 0; i < fhirType.length(); i++) {
+        char ci = fhirType.charAt(i);
+        if(ci == '_') continue;
+        sbClassName.append(ci);
+      }
+      return "org.dew.fhir.model." + sbClassName;
+    }
+    
+    if(fhirType.equalsIgnoreCase("string")) {
+      return "java.lang.String";
+    }
+    else if(fhirType.equalsIgnoreCase("id")) {
+      return "java.lang.String";
+    }
+    else if(fhirType.equalsIgnoreCase("uri")) {
+      return "java.lang.String";
+    }
+    else if(fhirType.equalsIgnoreCase("url")) {
+      return "java.lang.String";
+    }
+    else if(fhirType.equalsIgnoreCase("markdown")) {
+      return "java.lang.String";
+    }
+    else if(fhirType.equalsIgnoreCase("uuid")) {
+      return "java.lang.String";
+    }
+    else if(fhirType.equalsIgnoreCase("oid")) {
+      return "java.lang.String";
+    }
+    else if(fhirType.equalsIgnoreCase("code")) {
+      return "java.lang.String";
+    }
+    else if(fhirType.equalsIgnoreCase("canonical")) {
+      return "java.lang.String";
+    }
+    else if(fhirType.equalsIgnoreCase("boolean")) {
+      return "java.lang.Boolean";
+    }
+    if(fhirType.equalsIgnoreCase("number")) {
+      return "java.lang.Integer";
+    }
+    else if(fhirType.equalsIgnoreCase("integer")) {
+      return "java.lang.Integer";
+    }
+    else if(fhirType.equalsIgnoreCase("positiveInt")) {
+      return "java.lang.Integer";
+    }
+    else if(fhirType.equalsIgnoreCase("unsignedInt")) {
+      return "java.lang.Integer";
+    }
+    else if(fhirType.equalsIgnoreCase("decimal")) {
+      return "java.lang.Double";
+    }
+    else if(fhirType.equalsIgnoreCase("instant")) {
+      return "java.util.Date";
+    }
+    else if(fhirType.equalsIgnoreCase("date")) {
+      return "java.util.Date";
+    }
+    else if(fhirType.equalsIgnoreCase("dateTime")) {
+      return "java.util.Date";
+    }
+    else if(fhirType.equalsIgnoreCase("time")) {
+      return "java.util.Date";
+    }
+    return "java.lang.String";
   }
   
   @SuppressWarnings("unchecked")
   protected static
   Map<String, Object> getMap(Map<String, Object> map, String key)
-    throws Exception
   {
     if(map == null) return new HashMap<String, Object>();
     Object result = map.get(key);
@@ -442,7 +777,6 @@ class TestWFHIR extends TestCase
   
   protected static
   List<String> getFields(Map<String, Object> map, String key)
-    throws Exception
   {
     Map<String, Object> mapResult = getMap(map, key);
     
@@ -476,5 +810,26 @@ class TestWFHIR extends TestCase
     }
     
     return result;
+  }
+  
+  protected static
+  PrintStream getPrintStream(String folder, String fileName)
+  {
+    if(folder == null || folder.length() == 0) {
+      return System.out;
+    }
+    if(fileName == null || fileName.length() == 0) {
+      return System.out;
+    }
+    String filePath = folder + File.separator + fileName;
+    
+    try{
+      FileOutputStream fileoutputstream = new FileOutputStream(filePath, false);
+      return new PrintStream(fileoutputstream, true);
+    }
+    catch(FileNotFoundException ex){
+      ex.printStackTrace();
+    }
+    return System.out;
   }
 }

@@ -15,7 +15,7 @@ class Group extends DomainResource implements Serializable
   
   protected Identifier[] identifier;
   protected Boolean active;
-  protected CodeableConcept type;
+  protected String type;
   protected Boolean actual;
   protected CodeableConcept code;
   protected String name;
@@ -67,7 +67,7 @@ class Group extends DomainResource implements Serializable
     return active;
   }
 
-  public CodeableConcept getType() {
+  public String getType() {
     return type;
   }
 
@@ -107,7 +107,7 @@ class Group extends DomainResource implements Serializable
     this.active = active;
   }
 
-  public void setType(CodeableConcept type) {
+  public void setType(String type) {
     this.type = type;
   }
 

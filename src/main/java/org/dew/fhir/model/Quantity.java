@@ -9,15 +9,11 @@ import java.io.Serializable;
  * @see <a href="https://www.hl7.org/fhir/datatypes.html#Quantity">Quantity</a>
  */
 public 
-class Quantity extends Element implements Serializable
+class Quantity extends SimpleQuantity implements Serializable
 {
-  private static final long serialVersionUID = 3100779512737121858L;
-
-  protected Double value;
+  private static final long serialVersionUID = 2765287881482953882L;
+  
   protected String comparator;
-  protected String unit;
-  protected String system;
-  protected String code;
   
   public Quantity()
   {
@@ -55,48 +51,6 @@ class Quantity extends Element implements Serializable
 
   public String getComparator() {
     return comparator;
-  }
-
-  public String getUnit() {
-    return unit;
-  }
-
-  public String getSystem() {
-    return system;
-  }
-
-  public String getCode() {
-    return code;
-  }
-
-  public void setValue(Double value) {
-    this.value = value;
-  }
-
-  public void setComparator(String comparator) {
-    this.comparator = comparator;
-  }
-
-  public void setUnit(String unit) {
-    this.unit = unit;
-  }
-
-  public void setSystem(String system) {
-    this.system = system;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-  
-  public int intValue() {
-    if(value == null) return 0;
-    return value.intValue();
-  }
-  
-  public double doubleValue() {
-    if(value == null) return 0.0d;
-    return value.doubleValue();
   }
 
   @Override
