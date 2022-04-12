@@ -16,11 +16,13 @@ class FHIRClient<T extends Resource> implements IFHIRService<T>
 {
   protected String base;
   protected String type;
+  protected WHttp whttp;
   
   public FHIRClient(String base, String type)
   {
     this.base = base;
     this.type = type;
+    this.whttp = new WHttp(base);
   }
 
   public String getBase() {

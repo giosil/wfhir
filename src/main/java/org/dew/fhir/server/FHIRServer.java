@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.dew.fhir.model.Resource;
 import org.dew.fhir.services.FHIRRequest;
 import org.dew.fhir.services.FHIRResponse;
+import org.dew.fhir.services.FHIRServices;
 
 /**
  * 
@@ -20,6 +21,8 @@ public
 class FHIRServer extends HttpServlet 
 {
   private static final long serialVersionUID = -8635635498516268187L;
+  
+  protected FHIRServices services = new FHIRServices();
   
   @Override
   public 
