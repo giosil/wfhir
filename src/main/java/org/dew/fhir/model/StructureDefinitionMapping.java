@@ -11,9 +11,9 @@ import java.io.Serializable;
 public 
 class StructureDefinitionMapping extends BackboneElement implements Serializable
 {
-  private static final long serialVersionUID = -3159756750284289434L;
+  private static final long serialVersionUID = 854207996827387815L;
   
-  protected Identifier identity;
+  protected String identity;
   protected String uri;
   protected String name;
   protected String comment;
@@ -21,8 +21,8 @@ class StructureDefinitionMapping extends BackboneElement implements Serializable
   public StructureDefinitionMapping()
   {
   }
-
-  public Identifier getIdentity() {
+  
+  public String getIdentity() {
     return identity;
   }
 
@@ -38,7 +38,7 @@ class StructureDefinitionMapping extends BackboneElement implements Serializable
     return comment;
   }
 
-  public void setIdentity(Identifier identity) {
+  public void setIdentity(String identity) {
     this.identity = identity;
   }
 
@@ -53,7 +53,7 @@ class StructureDefinitionMapping extends BackboneElement implements Serializable
   public void setComment(String comment) {
     this.comment = comment;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof StructureDefinitionMapping) {

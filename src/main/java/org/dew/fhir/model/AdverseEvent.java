@@ -13,7 +13,7 @@ import java.util.Date;
 public 
 class AdverseEvent extends DomainResource implements Serializable 
 {
-  private static final long serialVersionUID = -452854700260594249L;
+  private static final long serialVersionUID = -5399533306663677632L;
   
   protected Identifier identifier;
   protected String actuality;

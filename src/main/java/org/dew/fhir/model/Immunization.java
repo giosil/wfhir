@@ -13,7 +13,7 @@ import java.util.Date;
 public 
 class Immunization extends DomainResource implements Serializable
 {
-  private static final long serialVersionUID = 5906221377585720374L;
+  private static final long serialVersionUID = 3698942683423313510L;
   
   protected Identifier[] identifier;
   protected String status;
@@ -32,7 +32,7 @@ class Immunization extends DomainResource implements Serializable
   protected Date expirationDate;
   protected CodeableConcept site;
   protected CodeableConcept route;
-  protected SimpleQuantity doseQuantity;
+  protected Quantity doseQuantity;
   protected ImmunizationPerformer[] performer;
   protected Annotation[] note;
   protected CodeableConcept[] reasonCode;
@@ -49,7 +49,7 @@ class Immunization extends DomainResource implements Serializable
   {
     this.resourceType = "Immunization";
   }
-
+  
   public Identifier[] getIdentifier() {
     return identifier;
   }
@@ -118,7 +118,7 @@ class Immunization extends DomainResource implements Serializable
     return route;
   }
 
-  public SimpleQuantity getDoseQuantity() {
+  public Quantity getDoseQuantity() {
     return doseQuantity;
   }
 
@@ -234,7 +234,7 @@ class Immunization extends DomainResource implements Serializable
     this.route = route;
   }
 
-  public void setDoseQuantity(SimpleQuantity doseQuantity) {
+  public void setDoseQuantity(Quantity doseQuantity) {
     this.doseQuantity = doseQuantity;
   }
 
@@ -281,7 +281,7 @@ class Immunization extends DomainResource implements Serializable
   public void setProtocolApplied(ImmunizationProtocolApplied[] protocolApplied) {
     this.protocolApplied = protocolApplied;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof Immunization) {

@@ -15,7 +15,7 @@ import java.util.Date;
 public 
 class MedicationDispense extends DomainResource implements Serializable 
 {
-  private static final long serialVersionUID = -7323425650436102988L;
+  private static final long serialVersionUID = -5947707937356058374L;
   
   protected Identifier[] identifier;
   protected Reference<Procedure>[] partOf;
@@ -32,8 +32,8 @@ class MedicationDispense extends DomainResource implements Serializable
   protected Reference<Location> location;
   protected Reference<MedicationRequest>[] authorizingPrescription;
   protected CodeableConcept type;
-  protected SimpleQuantity quantity;
-  protected SimpleQuantity daysSupply;
+  protected Quantity quantity;
+  protected Quantity daysSupply;
   protected Date whenPrepared;
   protected Date whenHandedOver;
   protected Reference<Location> destination;
@@ -109,11 +109,11 @@ class MedicationDispense extends DomainResource implements Serializable
     return type;
   }
 
-  public SimpleQuantity getQuantity() {
+  public Quantity getQuantity() {
     return quantity;
   }
 
-  public SimpleQuantity getDaysSupply() {
+  public Quantity getDaysSupply() {
     return daysSupply;
   }
 
@@ -213,11 +213,11 @@ class MedicationDispense extends DomainResource implements Serializable
     this.type = type;
   }
 
-  public void setQuantity(SimpleQuantity quantity) {
+  public void setQuantity(Quantity quantity) {
     this.quantity = quantity;
   }
 
-  public void setDaysSupply(SimpleQuantity daysSupply) {
+  public void setDaysSupply(Quantity daysSupply) {
     this.daysSupply = daysSupply;
   }
 

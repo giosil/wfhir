@@ -13,7 +13,7 @@ import java.util.Date;
 public 
 class PlanDefinitionAction extends BackboneElement implements Serializable 
 {
-  private static final long serialVersionUID = 1675108252294111860L;
+  private static final long serialVersionUID = -2412387348567322242L;
   
   protected String prefix;
   protected String title;
@@ -23,7 +23,7 @@ class PlanDefinitionAction extends BackboneElement implements Serializable
   protected CodeableConcept[] code;
   protected CodeableConcept[] reason;
   protected RelatedArtifact[] documentation;
-  protected String goalId;
+  protected String[] goalId;
   protected CodeableConcept subjectCodeableConcept;
   protected Reference<Group> subjectReference;
   protected TriggerDefinition[] trigger;
@@ -53,7 +53,7 @@ class PlanDefinitionAction extends BackboneElement implements Serializable
   public PlanDefinitionAction()
   {
   }
-
+  
   public String getPrefix() {
     return prefix;
   }
@@ -86,7 +86,7 @@ class PlanDefinitionAction extends BackboneElement implements Serializable
     return documentation;
   }
 
-  public String getGoalId() {
+  public String[] getGoalId() {
     return goalId;
   }
 
@@ -222,7 +222,7 @@ class PlanDefinitionAction extends BackboneElement implements Serializable
     this.documentation = documentation;
   }
 
-  public void setGoalId(String goalId) {
+  public void setGoalId(String[] goalId) {
     this.goalId = goalId;
   }
 
@@ -325,7 +325,7 @@ class PlanDefinitionAction extends BackboneElement implements Serializable
   public void setAction(PlanDefinitionAction[] action) {
     this.action = action;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof PlanDefinitionAction) {

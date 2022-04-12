@@ -11,23 +11,23 @@ import java.io.Serializable;
 public 
 class EncounterLocation extends BackboneElement implements Serializable
 {
-  private static final long serialVersionUID = -7701460222040263535L;
-
+  private static final long serialVersionUID = 1762402781608774773L;
+  
   protected Reference<Location> location;
-  protected String code;
+  protected String status;
   protected CodeableConcept physicalType;
   protected Period period;
   
   public EncounterLocation()
   {
   }
-
+  
   public Reference<Location> getLocation() {
     return location;
   }
 
-  public String getCode() {
-    return code;
+  public String getStatus() {
+    return status;
   }
 
   public CodeableConcept getPhysicalType() {
@@ -42,8 +42,8 @@ class EncounterLocation extends BackboneElement implements Serializable
     this.location = location;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setStatus(String status) {
+    this.status = status;
   }
 
   public void setPhysicalType(CodeableConcept physicalType) {
@@ -53,7 +53,7 @@ class EncounterLocation extends BackboneElement implements Serializable
   public void setPeriod(Period period) {
     this.period = period;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof EncounterLocation) {

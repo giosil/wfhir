@@ -11,11 +11,11 @@ import java.io.Serializable;
 public 
 class TaskRestriction extends BackboneElement implements Serializable 
 {
-  private static final long serialVersionUID = 7043155192561568077L;
+  private static final long serialVersionUID = 1969251168343865896L;
   
   protected Integer repetitions;
   protected Period period;
-  protected Reference<Resource> recipient;
+  protected Reference<Resource>[] recipient;
   
   public TaskRestriction()
   {
@@ -32,13 +32,6 @@ class TaskRestriction extends BackboneElement implements Serializable
     this.period = period;
   }
   
-  public TaskRestriction(int repetitions, Period period, Reference<Resource> recipient)
-  {
-    this.repetitions = repetitions;
-    this.period = period;
-    this.recipient = recipient;
-  }
-
   public Integer getRepetitions() {
     return repetitions;
   }
@@ -47,7 +40,7 @@ class TaskRestriction extends BackboneElement implements Serializable
     return period;
   }
 
-  public Reference<Resource> getRecipient() {
+  public Reference<Resource>[] getRecipient() {
     return recipient;
   }
 
@@ -59,10 +52,10 @@ class TaskRestriction extends BackboneElement implements Serializable
     this.period = period;
   }
 
-  public void setRecipient(Reference<Resource> recipient) {
+  public void setRecipient(Reference<Resource>[] recipient) {
     this.recipient = recipient;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof TaskRestriction) {

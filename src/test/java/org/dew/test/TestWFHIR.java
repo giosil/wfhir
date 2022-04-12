@@ -1,26 +1,23 @@
 package org.dew.test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.lang.reflect.Method;
-
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import org.dew.fhir.json.JSON;
-import org.dew.fhir.model.*;
+import org.dew.fhir.model.Address;
+import org.dew.fhir.model.CodeableConcept;
+import org.dew.fhir.model.Coding;
+import org.dew.fhir.model.ContactDetail;
+import org.dew.fhir.model.ContactPoint;
+import org.dew.fhir.model.Element;
+import org.dew.fhir.model.Identifier;
+import org.dew.fhir.model.Narrative;
+import org.dew.fhir.model.Organization;
+import org.dew.fhir.model.ValueSet;
+import org.dew.fhir.model.ValueSetCompose;
+import org.dew.fhir.model.ValueSetComposeInclude;
 
+import org.dew.fhir.util.FHIRSchema;
 import org.dew.fhir.util.FHIRUtil;
 
 import junit.framework.Test;
@@ -30,34 +27,6 @@ import junit.framework.TestSuite;
 public 
 class TestWFHIR extends TestCase 
 {
-  public static final String[] ALL_OBJECTS = {"Account","ActivityDefinition","AdverseEvent","AllergyIntolerance","Appointment","AppointmentResponse","AuditEvent","Basic",
-      "Binary","BiologicallyDerivedProduct","BodyStructure","Bundle","CapabilityStatement","CarePlan","CareTeam","CatalogEntry","ChargeItem",
-      "ChargeItemDefinition","Claim","ClaimResponse","ClinicalImpression","CodeSystem","Communication","CommunicationRequest",
-      "CompartmentDefinition","Composition","ConceptMap","Condition","Consent","Contract","Coverage","CoverageEligibilityRequest",
-      "CoverageEligibilityResponse","DetectedIssue","Device","DeviceDefinition","DeviceMetric","DeviceRequest","DeviceUseStatement",
-      "DiagnosticReport","DocumentManifest","DocumentReference","EffectEvidenceSynthesis","Encounter","Endpoint","EnrollmentRequest",
-      "EnrollmentResponse","EpisodeOfCare","EventDefinition","Evidence","EvidenceVariable","ExampleScenario","ExplanationOfBenefit",
-      "FamilyMemberHistory","Flag","Goal","GraphDefinition","Group","GuidanceResponse","HealthcareService","ImagingStudy","Immunization",
-      "ImmunizationEvaluation","ImmunizationRecommendation","ImplementationGuide","InsurancePlan","Invoice","Library","Linkage","List",
-      "Location","Measure","MeasureReport","Media","Medication","MedicationAdministration","MedicationDispense","MedicationKnowledge",
-      "MedicationRequest","MedicationStatement","MedicinalProduct","MedicinalProductAuthorization","MedicinalProductContraindication",
-      "MedicinalProductIndication","MedicinalProductIngredient","MedicinalProductInteraction","MedicinalProductManufactured","MedicinalProductPackaged",
-      "MedicinalProductPharmaceutical","MedicinalProductUndesirableEffect","MessageDefinition","MessageHeader","MolecularSequence","NamingSystem",
-      "NutritionOrder","Observation","ObservationDefinition","OperationDefinition","OperationOutcome","Organization","OrganizationAffiliation",
-      "Parameters","Patient","PaymentNotice","PaymentReconciliation","Person","PlanDefinition","Practitioner","PractitionerRole","Procedure",
-      "Provenance","Questionnaire","QuestionnaireResponse","RelatedPerson","RequestGroup","ResearchDefinition","ResearchElementDefinition",
-      "ResearchStudy","ResearchSubject","RiskAssessment","RiskEvidenceSynthesis","Schedule","SearchParameter","ServiceRequest","Slot",
-      "Specimen","SpecimenDefinition","StructureDefinition","StructureMap","Subscription","Substance","SubstanceNucleicAcid","SubstancePolymer",
-      "SubstanceProtein","SubstanceReferenceInformation","SubstanceSourceMaterial","SubstanceSpecification","SupplyDelivery","SupplyRequest","Task",
-      "TerminologyCapabilities","TestReport","TestScript","ValueSet","VerificationResult","VisionPrescription"};
-  
-  //                                           DomainResource                                         Resource
-  public static final String[] BASE_FIELDS = {"text", "contained", "extension", "modifierExtension", "id", "meta", "implicitRules", "language", "resourceType"};
-
-  public static final String[] KEYWORDS = {"class", "abstract", "for"};
-  
-  public static final String SRC_FOLDER = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "src";
-
   public TestWFHIR(String testName) {
     super(testName);
   }
@@ -69,13 +38,13 @@ class TestWFHIR extends TestCase
   public 
   void testApp() 
   {
-    example();
+    checkModel(false, false);
     
-    // buildJavaClasses(SRC_FOLDER, checkModel());
+    example();
   }
   
   public 
-  void example() 
+  void example()
   {
     try {
       Organization res = new Organization("asl-120201", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
@@ -237,599 +206,132 @@ class TestWFHIR extends TestCase
   }
   
   protected
-  List<String> checkModel()
+  List<String> checkModel(boolean traceObj, boolean traceFld)
   {
-    List<String> missingObj   = new ArrayList<String>();
-    List<String> missingFld   = new ArrayList<String>();
-    List<String> incorrectFld = new ArrayList<String>();
-    int countObj = 0;
+    List<String> missingObj = new ArrayList<String>();
+    List<String> missingFld = new ArrayList<String>();
+    List<String> invalidFld = new ArrayList<String>();
+    List<String> bbElements = new ArrayList<String>();
     
-    Map<String, Object> mapSchema = loadSchema();
+    FHIRSchema fhirSchema = new FHIRSchema();
     
-    for(int i = 0; i < ALL_OBJECTS.length; i++) {
-      String objectName = ALL_OBJECTS[i];
-      try {
-        Class<?> objectClass = Class.forName("org.dew.fhir.model." + objectName);
-        System.out.println(objectName);
-        countObj++;
+    List<String> listResources = fhirSchema.getAllResources();
+    
+    if(listResources == null || listResources.size() == 0) {
+      System.out.println("No resources available");
+      return missingObj;
+    }
+    
+    for(int i = 0; i < listResources.size(); i++) {
+      String objectName = listResources.get(i);
+      
+      Class<?> objectClass = fhirSchema.getClassOf(objectName);
+      if(objectClass == null) {
+        if(traceObj) System.out.println(objectName + " (missing)");
+        missingObj.add(objectName);
+        continue;
+      }
+      
+      if(traceObj) System.out.println(objectName);
+      
+      List<String> fields = fhirSchema.getFields(objectName);
+      if(fields == null || fields.size() == 0) {
+        if(traceFld) System.out.println("  No fields available");
+        continue;
+      }
+      
+      for(int j = 0; j < fields.size(); j++) {
+        String field    = fields.get(j);
+        String fhirType = fhirSchema.getType(objectName, field, bbElements);
         
-        Method[] methods = objectClass.getMethods();
+        if(fhirType == null || fhirType.length() == 0) {
+          if(traceFld) System.out.println("  " + rpad(field, ' ', 25) + rpad("?", ' ', 80) + " (no type available)");
+          continue;
+        }
         
-        if(mapSchema != null) {
-          List<String> fields = getObjectFields(mapSchema, objectName);
+        String classType = fhirSchema.getClassType(objectClass, field);
+        if(classType == null) {
+          if(traceFld) System.out.println("  " + rpad(field, ' ', 25) + rpad(fhirType, ' ', 80) + " (missing)");
+          missingFld.add(objectName + "." + field);
+          continue;
+        }
+        
+        if(!fhirType.equals(classType)) {
+          String note = " (schema=" + fhirType + ", class=" + classType + ")";
+          invalidFld.add(objectName + "." + field + " " + note);
           
-          if(fields != null && fields.size() > 0) {
-            for(int j = 0; j < fields.size(); j++) {
-              String field    = fields.get(j);
-              String fhirType = null;
-              String javaType = null;
-              
-              String getMethod = null;
-              if(field.length() > 1) {
-                getMethod = "get" + field.substring(0, 1).toUpperCase() + field.substring(1);
-              }
-              else {
-                getMethod = "get" + field.toUpperCase();
-              }
-              
-              boolean found = false;
-              String fiedNote = "";
-              for(int k = 0; k < methods.length; k++) {
-                Method method = methods[k];
-                String methodName = method.getName();
-                
-                if(methodName.equals(getMethod)) {
-                  found = true;
-                  
-                  Class<?> returnType = method.getReturnType();
-                  
-                  fhirType = getTypeField(mapSchema, objectName, field);
-                  javaType = returnType == null ? "void" : returnType.getCanonicalName();
-                  
-                  if(!fhirType.equals(javaType)) {
-                    if(fhirType.equals("org.dew.fhir.model.Quantity")) {
-                      if(!javaType.equals("org.dew.fhir.model.SimpleQuantity")) {
-                        fiedNote = " (fhirType=" + fhirType + ", javaType=" + javaType + ")";
-                        incorrectFld.add(objectName + "." + field + " " + fiedNote);
-                      }
-                    }
-                    else {
-                      fiedNote = " (fhirType=" + fhirType + ", javaType=" + javaType + ")";
-                      incorrectFld.add(objectName + "." + field + " " + fiedNote);
-                    }
-                  }
-                  
-                  break;
-                }
-              }
-              
-              if(found) {
-                System.out.println("\t" + field + "\t" + fhirType + "\t" + javaType + "\t" + fiedNote);
-              }
-              else {
-                System.out.println("\t" + field + "\t " + fhirType + "\t" + javaType + "\t" + " (missing)");
-                missingFld.add(objectName + "." + field);
-              }
-            }
-          }
+          if(traceFld) System.out.println("  " + rpad(field, ' ', 25) + rpad(fhirType, ' ', 80) + " (incorrect: " + classType + ")");
+        }
+        else {
+          if(traceFld) System.out.println("  " + rpad(field, ' ', 25) + rpad(fhirType, ' ', 80));
         }
       }
-      catch(Exception ex) {
-        System.out.println(objectName + " (missing)");
-        missingObj.add(objectName);
+    }
+    if(traceObj || traceFld) System.out.println();
+    
+    // Check backboneElements
+    for(int i = 0; i < bbElements.size(); i++) {
+      String backboneElement = bbElements.get(i);
+      
+      Class<?> objectClass = fhirSchema.getClassOf(backboneElement);
+      if(objectClass == null) {
+        continue;
+      }
+      
+      List<String> fields = fhirSchema.getFields(backboneElement);
+      if(fields == null || fields.size() == 0) {
+        continue;
+      }
+      
+      for(int j = 0; j < fields.size(); j++) {
+        String field    = fields.get(j);
+        String fhirType = fhirSchema.getType(backboneElement, field, bbElements);
+        
+        if(fhirType == null || fhirType.length() == 0) {
+          continue;
+        }
+        
+        String classType = fhirSchema.getClassType(objectClass, field);
+        if(classType == null) {
+          missingFld.add(backboneElement + "." + field + " *");
+          continue;
+        }
+        
+        if(!fhirType.equals(classType)) {
+          String note = " (schema=" + fhirType + ", class=" + classType + ")";
+          invalidFld.add(backboneElement + "." + field + " " + note + " *");
+        }
       }
     }
     
-    System.out.println("\n### Missing objects: ###\n");
+    System.out.println("### Missing objects [" + missingObj.size() + " of " + listResources.size() + "]: ###");
     for(int i = 0; i < missingObj.size(); i++) {
       System.out.println(missingObj.get(i));
     }
     
-    System.out.println("\n### Missing fields: ###\n");
+    System.out.println("### Missing fields [" + missingFld.size() + "]: ###");
     for(int i = 0; i < missingFld.size(); i++) {
       System.out.println(missingFld.get(i));
     }
     
-    System.out.println("\n### Incorrect fields: ###\n");
-    for(int i = 0; i < incorrectFld.size(); i++) {
-      System.out.println(incorrectFld.get(i));
+    System.out.println("### Invalid fields [" + invalidFld.size() + "]: ###");
+    for(int i = 0; i < invalidFld.size(); i++) {
+      System.out.println(invalidFld.get(i));
     }
-    
-    System.out.println("\nReport\n");
-    System.out.println("Implemented      : " + countObj);
-    System.out.println("Missing          : " + missingObj.size());
-    System.out.println("Missing fields   : " + missingFld.size());
-    System.out.println("Incorrect fields : " + incorrectFld.size());
     
     return missingObj;
   }
   
-  protected
-  void buildJavaClasses(String folder, List<String> objectNames)
+  public static
+  String rpad(String text, char c, int length)
   {
-    buildJavaClasses(folder, objectNames, null);
-  }
-  
-  protected
-  void buildJavaClasses(String folder, List<String> objectNames, List<String> backboneElements)
-  {
-    if(objectNames == null || objectNames.size() == 0) {
-      return;
-    }
-    for(int i = 0; i < objectNames.size(); i++) {
-      buildJavaClass(folder, objectNames.get(i), backboneElements);
-    }
-  }
-  
-  protected
-  void buildJavaClass(String folder, String objectName, List<String> backboneElements)
-  {
-    if(objectName == null || objectName.length() == 0) {
-      System.out.println("// [buildJavaClass] objectName = " + objectName);
-      return;
-    }
-    Map<String, Object> mapSchema = loadSchema();
-    if(mapSchema == null || mapSchema.isEmpty()) {
-      System.out.println("// [buildJavaClass] mapSchema = " + mapSchema);
-      return;
-    }
-    List<String> fields = getObjectFields(mapSchema, objectName);
-    if(fields == null || fields.size() == 0) {
-      System.out.println("// [buildJavaClass] fields = " + fields);
-      return;
-    }
-    if(backboneElements == null) {
-      backboneElements = new ArrayList<String>();
-    }
-    
-    boolean isBackboneElement = objectName.indexOf('_') > 0;
-    String className = objectName;
-    if(isBackboneElement) {
-      StringBuilder sbClassName = new StringBuilder(objectName.length());
-      for(int i = 0; i < objectName.length(); i++) {
-        char ci = objectName.charAt(i);
-        if(ci == '_') continue;
-        sbClassName.append(ci);
-      }
-      className = sbClassName.toString();
-    }
-    
-    PrintStream ps = getPrintStream(folder, className + ".java");
-    
-    String sDescription = getObjectDescription(mapSchema, objectName, "Bean " + objectName + ".");
-    
-    ps.println("package org.dew.fhir.model;");
-    ps.println();
-    ps.println("import java.io.Serializable;");
-    ps.println();
-    ps.println("import java.util.Date;");
-    ps.println();
-    ps.println("/**");
-    ps.println(" *");
-    ps.println(" * " + sDescription);
-    ps.println(" *");
-    ps.println(" * @see <a href=\"https://www.hl7.org/fhir\">" + objectName + "</a>");
-    ps.println(" *");
-    ps.println(" */");
-    ps.println("public");
-    if(isBackboneElement) {
-      ps.println("class " + className + " extends BackboneElement implements Serializable");
-    }
-    else {
-      ps.println("class " + className + " extends DomainResource implements Serializable");
-    }
-    ps.println("{");
-    
-    for(int j = 0; j < fields.size(); j++) {
-      String field    = fields.get(j);
-      
-      int sizeBackboneElements1 = backboneElements.size();
-      String fhirType = getTypeField(mapSchema, objectName, field, backboneElements);
-      int sizeBackboneElements2 = backboneElements.size();
-      
-      if(sizeBackboneElements1 != sizeBackboneElements2) {
-        buildJavaClass(folder, backboneElements.get(backboneElements.size()-1), backboneElements);
-      }
-      
-      int lastDot = fhirType.lastIndexOf('.');
-      if(lastDot > 0) {
-        fhirType = fhirType.substring(lastDot + 1);
-      }
-      if(fhirType.equals("Reference")) {
-        fhirType = "Reference<Resource>";
-      }
-      else if(fhirType.equals("Reference[]")) {
-        fhirType = "Reference<Resource>[]";
-      }
-      ps.println("  protected " + fhirType + " " + field + ";");
-    }
-    ps.println("  ");
-    if(isBackboneElement) {
-      ps.println("  public " + className + "()");
-      ps.println("  {");
-      ps.println("  }");
-      ps.println("  ");
-    }
-    else {
-      ps.println("  public " + className + "()");
-      ps.println("  {");
-      ps.println("    this.resourceType = \"" + objectName + "\";");
-      ps.println("  }");
-      ps.println("  ");
-    }
-    for(int j = 0; j < fields.size(); j++) {
-      String field    = fields.get(j);
-      String fhirType = getTypeField(mapSchema, objectName, field);
-      int lastDot = fhirType.lastIndexOf('.');
-      if(lastDot > 0) {
-        fhirType = fhirType.substring(lastDot + 1);
-      }
-      if(fhirType.equals("Reference")) {
-        fhirType = "Reference<Resource>";
-      }
-      else if(fhirType.equals("Reference[]")) {
-        fhirType = "Reference<Resource>[]";
-      }
-      String methodField = null;
-      if(field.length() > 1) {
-        methodField = field.substring(0, 1).toUpperCase() + field.substring(1);
-      }
-      else {
-        methodField = field.toUpperCase();
-      }
-      
-      ps.println("  public " + fhirType + " get" + methodField + "() {");
-      ps.println("    return " + field + ";");
-      ps.println("  }");
-      ps.println("  ");
-      ps.println("  public void set" + methodField + "(" + fhirType + " " + field + ") {");
-      ps.println("    this." + field + "=" + field + ";");
-      ps.println("  }");
-      ps.println("  ");
-    }
-    ps.println("  @Override");
-    ps.println("  public boolean equals(Object object) {");
-    ps.println("    if(object instanceof " + className + ") {");
-    ps.println("      return this.hashCode() == object.hashCode();");
-    ps.println("    }");
-    ps.println("    return false;");
-    ps.println("  }");
-    ps.println("  ");
-    ps.println("  @Override");
-    ps.println("  public int hashCode() {");
-    ps.println("    if(id == null) return 0;");
-    ps.println("    return id.hashCode();");
-    ps.println("  }");
-    ps.println("  ");
-    ps.println("  @Override");
-    ps.println("  public String toString() {");
-    ps.println("    return \"" + className + "(\" + id + \")\";");
-    ps.println("  }");
-    ps.println("}");
-    
-    if(!ps.equals(System.out)) {
-      try { ps.close(); } catch(Exception ex) {}
-    }
-  }
-  
-  protected
-  Map<String, Object> loadSchema()
-  {
-    Map<String, Object> result = null;
-    try {
-      byte[] fhir_schema = readFile("fhir.schema.json");
-      
-      result = JSON.parseObj(new String(fhir_schema));
-    }
-    catch(Exception ex) {
-      ex.printStackTrace();
-    }
-    
-    return result;
-  }
-  
-  protected static
-  byte[] readFile(String sFile)
-    throws Exception
-  {
-    int iFileSep = sFile.indexOf('/');
-    if(iFileSep < 0) iFileSep = sFile.indexOf('\\');
-    InputStream is = null;
-    if(iFileSep < 0) {
-      URL url = Thread.currentThread().getContextClassLoader().getResource(sFile);
-      is = url.openStream();
-    }
-    else {
-      is = new FileInputStream(sFile);
-    }
-    try {
-      int n;
-      ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      byte[] buff = new byte[1024];
-      while((n = is.read(buff)) > 0) baos.write(buff, 0, n);
-      return baos.toByteArray();
-    }
-    finally {
-      if(is != null) try{ is.close(); } catch(Exception ex) {}
-    }
-  }
-  
-  protected static
-  List<String> getObjectFields(Map<String, Object> mapSchema, String objName)
-  {
-    Map<String, Object> definitions = getMap(mapSchema, "definitions");
-    
-    Map<String, Object> resourceDef = getMap(definitions, objName);
-    
-    return getFields(resourceDef, "properties");
-  }
-  
-  protected static
-  String getObjectDescription(Map<String, Object> mapSchema, String objName, String sDefault)
-  {
-    Map<String, Object> definitions = getMap(mapSchema, "definitions");
-    
-    Map<String, Object> resourceDef = getMap(definitions, objName);
-    
-    String sResult = null;
-    
-    Object description = resourceDef.get("description");
-    
-    if(description instanceof String) {
-      sResult = (String) description;
-      sResult = sResult.replace('\n', ' ');
-    }
-    
-    if(sResult == null || sResult.length() == 0) {
-      return sDefault;
-    }
-    
-    return sResult;
-  }
-  
-  protected static
-  String getTypeField(Map<String, Object> mapSchema, String objName, String fieldName)
-  {
-    return getTypeField(mapSchema, objName, fieldName, null);
-  }
-  
-  protected static
-  String getTypeField(Map<String, Object> mapSchema, String objName, String fieldName, List<String> backboneElements)
-  {
-    Map<String, Object> definitions = getMap(mapSchema, "definitions");
-    
-    Map<String, Object> resourceDef = getMap(definitions, objName);
-    
-    Map<String, Object> properties = getMap(resourceDef, "properties");
-    
-    if(fieldName.endsWith("_")) {
-      fieldName = fieldName.substring(0, fieldName.length()-1);
-    }
-    
-    Map<String, Object> fieldDef = getMap(properties, fieldName);
-    
-    String fhirType = "";
-    
-    Object type = fieldDef.get("type");
-    if(type instanceof String) {
-      fhirType = (String) type;
-      
-      if(fhirType.equals("array")) {
-        String itemType = null;
-        Map<String, Object> items = getMap(fieldDef, "items");
-        Object ref = items.get("$ref");
-        if(ref instanceof String) {
-          itemType = (String) ref;
-          if(itemType.length() > 0) {
-            int sep = itemType.lastIndexOf('/');
-            if(sep >= 0) {
-              itemType = itemType.substring(sep + 1);
-            }
-          }
-        }
-        else {
-          Object enumValues = items.get("enum");
-          if(enumValues != null) {
-            itemType = "string";
-          }
-        }
-        
-        if(itemType.indexOf('_') > 0) {
-          if(backboneElements != null) {
-            if(!backboneElements.contains(itemType)) {
-              backboneElements.add(itemType);
-            }
-          }
-        }
-        
-        return getClassName(itemType) + "[]";
-      }
-      
-      if(fhirType.equals("string")) {
-        Object pattern = fieldDef.get("pattern");
-        if(pattern instanceof String) {
-          String sPattern = (String) pattern;
-          if(sPattern.startsWith("^([0")) {
-            return "java.util.Date";
-          }
-        }
-      }
-    }
-    else {
-      Object ref = fieldDef.get("$ref");
-      if(ref instanceof String) {
-        fhirType = (String) ref;
-        if(fhirType.length() > 0) {
-          int sep = fhirType.lastIndexOf('/');
-          if(sep >= 0) {
-            fhirType = fhirType.substring(sep + 1);
-          }
-        }
-      }
-      else {
-        Object enumValues = fieldDef.get("enum");
-        if(enumValues != null) {
-          fhirType = "string";
-        }
-      }
-    }
-    
-    if(fhirType.indexOf('_') > 0) {
-      if(backboneElements != null) {
-        if(!backboneElements.contains(fhirType)) {
-          backboneElements.add(fhirType);
-        }
-      }
-    }
-    
-    return getClassName(fhirType);
-  }
-  
-  protected static
-  String getClassName(String fhirType) 
-  {
-    if(fhirType == null || fhirType.length() == 0 || fhirType.equals("*")) {
-      return "java.lang.Object";
-    }
-    
-    char c0 = fhirType.charAt(0);
-    if(Character.isUpperCase(c0)) {
-      StringBuilder sbClassName = new StringBuilder(fhirType.length());
-      for(int i = 0; i < fhirType.length(); i++) {
-        char ci = fhirType.charAt(i);
-        if(ci == '_') continue;
-        sbClassName.append(ci);
-      }
-      return "org.dew.fhir.model." + sbClassName;
-    }
-    
-    if(fhirType.equalsIgnoreCase("string")) {
-      return "java.lang.String";
-    }
-    else if(fhirType.equalsIgnoreCase("id")) {
-      return "java.lang.String";
-    }
-    else if(fhirType.equalsIgnoreCase("uri")) {
-      return "java.lang.String";
-    }
-    else if(fhirType.equalsIgnoreCase("url")) {
-      return "java.lang.String";
-    }
-    else if(fhirType.equalsIgnoreCase("markdown")) {
-      return "java.lang.String";
-    }
-    else if(fhirType.equalsIgnoreCase("uuid")) {
-      return "java.lang.String";
-    }
-    else if(fhirType.equalsIgnoreCase("oid")) {
-      return "java.lang.String";
-    }
-    else if(fhirType.equalsIgnoreCase("code")) {
-      return "java.lang.String";
-    }
-    else if(fhirType.equalsIgnoreCase("canonical")) {
-      return "java.lang.String";
-    }
-    else if(fhirType.equalsIgnoreCase("boolean")) {
-      return "java.lang.Boolean";
-    }
-    if(fhirType.equalsIgnoreCase("number")) {
-      return "java.lang.Integer";
-    }
-    else if(fhirType.equalsIgnoreCase("integer")) {
-      return "java.lang.Integer";
-    }
-    else if(fhirType.equalsIgnoreCase("positiveInt")) {
-      return "java.lang.Integer";
-    }
-    else if(fhirType.equalsIgnoreCase("unsignedInt")) {
-      return "java.lang.Integer";
-    }
-    else if(fhirType.equalsIgnoreCase("decimal")) {
-      return "java.lang.Double";
-    }
-    else if(fhirType.equalsIgnoreCase("instant")) {
-      return "java.util.Date";
-    }
-    else if(fhirType.equalsIgnoreCase("date")) {
-      return "java.util.Date";
-    }
-    else if(fhirType.equalsIgnoreCase("dateTime")) {
-      return "java.util.Date";
-    }
-    else if(fhirType.equalsIgnoreCase("time")) {
-      return "java.util.Date";
-    }
-    return "java.lang.String";
-  }
-  
-  @SuppressWarnings("unchecked")
-  protected static
-  Map<String, Object> getMap(Map<String, Object> map, String key)
-  {
-    if(map == null) return new HashMap<String, Object>();
-    Object result = map.get(key);
-    if(result instanceof Map) {
-      return (Map<String, Object>) result;
-    }
-    return new HashMap<String, Object>(); 
-  }
-  
-  protected static
-  List<String> getFields(Map<String, Object> map, String key)
-  {
-    Map<String, Object> mapResult = getMap(map, key);
-    
-    List<String> result = new ArrayList<String>();
-    
-    Iterator<String> iterator = mapResult.keySet().iterator();
-    while(iterator.hasNext()) {
-      String field = iterator.next();
-      
-      if(field.startsWith("_")) continue;
-      
-      boolean isBaseField = false;
-      for(int i = 0; i < BASE_FIELDS.length; i++) {
-        if(field.equals(BASE_FIELDS[i])) {
-          isBaseField = true;
-          break;
-        }
-      }
-      if(isBaseField) continue;
-      
-      boolean isKeyword = false;
-      for(int i = 0; i < KEYWORDS.length; i++) {
-        if(field.equals(KEYWORDS[i])) {
-          isKeyword = true;
-          break;
-        }
-      }
-      if(isKeyword) field += "_";
-      
-      result.add(field);
-    }
-    
-    return result;
-  }
-  
-  protected static
-  PrintStream getPrintStream(String folder, String fileName)
-  {
-    if(folder == null || folder.length() == 0) {
-      return System.out;
-    }
-    if(fileName == null || fileName.length() == 0) {
-      return System.out;
-    }
-    String filePath = folder + File.separator + fileName;
-    
-    try{
-      FileOutputStream fileoutputstream = new FileOutputStream(filePath, false);
-      return new PrintStream(fileoutputstream, true);
-    }
-    catch(FileNotFoundException ex){
-      ex.printStackTrace();
-    }
-    return System.out;
+    if(text == null) text = "";
+    int iTextLength = text.length();
+    if(iTextLength >= length) return text;
+    int diff = length - iTextLength;
+    StringBuffer sb = new StringBuffer();
+    sb.append(text);
+    for(int i = 0; i < diff; i++) sb.append(c);
+    return sb.toString();
   }
 }

@@ -13,7 +13,7 @@ import java.util.Date;
 public
 class ActivityDefinition extends DomainResource implements Serializable
 {
-  private static final long serialVersionUID = 7353758378894024223L;
+  private static final long serialVersionUID = 6800195567974523466L;
   
   protected String url;
   protected Identifier[] identifier;
@@ -60,7 +60,7 @@ class ActivityDefinition extends DomainResource implements Serializable
   protected ActivityDefinitionParticipant[] participant;
   protected Reference<Resource> productReference;
   protected CodeableConcept productCodeableConcept;
-  protected SimpleQuantity quantity;
+  protected Quantity quantity;
   protected Dosage[] dosage;
   protected CodeableConcept[] bodySite;
   protected Reference<Resource>[] specimenRequirement;
@@ -254,7 +254,7 @@ class ActivityDefinition extends DomainResource implements Serializable
     return productCodeableConcept;
   }
 
-  public SimpleQuantity getQuantity() {
+  public Quantity getQuantity() {
     return quantity;
   }
 
@@ -466,7 +466,7 @@ class ActivityDefinition extends DomainResource implements Serializable
     this.productCodeableConcept = productCodeableConcept;
   }
 
-  public void setQuantity(SimpleQuantity quantity) {
+  public void setQuantity(Quantity quantity) {
     this.quantity = quantity;
   }
 

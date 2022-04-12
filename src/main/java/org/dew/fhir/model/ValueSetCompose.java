@@ -14,7 +14,7 @@ import java.util.Date;
 public 
 class ValueSetCompose extends BackboneElement implements Serializable
 {
-  private static final long serialVersionUID = -8736112276849779911L;
+  private static final long serialVersionUID = 8653293128019905294L;
   
   protected Date lockedDate;
   protected Boolean inactive;
@@ -29,7 +29,7 @@ class ValueSetCompose extends BackboneElement implements Serializable
     return lockedDate;
   }
 
-  public Boolean isInactive() {
+  public Boolean getInactive() {
     return inactive;
   }
 

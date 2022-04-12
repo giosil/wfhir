@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class PatientCommunication extends BackboneElement implements Serializable
 {
-  private static final long serialVersionUID = -7748844295675809911L;
+  private static final long serialVersionUID = -8975011077633126077L;
   
   protected CodeableConcept language;
   protected Boolean preferred;
@@ -24,7 +24,7 @@ class PatientCommunication extends BackboneElement implements Serializable
     return language;
   }
 
-  public Boolean isPreferred() {
+  public Boolean getPreferred() {
     return preferred;
   }
 

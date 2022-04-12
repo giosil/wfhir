@@ -11,20 +11,20 @@ import java.io.Serializable;
 public 
 class ConditionEvidence extends BackboneElement implements Serializable
 {
-  private static final long serialVersionUID = 7807648213362416664L;
+  private static final long serialVersionUID = 1386077381021550784L;
   
   protected CodeableConcept[] code;
-  protected Reference<Resource> detail;
+  protected Reference<Resource>[] detail;
   
   public ConditionEvidence()
   {
   }
-
+  
   public CodeableConcept[] getCode() {
     return code;
   }
 
-  public Reference<Resource> getDetail() {
+  public Reference<Resource>[] getDetail() {
     return detail;
   }
 
@@ -32,10 +32,10 @@ class ConditionEvidence extends BackboneElement implements Serializable
     this.code = code;
   }
 
-  public void setDetail(Reference<Resource> detail) {
+  public void setDetail(Reference<Resource>[] detail) {
     this.detail = detail;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof ConditionEvidence) {

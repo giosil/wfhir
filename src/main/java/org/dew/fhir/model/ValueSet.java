@@ -37,7 +37,7 @@ class ValueSet extends DomainResource implements Serializable
   {
     this.resourceType = "ValueSet";
   }
-
+  
   public String getUrl() {
     return url;
   }

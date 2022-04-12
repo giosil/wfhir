@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class GroupCharacteristic extends BackboneElement implements Serializable
 {
-  private static final long serialVersionUID = 8300008001459280420L;
+  private static final long serialVersionUID = -2597970240901007245L;
   
   protected CodeableConcept code;
   protected CodeableConcept valueCodeableConcept;
@@ -39,7 +39,7 @@ class GroupCharacteristic extends BackboneElement implements Serializable
     return valueCodeableConcept;
   }
 
-  public Boolean isValueBoolean() {
+  public Boolean getValueBoolean() {
     return valueBoolean;
   }
 
@@ -55,7 +55,7 @@ class GroupCharacteristic extends BackboneElement implements Serializable
     return valueReference;
   }
 
-  public Boolean isExclude() {
+  public Boolean getExclude() {
     return exclude;
   }
 

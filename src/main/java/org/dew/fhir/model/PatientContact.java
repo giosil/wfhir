@@ -13,9 +13,9 @@ class PatientContact extends BackboneElement implements Serializable
 {
   private static final long serialVersionUID = 5291225690011634798L;
   
-  protected CodeableConcept relationship;
+  protected CodeableConcept[] relationship;
   protected HumanName name;
-  protected ContactPoint telecom;
+  protected ContactPoint[] telecom;
   protected Address address;
   protected String gender;
   protected Reference<Organization> organization;
@@ -24,8 +24,8 @@ class PatientContact extends BackboneElement implements Serializable
   public PatientContact()
   {
   }
-  
-  public CodeableConcept getRelationship() {
+
+  public CodeableConcept[] getRelationship() {
     return relationship;
   }
 
@@ -33,7 +33,7 @@ class PatientContact extends BackboneElement implements Serializable
     return name;
   }
 
-  public ContactPoint getTelecom() {
+  public ContactPoint[] getTelecom() {
     return telecom;
   }
 
@@ -53,7 +53,7 @@ class PatientContact extends BackboneElement implements Serializable
     return period;
   }
 
-  public void setRelationship(CodeableConcept relationship) {
+  public void setRelationship(CodeableConcept[] relationship) {
     this.relationship = relationship;
   }
 
@@ -61,7 +61,7 @@ class PatientContact extends BackboneElement implements Serializable
     this.name = name;
   }
 
-  public void setTelecom(ContactPoint telecom) {
+  public void setTelecom(ContactPoint[] telecom) {
     this.telecom = telecom;
   }
 

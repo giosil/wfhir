@@ -11,13 +11,13 @@ import java.io.Serializable;
 public 
 class MedicationKnowledge extends DomainResource implements Serializable 
 {
-  private static final long serialVersionUID = 8346930621286846757L;
+  private static final long serialVersionUID = -7575155093135780029L;
   
   protected CodeableConcept code;
   protected String status;
   protected Reference<Organization> manufacturer;
   protected CodeableConcept doseForm;
-  protected SimpleQuantity amount;
+  protected Quantity amount;
   protected String[] synonym;
   protected MedicationKnowledgeRelatedMedicationKnowledge[] relatedMedicationKnowledge;
   protected Reference<Medication>[] associatedMedication;
@@ -40,7 +40,7 @@ class MedicationKnowledge extends DomainResource implements Serializable
   {
     this.resourceType = "MedicationKnowledge";
   }
-
+  
   public CodeableConcept getCode() {
     return code;
   }
@@ -57,7 +57,7 @@ class MedicationKnowledge extends DomainResource implements Serializable
     return doseForm;
   }
 
-  public SimpleQuantity getAmount() {
+  public Quantity getAmount() {
     return amount;
   }
 
@@ -145,7 +145,7 @@ class MedicationKnowledge extends DomainResource implements Serializable
     this.doseForm = doseForm;
   }
 
-  public void setAmount(SimpleQuantity amount) {
+  public void setAmount(Quantity amount) {
     this.amount = amount;
   }
 
@@ -216,7 +216,7 @@ class MedicationKnowledge extends DomainResource implements Serializable
   public void setKinetics(MedicationKnowledgeKinetics[] kinetics) {
     this.kinetics = kinetics;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof MedicationKnowledge) {

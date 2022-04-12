@@ -32,7 +32,7 @@ class MolecularSequenceQuality extends BackboneElement implements Serializable
   public MolecularSequenceQuality()
   {
   }
-
+  
   public String getType() {
     return type;
   }
@@ -85,7 +85,7 @@ class MolecularSequenceQuality extends BackboneElement implements Serializable
     return recall;
   }
 
-  public Double getfScore() {
+  public Double getFScore() {
     return fScore;
   }
 
@@ -145,14 +145,14 @@ class MolecularSequenceQuality extends BackboneElement implements Serializable
     this.recall = recall;
   }
 
-  public void setfScore(Double fScore) {
+  public void setFScore(Double fScore) {
     this.fScore = fScore;
   }
 
   public void setRoc(MolecularSequenceQualityRoc roc) {
     this.roc = roc;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof MolecularSequenceQuality) {

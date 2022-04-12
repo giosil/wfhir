@@ -11,17 +11,17 @@ import java.io.Serializable;
 public 
 class MessageHeaderDestination extends BackboneElement implements Serializable
 {
-  private static final long serialVersionUID = 7601197736209593864L;
+  private static final long serialVersionUID = 1102316611246532715L;
   
   protected String name;
   protected Reference<Device> target;
-  protected String url;
+  protected String endpoint;
   protected Reference<Resource> receiver;
   
   public MessageHeaderDestination()
   {
   }
-
+  
   public String getName() {
     return name;
   }
@@ -30,8 +30,8 @@ class MessageHeaderDestination extends BackboneElement implements Serializable
     return target;
   }
 
-  public String getUrl() {
-    return url;
+  public String getEndpoint() {
+    return endpoint;
   }
 
   public Reference<Resource> getReceiver() {
@@ -46,14 +46,14 @@ class MessageHeaderDestination extends BackboneElement implements Serializable
     this.target = target;
   }
 
-  public void setUrl(String url) {
-    this.url = url;
+  public void setEndpoint(String endpoint) {
+    this.endpoint = endpoint;
   }
 
   public void setReceiver(Reference<Resource> receiver) {
     this.receiver = receiver;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof MessageHeaderDestination) {
@@ -70,6 +70,6 @@ class MessageHeaderDestination extends BackboneElement implements Serializable
   
   @Override
   public String toString() {
-    return "MessageHeaderDestination(" + id + "," + name + "," + target + "," + url + "," + receiver + ")";
+    return "MessageHeaderDestination(" + id + "," + name + "," + target + "," + endpoint + "," + receiver + ")";
   }
 }
