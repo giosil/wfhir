@@ -998,6 +998,7 @@ class FReflection
           aoResult[i] = param;
         }
         else if(param instanceof String) {
+          // FHIR
           try {
             aoResult[i] = Base64Coder.decode((String) param);
           }
