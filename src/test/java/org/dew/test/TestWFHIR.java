@@ -221,7 +221,6 @@ class TestWFHIR extends TestCase
     FHIRSchema fhirSchema = new FHIRSchema();
     
     List<String> listResources = fhirSchema.getAllResources();
-    
     if(listResources == null || listResources.size() == 0) {
       System.out.println("No resources available");
       return;
@@ -282,7 +281,6 @@ class TestWFHIR extends TestCase
       if(objectClass == null) {
         continue;
       }
-      
       List<String> fields = fhirSchema.getFields(backboneElement);
       if(fields == null || fields.size() == 0) {
         continue;
@@ -295,7 +293,6 @@ class TestWFHIR extends TestCase
         if(fhirType == null || fhirType.length() == 0) {
           continue;
         }
-        
         String classType = fhirSchema.getClassType(objectClass, field);
         if(classType == null) {
           missingFld.add(backboneElement + "." + field + " *");
@@ -356,7 +353,7 @@ class TestWFHIR extends TestCase
     System.out.println("-------------------------------------------------");
   }
   
-  public static
+  protected static
   String rpad(String text, char c, int length)
   {
     if(text == null) text = "";
@@ -369,7 +366,7 @@ class TestWFHIR extends TestCase
     return sb.toString();
   }
   
-  public static
+  protected static
   String getBackboneRoot(String backboneElement)
   {
     if(backboneElement == null || backboneElement.length() == 0) {
