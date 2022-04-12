@@ -228,6 +228,6 @@ class FHIRRequest<T extends Resource> implements Serializable
   
   @Override
   public String toString() {
-    return "FHIRAPIParameters(" + id + "," + vid + "," + resource + "," + format + "," + pretty + "," + summary + "," + elements + "," + parameters + ")";
+    return "FHIRRequest(" + id + "," + vid + "," + resource + "," + format + "," + pretty + "," + summary + "," + elements + "," + parameters + ")";
   }
 }
