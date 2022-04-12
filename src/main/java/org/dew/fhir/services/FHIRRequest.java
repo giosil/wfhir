@@ -1,11 +1,12 @@
 package org.dew.fhir.services;
 
 import java.io.Serializable;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.dew.fhir.model.Resource;
+import org.dew.fhir.util.FUtil;
 
 /**
  * 
@@ -19,19 +20,17 @@ class FHIRRequest<T extends Resource> implements Serializable
   
   protected String id;
   protected String vid;
-  protected String code;
   protected T resource;
   protected String format;
   protected boolean pretty;
   protected boolean summary;
   protected List<String> elements;
+  // Extension
+  protected String type;
+  protected boolean history;
   protected String compartment;
   protected String include;
   protected String revinclude;
-  protected String not;
-  protected String missing;
-  protected String exact;
-  protected String contains;
   protected Map<String, Object> parameters;
   
   public FHIRRequest()
@@ -84,17 +83,13 @@ class FHIRRequest<T extends Resource> implements Serializable
     this.format = format;
     this.elements = elements;
   }
-
+  
   public String getId() {
     return id;
   }
 
   public String getVid() {
     return vid;
-  }
-
-  public String getCode() {
-    return code;
   }
 
   public T getResource() {
@@ -117,6 +112,14 @@ class FHIRRequest<T extends Resource> implements Serializable
     return elements;
   }
 
+  public String getType() {
+    return type;
+  }
+
+  public boolean isHistory() {
+    return history;
+  }
+
   public String getCompartment() {
     return compartment;
   }
@@ -129,22 +132,6 @@ class FHIRRequest<T extends Resource> implements Serializable
     return revinclude;
   }
 
-  public String getNot() {
-    return not;
-  }
-
-  public String getMissing() {
-    return missing;
-  }
-
-  public String getExact() {
-    return exact;
-  }
-
-  public String getContains() {
-    return contains;
-  }
-
   public Map<String, Object> getParameters() {
     return parameters;
   }
@@ -155,10 +142,6 @@ class FHIRRequest<T extends Resource> implements Serializable
 
   public void setVid(String vid) {
     this.vid = vid;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
   }
 
   public void setResource(T resource) {
@@ -181,6 +164,14 @@ class FHIRRequest<T extends Resource> implements Serializable
     this.elements = elements;
   }
 
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  public void setHistory(boolean history) {
+    this.history = history;
+  }
+
   public void setCompartment(String compartment) {
     this.compartment = compartment;
   }
@@ -193,24 +184,81 @@ class FHIRRequest<T extends Resource> implements Serializable
     this.revinclude = revinclude;
   }
 
-  public void setNot(String not) {
-    this.not = not;
-  }
-
-  public void setMissing(String missing) {
-    this.missing = missing;
-  }
-
-  public void setExact(String exact) {
-    this.exact = exact;
-  }
-
-  public void setContains(String contains) {
-    this.contains = contains;
-  }
-
   public void setParameters(Map<String, Object> parameters) {
     this.parameters = parameters;
+  }
+
+  public void addParameter(String name, String value) {
+    if(name == null || name.length() == 0) {
+      return;
+    }
+    if(name.equals("id")) {
+      this.id = value;
+    }
+    else if(name.equals("vid")) {
+      this.vid = value;
+    }
+    else if(name.equals("_format") || name.equals("format")) {
+      this.format = value;
+    }
+    else if(name.equals("_pretty") || name.equals("pretty")) {
+      this.pretty = FUtil.toBoolean(value, false);
+    }
+    else if(name.equals("_summary") || name.equals("summary")) {
+      this.summary = FUtil.toBoolean(value, false);
+    }
+    else if(name.equals("_elements") || name.equals("elements")) {
+      this.elements = FUtil.toListOfString(value);
+    }
+    else if(name.equals("_type") || name.equals("type")) {
+      this.type = value;
+    }
+    else {
+      if(this.parameters == null) {
+        this.parameters = new HashMap<String, Object>();
+      }
+      this.parameters.put(name, value);
+    }
+  }
+  
+  public Object valueOf(String name) {
+    if(name == null || name.length() == 0) {
+      return null;
+    }
+    if(name.equals("id")) {
+      return this.id;
+    }
+    else if(name.equals("vid")) {
+      return this.vid;
+    }
+    else if(name.equals("_format") || name.equals("format")) {
+      return this.format;
+    }
+    else if(name.equals("_pretty") || name.equals("pretty")) {
+      return this.pretty;
+    }
+    else if(name.equals("_summary") || name.equals("summary")) {
+      return this.summary;
+    }
+    else if(name.equals("_elements") || name.equals("elements")) {
+      return this.elements;
+    }
+    else if(name.equals("_type") || name.equals("type")) {
+      return this.type;
+    }
+    
+    if(this.parameters != null) {
+      return this.parameters.get(name);
+    }
+    return null;
+  }
+  
+  public Object valueOf(String name, Object defaultValue) {
+    Object result = valueOf(name);
+    if(result == null) {
+      return defaultValue;
+    }
+    return result;
   }
 
   @Override
