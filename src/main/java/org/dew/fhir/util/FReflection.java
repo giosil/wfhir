@@ -997,6 +997,13 @@ class FReflection
         else if(param instanceof byte[]) {
           aoResult[i] = param;
         }
+        else if(param instanceof String) {
+          try {
+            aoResult[i] = Base64Coder.decode((String) param);
+          }
+          catch(Exception ex) {
+          }
+        }
         else if(param instanceof Collection) {
           byte[] array = Arrays.toArrayOfByte((Collection) param);
           if(array == null) return null;

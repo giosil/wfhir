@@ -2061,7 +2061,7 @@ class FUtil
         }
       } 
       catch(Exception ex) {
-        System.err.println("[W] WUtil.beanToMap(bean=" + bean.getClass() + ",methodName=" + methodName + "): " + ex);
+        System.err.println("FUtil.beanToMap(bean=" + bean.getClass() + ",methodName=" + methodName + "): " + ex);
       }
     }
     return mapResult;
@@ -2078,7 +2078,7 @@ class FUtil
       bean = beanClass.newInstance();
     }
     catch(Exception ex) {
-      System.err.println("[W] WUtil.populateBean(beanClassName=" + beanClassName + "): " + ex);
+      System.err.println("FUtil.populateBean(beanClassName=" + beanClassName + "): " + ex);
     }
     return populateBean(bean, mapValues);
   }
@@ -2094,7 +2094,7 @@ class FUtil
       bean = beanClass.newInstance();
     }
     catch(Exception ex) {
-      System.err.println("[W] WUtil.populateBean(beanClassName=" + beanClassName + "): " + ex);
+      System.err.println("FUtil.populateBean(beanClassName=" + beanClassName + "): " + ex);
     }
     return populateBean(bean, mapValues, classLoader);
   }
@@ -2107,7 +2107,7 @@ class FUtil
       bean = beanClass.newInstance(); 
     } 
     catch(Exception ex) {
-      System.err.println("[W] WUtil.populateBean(beanClass=" + beanClass + "): " + ex);
+      System.err.println("FUtil.populateBean(beanClass=" + beanClass + "): " + ex);
     }
     return populateBean(bean, mapValues);
   }
@@ -2120,7 +2120,7 @@ class FUtil
       bean = beanClass.newInstance(); 
     } 
     catch(Exception ex) {
-      System.err.println("[W] WUtil.populateBean(beanClass=" + beanClass + ",classLoader=" + classLoader + "): " + ex);
+      System.err.println("FUtil.populateBean(beanClass=" + beanClass + ",classLoader=" + classLoader + "): " + ex);
     }
     return populateBean(bean, mapValues, classLoader);
   }
@@ -2158,8 +2158,7 @@ class FUtil
             if(key.length() == 1) {
               key = key.toLowerCase();
             } 
-            else
-            if(!Character.isUpperCase(key.charAt(1))) {
+            else if(!Character.isUpperCase(key.charAt(1))) {
               key = key.substring(0, 1).toLowerCase() + key.substring(1);
             }
             String genericParameterType  = null;
@@ -2187,7 +2186,7 @@ class FUtil
         }
       } 
       catch(Exception ex) {
-        System.err.println("[W] WUtil.populateBean(methodName=" + methodName + "): " + ex);
+        System.err.println("FUtil.populateBean(methodName=" + methodName + "): " + ex);
       }
     }
     return bean;
@@ -3690,7 +3689,7 @@ class FUtil
       }
       catch(Exception ex) {
         ex.printStackTrace();
-        System.err.println("[W] WUtil.toObject(objectClass=" + object.getClass() + ",className=" + className + ",actualClass=" + sActualClass + ",classLoader=" + classLoader + "): " + ex);
+        System.err.println("FUtil.toObject(objectClass=" + object.getClass() + ",className=" + className + ",actualClass=" + sActualClass + ",classLoader=" + classLoader + "): " + ex);
       }
       if(cActualClass == null) return null;
       Object oList = toObject(object, "java.util.List<" + sActualClass + ">", classLoader);
@@ -3740,7 +3739,7 @@ class FUtil
       }
       catch(Exception ex) {
         ex.printStackTrace();
-        System.err.println("[W] WUtil.toObject(objectClass=" + object.getClass() + ",className=" + className + ",classLoader=" + classLoader + "): " + ex);
+        System.err.println("FUtil.toObject(objectClass=" + object.getClass() + ",className=" + className + ",classLoader=" + classLoader + "): " + ex);
       }
       return populateBean(bean, mapValues, classLoader);
     }
