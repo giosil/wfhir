@@ -19,7 +19,7 @@ class QuestionnaireInitial extends BackboneElement implements Serializable
   protected Coding valueCoding;
   protected Date valueTime;
   protected Reference<Resource> valueReference;
-  protected Integer valueDecimal;
+  protected Double valueDecimal;
   protected String valueUri;
   protected Date valueDate;
   protected Attachment valueAttachment;
@@ -64,11 +64,11 @@ class QuestionnaireInitial extends BackboneElement implements Serializable
     this.valueReference = valueReference;
   }
   
-  public Integer getValueDecimal() {
+  public Double getValueDecimal() {
     return valueDecimal;
   }
   
-  public void setValueDecimal(Integer valueDecimal) {
+  public void setValueDecimal(Double valueDecimal) {
     this.valueDecimal = valueDecimal;
   }
   

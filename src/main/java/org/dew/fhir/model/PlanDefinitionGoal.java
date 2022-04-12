@@ -20,12 +20,12 @@ class PlanDefinitionGoal extends BackboneElement implements Serializable
   protected CodeableConcept start;
   protected CodeableConcept[] addresses;
   protected RelatedArtifact[] documentation;
-  protected PlanDefinitionGoalTarget target;
+  protected PlanDefinitionGoalTarget[] target;
   
   public PlanDefinitionGoal()
   {
   }
-
+  
   public CodeableConcept getCategory() {
     return category;
   }
@@ -50,7 +50,7 @@ class PlanDefinitionGoal extends BackboneElement implements Serializable
     return documentation;
   }
 
-  public PlanDefinitionGoalTarget getTarget() {
+  public PlanDefinitionGoalTarget[] getTarget() {
     return target;
   }
 
@@ -78,10 +78,10 @@ class PlanDefinitionGoal extends BackboneElement implements Serializable
     this.documentation = documentation;
   }
 
-  public void setTarget(PlanDefinitionGoalTarget target) {
+  public void setTarget(PlanDefinitionGoalTarget[] target) {
     this.target = target;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof PlanDefinitionGoal) {

@@ -61,7 +61,7 @@ class StructureMapSource extends BackboneElement implements Serializable
   protected Date defaultValueDateTime;
   protected Distance defaultValueDistance;
   protected CodeableConcept defaultValueCodeableConcept;
-  protected Integer defaultValueDecimal;
+  protected Double defaultValueDecimal;
   protected String defaultValueUuid;
   protected Annotation defaultValueAnnotation;
   protected Count defaultValueCount;
@@ -448,11 +448,11 @@ class StructureMapSource extends BackboneElement implements Serializable
     this.defaultValueCodeableConcept = defaultValueCodeableConcept;
   }
   
-  public Integer getDefaultValueDecimal() {
+  public Double getDefaultValueDecimal() {
     return defaultValueDecimal;
   }
   
-  public void setDefaultValueDecimal(Integer defaultValueDecimal) {
+  public void setDefaultValueDecimal(Double defaultValueDecimal) {
     this.defaultValueDecimal = defaultValueDecimal;
   }
   

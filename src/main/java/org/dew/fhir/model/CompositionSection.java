@@ -11,8 +11,8 @@ import java.io.Serializable;
 public 
 class CompositionSection extends BackboneElement implements Serializable 
 {
-  private static final long serialVersionUID = 914583728678962256L;
-
+  private static final long serialVersionUID = 1225469072578075082L;
+  
   protected String title;
   protected CodeableConcept code;
   protected Reference<Resource>[] author;
@@ -22,7 +22,7 @@ class CompositionSection extends BackboneElement implements Serializable
   protected CodeableConcept orderedBy;
   protected Reference<Resource>[] entry;
   protected CodeableConcept emptyReason;
-  protected CompositionSection section;
+  protected CompositionSection[] section;
   
   public CompositionSection()
   {
@@ -32,7 +32,7 @@ class CompositionSection extends BackboneElement implements Serializable
   {
     this.code = code;
   }
-
+  
   public String getTitle() {
     return title;
   }
@@ -69,7 +69,7 @@ class CompositionSection extends BackboneElement implements Serializable
     return emptyReason;
   }
 
-  public CompositionSection getSection() {
+  public CompositionSection[] getSection() {
     return section;
   }
 
@@ -109,10 +109,10 @@ class CompositionSection extends BackboneElement implements Serializable
     this.emptyReason = emptyReason;
   }
 
-  public void setSection(CompositionSection section) {
+  public void setSection(CompositionSection[] section) {
     this.section = section;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof CompositionSection) {

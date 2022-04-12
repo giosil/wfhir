@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class CapabilityStatementRest extends BackboneElement implements Serializable 
 {
-  private static final long serialVersionUID = -8614611830713741525L;
+  private static final long serialVersionUID = 1719746889530420498L;
   
   protected String mode;
   protected String documentation;
@@ -20,12 +20,12 @@ class CapabilityStatementRest extends BackboneElement implements Serializable
   protected CapabilityStatementRestInteraction[] interaction;
   protected CapabilityStatementRestResourceSearchParam[] searchParam;
   protected CapabilityStatementRestResourceOperation[] operation;
-  protected String compartment;
+  protected String[] compartment;
   
   public CapabilityStatementRest()
   {
   }
-
+  
   public String getMode() {
     return mode;
   }
@@ -54,7 +54,7 @@ class CapabilityStatementRest extends BackboneElement implements Serializable
     return operation;
   }
 
-  public String getCompartment() {
+  public String[] getCompartment() {
     return compartment;
   }
 
@@ -86,10 +86,10 @@ class CapabilityStatementRest extends BackboneElement implements Serializable
     this.operation = operation;
   }
 
-  public void setCompartment(String compartment) {
+  public void setCompartment(String[] compartment) {
     this.compartment = compartment;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof CapabilityStatementRest) {

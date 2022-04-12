@@ -200,7 +200,11 @@ class FHIRSchema
     Method method = findGetMethod(objectClass, field);
     if(method == null) return null;
     Class<?> returnType = method.getReturnType();
-    return returnType == null ? "void" : returnType.getCanonicalName();
+    String result = returnType == null ? "void" : returnType.getCanonicalName();
+    if(result.equals("int"))     return "java.lang.Integer";
+    if(result.equals("double"))  return "java.lang.Double";
+    if(result.equals("boolean")) return "java.lang.Boolean";
+    return result;
   }
   
   public
@@ -298,6 +302,11 @@ class FHIRSchema
           if(sPattern.startsWith("^([0")) {
             return "java.util.Date";
           }
+        }
+      }
+      else if(fhirType.equals("number")) {
+        if(fieldName.toLowerCase().indexOf("decimal") >= 0) {
+          return "java.lang.Double";
         }
       }
     }
@@ -610,7 +619,7 @@ class FHIRSchema
     else if(fhirType.equalsIgnoreCase("boolean")) {
       return "java.lang.Boolean";
     }
-    if(fhirType.equalsIgnoreCase("number")) {
+    else if(fhirType.equalsIgnoreCase("number")) {
       return "java.lang.Integer";
     }
     else if(fhirType.equalsIgnoreCase("integer")) {

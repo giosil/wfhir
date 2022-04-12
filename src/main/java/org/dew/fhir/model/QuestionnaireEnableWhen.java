@@ -22,7 +22,7 @@ class QuestionnaireEnableWhen extends BackboneElement implements Serializable
   protected Date answerTime;
   protected String operator;
   protected Integer answerInteger;
-  protected Integer answerDecimal;
+  protected Double answerDecimal;
   protected String answerString;
   protected Coding answerCoding;
   protected Reference<Resource> answerReference;
@@ -88,11 +88,11 @@ class QuestionnaireEnableWhen extends BackboneElement implements Serializable
     this.answerInteger = answerInteger;
   }
   
-  public Integer getAnswerDecimal() {
+  public Double getAnswerDecimal() {
     return answerDecimal;
   }
   
-  public void setAnswerDecimal(Integer answerDecimal) {
+  public void setAnswerDecimal(Double answerDecimal) {
     this.answerDecimal = answerDecimal;
   }
   

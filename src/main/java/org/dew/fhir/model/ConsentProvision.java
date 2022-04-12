@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class ConsentProvision extends BackboneElement implements Serializable
 {
-  private static final long serialVersionUID = 5070399279451258837L;
+  private static final long serialVersionUID = -7556717859655121127L;
   
   protected String type;
   protected Period period;
@@ -23,12 +23,12 @@ class ConsentProvision extends BackboneElement implements Serializable
   protected CodeableConcept[] code;
   protected Period dataPeriod;
   protected ConsentProvisionData[] data;
-  protected ConsentProvision provision;
+  protected ConsentProvision[] provision;
   
   public ConsentProvision()
   {
   }
-
+  
   public String getType() {
     return type;
   }
@@ -69,7 +69,7 @@ class ConsentProvision extends BackboneElement implements Serializable
     return data;
   }
 
-  public ConsentProvision getProvision() {
+  public ConsentProvision[] getProvision() {
     return provision;
   }
 
@@ -113,10 +113,10 @@ class ConsentProvision extends BackboneElement implements Serializable
     this.data = data;
   }
 
-  public void setProvision(ConsentProvision provision) {
+  public void setProvision(ConsentProvision[] provision) {
     this.provision = provision;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof ConsentProvision) {

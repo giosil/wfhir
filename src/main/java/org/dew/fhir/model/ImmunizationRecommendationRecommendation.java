@@ -18,7 +18,7 @@ class ImmunizationRecommendationRecommendation extends BackboneElement implement
   protected CodeableConcept[] contraindicatedVaccineCode;
   protected CodeableConcept forecastStatus;
   protected CodeableConcept[] forecastReason;
-  protected ImmunizationRecommendationRecommendationDateCriterion dateCriterion;
+  protected ImmunizationRecommendationRecommendationDateCriterion[] dateCriterion;
   protected String description;
   protected String series;
   protected Integer doseNumberPositiveInt;
@@ -31,7 +31,7 @@ class ImmunizationRecommendationRecommendation extends BackboneElement implement
   public ImmunizationRecommendationRecommendation()
   {
   }
-
+  
   public CodeableConcept[] getVaccineCode() {
     return vaccineCode;
   }
@@ -52,7 +52,7 @@ class ImmunizationRecommendationRecommendation extends BackboneElement implement
     return forecastReason;
   }
 
-  public ImmunizationRecommendationRecommendationDateCriterion getDateCriterion() {
+  public ImmunizationRecommendationRecommendationDateCriterion[] getDateCriterion() {
     return dateCriterion;
   }
 
@@ -108,7 +108,7 @@ class ImmunizationRecommendationRecommendation extends BackboneElement implement
     this.forecastReason = forecastReason;
   }
 
-  public void setDateCriterion(ImmunizationRecommendationRecommendationDateCriterion dateCriterion) {
+  public void setDateCriterion(ImmunizationRecommendationRecommendationDateCriterion[] dateCriterion) {
     this.dateCriterion = dateCriterion;
   }
 
@@ -143,7 +143,7 @@ class ImmunizationRecommendationRecommendation extends BackboneElement implement
   public void setSupportingPatientInformation(Reference<Resource>[] supportingPatientInformation) {
     this.supportingPatientInformation = supportingPatientInformation;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof ImmunizationRecommendationRecommendation) {

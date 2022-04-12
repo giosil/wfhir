@@ -6,14 +6,14 @@ import java.io.Serializable;
  * 
  * Specific parameters for the ordered item. For example, the size of the indicated item.
  *
- * @see <a href="https://www.hl7.org/fhir/appointment.html">Appointment</a>
+ * @see <a href="https://build.fhir.org/supplyrequest-definitions.html#SupplyRequest.parameter">SupplyRequest.parameter</a>
  */
 public 
 class SupplyRequestParameter extends BackboneElement implements Serializable 
 {
   private static final long serialVersionUID = -8398813824686080724L;
   
-  protected String code;
+  protected CodeableConcept code;
   protected CodeableConcept valueCodeableConcept;
   protected Quantity valueQuantity;
   protected Range valueRange;
@@ -22,8 +22,8 @@ class SupplyRequestParameter extends BackboneElement implements Serializable
   public SupplyRequestParameter()
   {
   }
-
-  public String getCode() {
+  
+  public CodeableConcept getCode() {
     return code;
   }
 
@@ -43,7 +43,7 @@ class SupplyRequestParameter extends BackboneElement implements Serializable
     return valueBoolean;
   }
 
-  public void setCode(String code) {
+  public void setCode(CodeableConcept code) {
     this.code = code;
   }
 
@@ -62,7 +62,7 @@ class SupplyRequestParameter extends BackboneElement implements Serializable
   public void setValueBoolean(Boolean valueBoolean) {
     this.valueBoolean = valueBoolean;
   }
-  
+
   @Override
   public boolean equals(Object object) {
     if(object instanceof SupplyRequestParameter) {

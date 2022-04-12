@@ -20,7 +20,7 @@ class QuestionnaireResponseAnswer extends BackboneElement implements Serializabl
   protected Date valueTime;
   protected QuestionnaireResponseItem[] item;
   protected Reference<Resource> valueReference;
-  protected Integer valueDecimal;
+  protected Double valueDecimal;
   protected String valueUri;
   protected Date valueDate;
   protected Attachment valueAttachment;
@@ -73,11 +73,11 @@ class QuestionnaireResponseAnswer extends BackboneElement implements Serializabl
     this.valueReference = valueReference;
   }
   
-  public Integer getValueDecimal() {
+  public Double getValueDecimal() {
     return valueDecimal;
   }
   
-  public void setValueDecimal(Integer valueDecimal) {
+  public void setValueDecimal(Double valueDecimal) {
     this.valueDecimal = valueDecimal;
   }
   

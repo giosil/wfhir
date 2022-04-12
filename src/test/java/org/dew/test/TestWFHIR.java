@@ -40,12 +40,14 @@ class TestWFHIR extends TestCase
   {
     checkModel(false, false);
     
-    example();
+    examples();
   }
   
   public 
-  void example()
+  void examples()
   {
+    System.out.println("examples()...");
+    System.out.println("-------------------------------------------------");
     try {
       Organization res = new Organization("asl-120201", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
       System.out.println(res);
@@ -65,6 +67,7 @@ class TestWFHIR extends TestCase
     catch(Exception ex) {
       ex.printStackTrace();
     }
+    System.out.println("-------------------------------------------------");
   }
   
   protected
@@ -206,8 +209,10 @@ class TestWFHIR extends TestCase
   }
   
   protected
-  List<String> checkModel(boolean traceObj, boolean traceFld)
+  void checkModel(boolean traceObj, boolean traceFld)
   {
+    System.out.println("checkModel(" + traceObj + "," + traceFld + ")...");
+    System.out.println("-------------------------------------------------");
     List<String> missingObj = new ArrayList<String>();
     List<String> missingFld = new ArrayList<String>();
     List<String> invalidFld = new ArrayList<String>();
@@ -219,7 +224,7 @@ class TestWFHIR extends TestCase
     
     if(listResources == null || listResources.size() == 0) {
       System.out.println("No resources available");
-      return missingObj;
+      return;
     }
     
     for(int i = 0; i < listResources.size(); i++) {
@@ -298,28 +303,57 @@ class TestWFHIR extends TestCase
         }
         
         if(!fhirType.equals(classType)) {
-          String note = " (schema=" + fhirType + ", class=" + classType + ")";
-          invalidFld.add(backboneElement + "." + field + " " + note + " *");
+          boolean invalid = true;
+          
+          String root = getBackboneRoot(backboneElement);
+          if(classType.startsWith(root)) {
+            if(fhirType.endsWith("[]") && classType.endsWith("[]")) {
+              invalid = false;
+            }
+            else if(!fhirType.endsWith("[]") && !classType.endsWith("[]")) {
+              invalid = false;
+            }
+          }
+          else if(fhirType.equals("org.dew.fhir.model.Quantity") && classType.equals("org.dew.fhir.model.SimpleQuantity")) {
+            invalid = false;
+          }
+          else if(fhirType.equals("org.dew.fhir.model.Quantity[]") && classType.equals("org.dew.fhir.model.SimpleQuantity[]")) {
+            invalid = false;
+          }
+          else if(fhirType.equals("org.dew.fhir.model.SimpleQuantity") && classType.equals("org.dew.fhir.model.Quantity")) {
+            invalid = false;
+          }
+          else if(fhirType.equals("org.dew.fhir.model.SimpleQuantity[]") && classType.equals("org.dew.fhir.model.Quantity[]")) {
+            invalid = false;
+          }
+          else if(fhirType.equals("org.dew.fhir.model.ResourceList") && classType.equals("org.dew.fhir.model.Resource")) {
+            invalid = false;
+          }
+          else if(fhirType.equals("java.lang.String") && classType.equals("byte[]")) {
+            invalid = false;
+          }
+          
+          if(invalid) {
+            String note = " (schema=" + fhirType + ", class=" + classType + ")";
+            invalidFld.add(backboneElement + "." + field + " " + note + " *");
+          }
         }
       }
     }
     
-    System.out.println("### Missing objects [" + missingObj.size() + " of " + listResources.size() + "]: ###");
+    System.out.println("### Missing objects [" + missingObj.size() + " of " + listResources.size() + "]:");
     for(int i = 0; i < missingObj.size(); i++) {
       System.out.println(missingObj.get(i));
     }
-    
-    System.out.println("### Missing fields [" + missingFld.size() + "]: ###");
+    System.out.println("### Missing fields [" + missingFld.size() + "]:");
     for(int i = 0; i < missingFld.size(); i++) {
       System.out.println(missingFld.get(i));
     }
-    
-    System.out.println("### Invalid fields [" + invalidFld.size() + "]: ###");
+    System.out.println("### Invalid fields [" + invalidFld.size() + "]:");
     for(int i = 0; i < invalidFld.size(); i++) {
       System.out.println(invalidFld.get(i));
     }
-    
-    return missingObj;
+    System.out.println("-------------------------------------------------");
   }
   
   public static
@@ -333,5 +367,25 @@ class TestWFHIR extends TestCase
     sb.append(text);
     for(int i = 0; i < diff; i++) sb.append(c);
     return sb.toString();
+  }
+  
+  public static
+  String getBackboneRoot(String backboneElement)
+  {
+    if(backboneElement == null || backboneElement.length() == 0) {
+      return "";
+    }
+    String result = null;
+    int sep = backboneElement.indexOf('_');
+    if(sep > 0) {
+      result = backboneElement.substring(0, sep);
+    }
+    else {
+      result = backboneElement;
+    }
+    if(result.indexOf('.') < 0) {
+      return FHIRSchema.MODEL_PACKAGE + "." + result;
+    }
+    return result;
   }
 }

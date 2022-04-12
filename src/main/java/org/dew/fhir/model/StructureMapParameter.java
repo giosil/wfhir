@@ -15,7 +15,7 @@ class StructureMapParameter extends BackboneElement implements Serializable
   
   protected Boolean valueBoolean;
   protected String valueId;
-  protected Integer valueDecimal;
+  protected Double valueDecimal;
   protected String valueString;
   protected Integer valueInteger;
   
@@ -39,11 +39,11 @@ class StructureMapParameter extends BackboneElement implements Serializable
     this.valueId = valueId;
   }
   
-  public Integer getValueDecimal() {
+  public Double getValueDecimal() {
     return valueDecimal;
   }
   
-  public void setValueDecimal(Integer valueDecimal) {
+  public void setValueDecimal(Double valueDecimal) {
     this.valueDecimal = valueDecimal;
   }
   
