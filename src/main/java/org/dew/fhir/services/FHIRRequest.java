@@ -23,7 +23,7 @@ class FHIRRequest<T extends Resource> implements Serializable
   protected T resource;
   protected String format;
   protected boolean pretty;
-  protected boolean summary;
+  protected String summary;
   protected List<String> elements;
   // Extension
   protected String type;
@@ -59,7 +59,7 @@ class FHIRRequest<T extends Resource> implements Serializable
     this.pretty = pretty;
   }
 
-  public FHIRRequest(String format, boolean pretty, boolean summary)
+  public FHIRRequest(String format, boolean pretty, String summary)
   {
     this.format = format;
     this.pretty = pretty;
@@ -83,7 +83,7 @@ class FHIRRequest<T extends Resource> implements Serializable
     this.format = format;
     this.elements = elements;
   }
-  
+
   public String getId() {
     return id;
   }
@@ -104,7 +104,7 @@ class FHIRRequest<T extends Resource> implements Serializable
     return pretty;
   }
 
-  public boolean isSummary() {
+  public String getSummary() {
     return summary;
   }
 
@@ -156,7 +156,7 @@ class FHIRRequest<T extends Resource> implements Serializable
     this.pretty = pretty;
   }
 
-  public void setSummary(boolean summary) {
+  public void setSummary(String summary) {
     this.summary = summary;
   }
 
@@ -205,7 +205,7 @@ class FHIRRequest<T extends Resource> implements Serializable
       this.pretty = FUtil.toBoolean(value, false);
     }
     else if(name.equals("_summary") || name.equals("summary")) {
-      this.summary = FUtil.toBoolean(value, false);
+      this.summary = value;
     }
     else if(name.equals("_elements") || name.equals("elements")) {
       this.elements = FUtil.toListOfString(value);

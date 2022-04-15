@@ -42,49 +42,49 @@ class FHIRClient<T extends Resource> implements IFHIRService<T>
   }
 
   @Override
-  public FHIRResponse<T> read(FHIRRequest<T> request) {
+  public FHIRResponse<T> read(FHIRRequest<T> request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public FHIRResponse<T> vread(FHIRRequest<T> request) {
+  public FHIRResponse<T> vread(FHIRRequest<T> request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public FHIRResponse<T> update(FHIRRequest<T> request) {
+  public FHIRResponse<T> update(FHIRRequest<T> request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public FHIRResponse<T> patch(FHIRRequest<T> request) {
+  public FHIRResponse<T> patch(FHIRRequest<T> request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public FHIRResponse<T> delete(FHIRRequest<T> request) {
+  public FHIRResponse<T> delete(FHIRRequest<T> request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public FHIRResponse<T> history(FHIRRequest<T> request) {
+  public FHIRResponse<T> history(FHIRRequest<T> request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public FHIRResponse<T> create(FHIRRequest<T> request) {
+  public FHIRResponse<T> create(FHIRRequest<T> request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public FHIRResponse<T> search(FHIRRequest<T> request) {
+  public FHIRResponse<T> search(FHIRRequest<T> request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
