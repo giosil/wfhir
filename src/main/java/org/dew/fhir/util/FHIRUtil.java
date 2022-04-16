@@ -134,6 +134,7 @@ class FHIRUtil
     }
     
     Class<?> beanClass = FHIRSchema.getClassOf(type);
+    if(beanClass == null) return null;
     
     Map<String, Object> map = deserialize(data);
     
@@ -154,6 +155,32 @@ class FHIRUtil
     if(object == null) return null;
     
     return FUtil.beanToMap(object);
+  }
+  
+  public static
+  Resource toResource(Map<String, Object> map)
+  {
+    if(map == null) return null;
+    
+    String resourceType = FUtil.toString(map.get("resourceType"), null);
+    if(resourceType == null || resourceType.length() == 0) {
+      return null;
+    }
+    
+    char c0 = resourceType.charAt(0);
+    if(Character.isLowerCase(c0)) {
+      resourceType = Character.toUpperCase(c0) + resourceType.substring(1);
+    }
+    
+    Class<?> beanClass = FHIRSchema.getClassOf(resourceType);
+    if(beanClass == null) return null;
+    
+    Object result = FUtil.populateBean(beanClass, map);
+    if(result instanceof Resource) {
+      return (Resource) result;
+    }
+    
+    return null;
   }
   
   public static

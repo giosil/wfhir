@@ -1,11 +1,14 @@
 package org.dew.fhir.services;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import org.dew.fhir.model.Bundle;
 import org.dew.fhir.model.Meta;
 import org.dew.fhir.model.OperationOutcome;
 import org.dew.fhir.model.Resource;
+import org.dew.fhir.util.FHIRUtil;
+import org.dew.fhir.util.FUtil;
 
 /**
  * 
@@ -63,6 +66,27 @@ class FHIRResponse implements Serializable
           this.vid = versionId;
         }
       }
+    }
+  }
+  
+  public FHIRResponse(Map<String, Object> map)
+  {
+    if(map == null) return;
+    
+    Resource resource = FHIRUtil.toResource(map);
+    
+    if(resource instanceof OperationOutcome) {
+      outcome = (OperationOutcome) resource;
+    }
+    else if(resource instanceof Bundle) {
+      bundle = (Bundle) resource;
+    }
+    else if(resource != null) {
+      setResource(resource);
+    }
+    else {
+      id  = FUtil.toString(map.get("id"), null);
+      vid = FUtil.toString(map.get("vid"), null);
     }
   }
 

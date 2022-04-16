@@ -49,6 +49,13 @@ class FHIRRequest implements Serializable
     this.vid = vid;
   }
 
+  public FHIRRequest(String type, String id, String vid)
+  {
+    this.type = type;
+    this.id = id;
+    this.vid = vid;
+  }
+
   public FHIRRequest(Resource resource)
   {
     this.resource = resource;

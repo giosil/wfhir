@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.dew.fhir.client.FHIRClient;
 import org.dew.fhir.model.Address;
 import org.dew.fhir.model.CodeableConcept;
 import org.dew.fhir.model.Coding;
@@ -12,11 +13,14 @@ import org.dew.fhir.model.ContactPoint;
 import org.dew.fhir.model.Element;
 import org.dew.fhir.model.Identifier;
 import org.dew.fhir.model.Narrative;
+import org.dew.fhir.model.OperationOutcome;
 import org.dew.fhir.model.Organization;
+import org.dew.fhir.model.Resource;
 import org.dew.fhir.model.ValueSet;
 import org.dew.fhir.model.ValueSetCompose;
 import org.dew.fhir.model.ValueSetComposeInclude;
-
+import org.dew.fhir.services.FHIRRequest;
+import org.dew.fhir.services.FHIRResponse;
 import org.dew.fhir.util.FHIRSchema;
 import org.dew.fhir.util.FHIRUtil;
 
@@ -40,7 +44,9 @@ class TestWFHIR extends TestCase
   {
     checkModel(false, false);
     
-    examples();
+    // examples();
+    
+    // clientExamples();
   }
   
   public 
@@ -68,6 +74,31 @@ class TestWFHIR extends TestCase
       ex.printStackTrace();
     }
     System.out.println("-------------------------------------------------");
+  }
+  
+  public 
+  void clientExamples()
+  {
+    FHIRClient client = new FHIRClient("http://localhost:8080/wfhir/fhir", "organization");
+    
+    try {
+      FHIRRequest request = new FHIRRequest("12345");
+      
+      System.out.println("read...");
+      FHIRResponse response = client.read(request);
+      
+      Resource resource = response.getResource();
+      System.out.println("resource = " + resource);
+      
+      System.out.println("delete...");
+      response = client.delete(request);
+      
+      OperationOutcome outcome = response.getOutcome();
+      System.out.println("outcome = " + outcome);
+    }
+    catch(Exception ex) {
+      ex.printStackTrace();
+    }
   }
   
   protected

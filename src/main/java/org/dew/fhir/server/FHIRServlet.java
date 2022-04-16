@@ -4,9 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -15,16 +15,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.dew.fhir.mock.MockOrganizationService;
 import org.dew.fhir.model.Bundle;
 import org.dew.fhir.model.OperationOutcome;
-import org.dew.fhir.model.OperationOutcomeIssue;
 import org.dew.fhir.model.Resource;
 
 import org.dew.fhir.services.FHIRRequest;
 import org.dew.fhir.services.FHIRResponse;
 import org.dew.fhir.services.FHIRServices;
 import org.dew.fhir.services.IFHIRService;
+
 import org.dew.fhir.util.FHIRUtil;
 
 /**
@@ -46,7 +45,7 @@ class FHIRServlet extends HttpServlet
   void init() 
     throws ServletException 
   {
-    services.addHandler("organization", new MockOrganizationService());
+    services.addHandler("organization", new org.dew.fhir.mock.MockOrganizationService());
   }
   
   @Override
@@ -306,7 +305,7 @@ class FHIRServlet extends HttpServlet
           data = FHIRUtil.serialize(resource, contentType);
         }
         else {
-          data = FHIRUtil.serialize(createOperationOutcome("NR"), contentType);
+          data = FHIRUtil.serialize(new OperationOutcome("error", "error", "No resource available"), contentType);
         }
       }
     }
@@ -324,12 +323,37 @@ class FHIRServlet extends HttpServlet
   protected
   String getBase(HttpServletRequest request)
   {
-    String result = request.getServletPath();
-    if(result == null || result.length() == 0) {
-      return "http://localhost:8080/wfhir/fhir";
+    String serverName  = request.getServerName();
+    int    serverPort  = request.getServerPort();
+    String ctxPath     = request.getContextPath();
+    String servletPath = request.getServletPath();
+    String protocol    = serverPort == 443 ? "https" : "http";
+    
+    String result      = protocol + "://";
+    if(serverName == null || serverName.length() == 0) {
+      serverName = "localhost";
     }
-    if(result.endsWith("/")) {
-      return result.substring(0, result.length()-1);
+    result += serverName;
+    if(serverPort != 80 && serverPort != 443) {
+      result += ":" + serverPort;
+    }
+    if(ctxPath == null || ctxPath.length() == 0) {
+      ctxPath = "/wfhir";
+    }
+    if(ctxPath.startsWith("/")) {
+      result += ctxPath;
+    }
+    else {
+      result += "/" + ctxPath;
+    }
+    if(servletPath == null || servletPath.length() == 0) {
+      servletPath = "/fhir";
+    }
+    if(servletPath.startsWith("/")) {
+      result += servletPath;
+    }
+    else {
+      result += "/" + servletPath;
     }
     return result;
   }
@@ -341,24 +365,39 @@ class FHIRServlet extends HttpServlet
     if(pathInfo == null) {
       return new ArrayList<String>();
     }
-    if(pathInfo.startsWith("/'")) {
+    if(pathInfo.startsWith("/")) {
       pathInfo = pathInfo.substring(1);
     }
     if(pathInfo.endsWith("/")) {
       pathInfo = pathInfo.substring(0, pathInfo.length()-1);
     }
-    if(pathInfo.length() == 0) return new ArrayList<String>();
-    return Arrays.asList(pathInfo.split("/"));
+    List<String> result = new ArrayList<String>();
+    if(pathInfo.length() == 0) return result;
+    String[] array = pathInfo.split("/");
+    if(array == null || array.length == 0) {
+      return result;
+    }
+    for(int i = 0; i < array.length; i++) {
+      result.add(array[i]);
+    }
+    return result;
   }
   
   protected
-  OperationOutcome createOperationOutcome(String code)
+  void sendHTMLMessage(HttpServletRequest request, HttpServletResponse response, String message)
+      throws ServletException, IOException
   {
-    OperationOutcomeIssue issue = new OperationOutcomeIssue();
-    issue.setCode(code);
-    OperationOutcome operationOutcome = new OperationOutcome();
-    operationOutcome.setIssue(new OperationOutcomeIssue[] { issue });
-    
-    return operationOutcome;
+    if(message == null) message = "";
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+    out.println("<!DOCTYPE html>");
+    out.println("<html>");
+    out.println("<head>");
+    out.println("<title>FHIRServlet</title>");
+    out.println("</head>");
+    out.println("<body>");
+    out.println(message);
+    out.println("</body>");
+    out.println("</html>");
   }
 }

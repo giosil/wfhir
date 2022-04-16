@@ -85,6 +85,12 @@ class OperationOutcome extends DomainResource implements Serializable
   
   @Override
   public String toString() {
+    if(issue != null && issue.length == 1) {
+      OperationOutcomeIssue issue0 = issue[0];
+      if(issue0 != null) {
+        return "OperationOutcome(" + id + ",[" + issue0 + "])";
+      }
+    }
     return "OperationOutcome(" + id + ")";
   }
 }
