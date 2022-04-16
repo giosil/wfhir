@@ -3,8 +3,6 @@ package org.dew.fhir.services;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.dew.fhir.model.Resource;
-
 /**
  * 
  * FHIR Services Container.
@@ -14,12 +12,12 @@ public
 class FHIRServices 
 {
   protected String name;
-  protected Map<String, IFHIRService<Resource>> handlers;
+  protected Map<String, IFHIRService> handlers;
   
   public FHIRServices()
   {
     this.name = "default";
-    this.handlers = new HashMap<String, IFHIRService<Resource>>();
+    this.handlers = new HashMap<String, IFHIRService>();
   }
   
   public FHIRServices(String name)
@@ -28,7 +26,7 @@ class FHIRServices
     if(this.name == null || this.name.length() == 0) {
       this.name = "default";
     }
-    this.handlers = new HashMap<String, IFHIRService<Resource>>();
+    this.handlers = new HashMap<String, IFHIRService>();
   }
 
   public String getName() {
@@ -40,7 +38,7 @@ class FHIRServices
   }
 
   public 
-  void addHandler(String type, IFHIRService<Resource> service)
+  void addHandler(String type, IFHIRService service)
   {
     if(type == null || type.length() == 0) {
       return;
@@ -52,7 +50,7 @@ class FHIRServices
   }
   
   public 
-  IFHIRService<?> removeHandler(String type)
+  IFHIRService removeHandler(String type)
   {
     if(type == null || type.length() == 0) {
       return null;
@@ -61,7 +59,7 @@ class FHIRServices
   }
   
   public 
-  IFHIRService<Resource> getHandler(String type)
+  IFHIRService getHandler(String type)
   {
     if(type == null || type.length() == 0) {
       return null;

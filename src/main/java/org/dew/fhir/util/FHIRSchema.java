@@ -124,7 +124,7 @@ class FHIRSchema
     return listResult;
   }
   
-  public
+  public static
   Class<?> getClassOf(String objectName)
   {
     if(objectName == null || objectName.length() == 0) {

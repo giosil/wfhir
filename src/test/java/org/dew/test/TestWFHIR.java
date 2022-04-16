@@ -229,7 +229,7 @@ class TestWFHIR extends TestCase
     for(int i = 0; i < listResources.size(); i++) {
       String objectName = listResources.get(i);
       
-      Class<?> objectClass = fhirSchema.getClassOf(objectName);
+      Class<?> objectClass = FHIRSchema.getClassOf(objectName);
       if(objectClass == null) {
         if(traceObj) System.out.println(objectName + " (missing)");
         missingObj.add(objectName);
@@ -277,7 +277,7 @@ class TestWFHIR extends TestCase
     for(int i = 0; i < bbElements.size(); i++) {
       String backboneElement = bbElements.get(i);
       
-      Class<?> objectClass = fhirSchema.getClassOf(backboneElement);
+      Class<?> objectClass = FHIRSchema.getClassOf(backboneElement);
       if(objectClass == null) {
         continue;
       }

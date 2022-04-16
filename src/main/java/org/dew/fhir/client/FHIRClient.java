@@ -1,7 +1,5 @@
 package org.dew.fhir.client;
 
-import org.dew.fhir.model.Resource;
-
 import org.dew.fhir.services.FHIRRequest;
 import org.dew.fhir.services.FHIRResponse;
 import org.dew.fhir.services.IFHIRService;
@@ -12,7 +10,7 @@ import org.dew.fhir.services.IFHIRService;
  * 
  */
 public 
-class FHIRClient<T extends Resource> implements IFHIRService<T>
+class FHIRClient implements IFHIRService
 {
   protected String base;
   protected String type;
@@ -42,49 +40,49 @@ class FHIRClient<T extends Resource> implements IFHIRService<T>
   }
 
   @Override
-  public FHIRResponse<T> read(FHIRRequest<T> request) throws Exception {
+  public FHIRResponse read(FHIRRequest request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public FHIRResponse<T> vread(FHIRRequest<T> request) throws Exception {
+  public FHIRResponse vread(FHIRRequest request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public FHIRResponse<T> update(FHIRRequest<T> request) throws Exception {
+  public FHIRResponse update(FHIRRequest request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public FHIRResponse<T> patch(FHIRRequest<T> request) throws Exception {
+  public FHIRResponse patch(FHIRRequest request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public FHIRResponse<T> delete(FHIRRequest<T> request) throws Exception {
+  public FHIRResponse delete(FHIRRequest request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public FHIRResponse<T> history(FHIRRequest<T> request) throws Exception {
+  public FHIRResponse history(FHIRRequest request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public FHIRResponse<T> create(FHIRRequest<T> request) throws Exception {
+  public FHIRResponse create(FHIRRequest request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public FHIRResponse<T> search(FHIRRequest<T> request) throws Exception {
+  public FHIRResponse search(FHIRRequest request) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }

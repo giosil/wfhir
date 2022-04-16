@@ -3,6 +3,7 @@ package org.dew.fhir.services;
 import java.io.Serializable;
 
 import org.dew.fhir.model.Bundle;
+import org.dew.fhir.model.Meta;
 import org.dew.fhir.model.OperationOutcome;
 import org.dew.fhir.model.Resource;
 
@@ -12,7 +13,7 @@ import org.dew.fhir.model.Resource;
  *
  */
 public 
-class FHIRResponse<T extends Resource> implements Serializable
+class FHIRResponse implements Serializable
 {
   private static final long serialVersionUID = -2487169018671968981L;
   
@@ -20,7 +21,7 @@ class FHIRResponse<T extends Resource> implements Serializable
   protected String vid;
   protected OperationOutcome outcome;
   protected Bundle bundle;
-  protected T resource;
+  protected Resource resource;
   
   public FHIRResponse()
   {
@@ -41,10 +42,28 @@ class FHIRResponse<T extends Resource> implements Serializable
   {
     this.bundle = bundle;
   }
+  
+  public FHIRResponse(OperationOutcome outcome)
+  {
+    this.outcome = outcome;
+  }
 
-  public FHIRResponse(T resource)
+  public FHIRResponse(Resource resource)
   {
     this.resource = resource;
+    if(resource != null) {
+      String resourceId = resource.getId();
+      if(resourceId != null && resourceId.length() > 0) {
+        this.id = resourceId;
+      }
+      Meta meta = resource.getMeta();
+      if(meta != null) {
+        String versionId = meta.getVersionId();
+        if(versionId != null && versionId.length() > 0) {
+          this.vid = versionId;
+        }
+      }
+    }
   }
 
   public String getId() {
@@ -63,7 +82,7 @@ class FHIRResponse<T extends Resource> implements Serializable
     return bundle;
   }
 
-  public T getResource() {
+  public Resource getResource() {
     return resource;
   }
 
@@ -83,8 +102,21 @@ class FHIRResponse<T extends Resource> implements Serializable
     this.bundle = bundle;
   }
 
-  public void setResource(T resource) {
+  public void setResource(Resource resource) {
     this.resource = resource;
+    if(resource != null) {
+      String resourceId = resource.getId();
+      if(resourceId != null && resourceId.length() > 0) {
+        this.id = resourceId;
+      }
+      Meta meta = resource.getMeta();
+      if(meta != null) {
+        String versionId = meta.getVersionId();
+        if(versionId != null && versionId.length() > 0) {
+          this.vid = versionId;
+        }
+      }
+    }
   }
   
   @Override

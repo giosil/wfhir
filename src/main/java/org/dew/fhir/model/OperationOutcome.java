@@ -35,6 +35,25 @@ class OperationOutcome extends DomainResource implements Serializable
     }
   }
   
+  public OperationOutcome(String issueSeverity, String issueCode, String issueDiagnostics)
+  {
+    this.resourceType = "OperationOutcome";
+    if(issueSeverity != null || issueCode != null || issueDiagnostics != null) {
+      this.issue = new OperationOutcomeIssue[] { new OperationOutcomeIssue(null, issueSeverity, issueCode, issueDiagnostics) };
+    }
+  }
+  
+  public OperationOutcome(String id, String issueSeverity, String issueCode, String issueDiagnostics)
+  {
+    this.resourceType = "OperationOutcome";
+    this.id = id;
+    if(issueSeverity != null || issueCode != null || issueDiagnostics != null) {
+      String idIssue = id;
+      if(idIssue != null) idIssue += "-issue";
+      this.issue = new OperationOutcomeIssue[] { new OperationOutcomeIssue(idIssue, issueSeverity, issueCode, issueDiagnostics) };
+    }
+  }
+  
   public OperationOutcome(String id, OperationOutcomeIssue[] issue)
   {
     this.resourceType = "OperationOutcome";

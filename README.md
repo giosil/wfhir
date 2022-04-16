@@ -9,7 +9,7 @@ The project is in a preliminary phase, therefore the implementation is incomplet
 import org.dew.fhir.model.*;
 import org.dew.fhir.util.FHIRUtil;
 
-Organization res = new Organization("asl-120201", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
+Organization res = new Organization("120201000", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
   
 String json = FHIRUtil.serialize(res, "application/fhir+json");
   

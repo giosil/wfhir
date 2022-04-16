@@ -32,6 +32,12 @@ class Bundle extends Resource implements Serializable
     this.resourceType = "Bundle";
     this.identifier = identifier;
   }
+  
+  public Bundle(String type)
+  {
+    this.resourceType = "Bundle";
+    this.type = type;
+  }
 
   public Identifier getIdentifier() {
     return identifier;
@@ -87,6 +93,28 @@ class Bundle extends Resource implements Serializable
 
   public void setSignature(Signature signature) {
     this.signature = signature;
+  }
+  
+  public 
+  void addLink(String relation, String url)
+  {
+    if(url == null || url.length() == 0) {
+      return;
+    }
+    if(relation == null || relation.length() == 0) {
+      relation = "self";
+    }
+    if(link == null || link.length == 0) {
+      link = new BundleLink[] { new BundleLink(url, relation) };
+    }
+    else {
+      BundleLink[] newLink = new BundleLink[link.length + 1];
+      for(int i = 0; i < link.length; i++) {
+        newLink[i] = link[i];
+      }
+      newLink[link.length] = new BundleLink(url, relation);
+    }
+    total = link.length;
   }
 
   @Override

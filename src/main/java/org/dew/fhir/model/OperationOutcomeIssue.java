@@ -49,6 +49,14 @@ class OperationOutcomeIssue extends BackboneElement implements Serializable
     this.code = code;
     this.details = details;
   }
+  
+  public OperationOutcomeIssue(String id, String severity, String code, String diagnostics)
+  {
+    this.id = id;
+    this.severity = severity;
+    this.code = code;
+    this.diagnostics = diagnostics;
+  }
 
   public String getSeverity() {
     return severity;

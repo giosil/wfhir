@@ -1,9 +1,12 @@
 package org.dew.fhir.server;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.dew.fhir.mock.MockOrganizationService;
 import org.dew.fhir.model.Bundle;
 import org.dew.fhir.model.OperationOutcome;
 import org.dew.fhir.model.OperationOutcomeIssue;
@@ -33,6 +37,8 @@ class FHIRServlet extends HttpServlet
 {
   private static final long serialVersionUID = -8635635498516268187L;
   
+  protected static int BUFF_LENGTH = 1024;
+  
   protected FHIRServices services = new FHIRServices();
   
   @Override
@@ -40,7 +46,7 @@ class FHIRServlet extends HttpServlet
   void init() 
     throws ServletException 
   {
-    // TODO Auto-generated method stub
+    services.addHandler("organization", new MockOrganizationService());
   }
   
   @Override
@@ -62,16 +68,16 @@ class FHIRServlet extends HttpServlet
   void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
   {
-    FHIRRequest<Resource> fhirRequest = createFHIRRequest(request);
+    FHIRRequest fhirRequest = createFHIRRequest(request);
     if(fhirRequest == null) return;
     
-    IFHIRService<Resource> service = services.getHandler(fhirRequest.getType());
+    IFHIRService service = services.getHandler(fhirRequest.getType());
     if(service == null) {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST);
       return;
     }
     
-    FHIRResponse<Resource> fhirResponse = null;
+    FHIRResponse fhirResponse = null;
     try {
       if(fhirRequest.isHistory()) {
         fhirResponse = service.vread(fhirRequest);
@@ -93,16 +99,16 @@ class FHIRServlet extends HttpServlet
   void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
   {
-    FHIRRequest<Resource> fhirRequest = createFHIRRequest(request);
+    FHIRRequest fhirRequest = createFHIRRequest(request);
     if(fhirRequest == null) return;
     
-    IFHIRService<Resource> service = services.getHandler(fhirRequest.getType());
+    IFHIRService service = services.getHandler(fhirRequest.getType());
     if(service == null) {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST);
       return;
     }
     
-    FHIRResponse<Resource> fhirResponse = null;
+    FHIRResponse fhirResponse = null;
     try {
       fhirResponse = service.create(fhirRequest);
     }
@@ -119,16 +125,16 @@ class FHIRServlet extends HttpServlet
   void doPut(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
   {
-    FHIRRequest<Resource> fhirRequest = createFHIRRequest(request);
+    FHIRRequest fhirRequest = createFHIRRequest(request);
     if(fhirRequest == null) return;
     
-    IFHIRService<Resource> service = services.getHandler(fhirRequest.getType());
+    IFHIRService service = services.getHandler(fhirRequest.getType());
     if(service == null) {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST);
       return;
     }
     
-    FHIRResponse<Resource> fhirResponse = null;
+    FHIRResponse fhirResponse = null;
     try {
       fhirResponse = service.update(fhirRequest);
     }
@@ -145,16 +151,16 @@ class FHIRServlet extends HttpServlet
   void doDelete(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
   {
-    FHIRRequest<Resource> fhirRequest = createFHIRRequest(request);
+    FHIRRequest fhirRequest = createFHIRRequest(request);
     if(fhirRequest == null) return;
     
-    IFHIRService<Resource> service = services.getHandler(fhirRequest.getType());
+    IFHIRService service = services.getHandler(fhirRequest.getType());
     if(service == null) {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST);
       return;
     }
     
-    FHIRResponse<Resource> fhirResponse = null;
+    FHIRResponse fhirResponse = null;
     try {
       fhirResponse = service.delete(fhirRequest);
     }
@@ -170,16 +176,16 @@ class FHIRServlet extends HttpServlet
   void doPatch(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
   {
-    FHIRRequest<Resource> fhirRequest = createFHIRRequest(request);
+    FHIRRequest fhirRequest = createFHIRRequest(request);
     if(fhirRequest == null) return;
     
-    IFHIRService<Resource> service = services.getHandler(fhirRequest.getType());
+    IFHIRService service = services.getHandler(fhirRequest.getType());
     if(service == null) {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST);
       return;
     }
     
-    FHIRResponse<Resource> fhirResponse = null;
+    FHIRResponse fhirResponse = null;
     try {
       fhirResponse = service.patch(fhirRequest);
     }
@@ -192,9 +198,12 @@ class FHIRServlet extends HttpServlet
   }
   
   protected
-  FHIRRequest<Resource> createFHIRRequest(HttpServletRequest request)
+  FHIRRequest createFHIRRequest(HttpServletRequest request)
+    throws IOException
   {
-    FHIRRequest<Resource> result = new FHIRRequest<Resource>();
+    FHIRRequest result = new FHIRRequest();
+    
+    result.setBase(getBase(request));
     
     List<String> pathInfo = getPathInfo(request);
     if(pathInfo.size() > 0) {
@@ -235,19 +244,39 @@ class FHIRServlet extends HttpServlet
       }
     }
     
+    InputStream is = request.getInputStream();
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    byte[] buff = new byte[BUFF_LENGTH];
+    int n;
+    while((n = is.read(buff)) > 0) {
+      baos.write(buff, 0, n);
+    }
+    String requestData = baos.toString();
+    if(requestData != null && requestData.length() > 0) {
+      try {
+        result.setResource(FHIRUtil.deserialize(requestData, result.getType()));
+      }
+      catch(Exception ex) {
+      }
+    }
+    
     return result;
   }
   
   protected
-  void send(HttpServletRequest request, HttpServletResponse response, FHIRRequest<Resource> fhirRequest, FHIRResponse<Resource> fhirResponse)
+  void send(HttpServletRequest request, HttpServletResponse response, FHIRRequest fhirRequest, FHIRResponse fhirResponse)
     throws ServletException, IOException
   {
-    String type = fhirRequest.getType();
+    String base = fhirRequest.getBase();
+    if(base == null || base.length() == 0) {
+      base = getBase(request);
+    }
     
-    String id  = fhirResponse.getId();
-    String vid = fhirResponse.getVid();
+    String type = fhirRequest.getType();
+    String id   = fhirResponse.getId();
+    String vid  = fhirResponse.getVid();
     if(id != null && id.length() > 0) {
-      String location = getBase(request) + "/" + type + "/" + id;
+      String location = base + "/" + type + "/" + id;
       if(vid != null && vid.length() > 0) {
         location += "/_history/" + vid;
       }
@@ -297,7 +326,7 @@ class FHIRServlet extends HttpServlet
   {
     String result = request.getServletPath();
     if(result == null || result.length() == 0) {
-      return "wfhir";
+      return "http://localhost:8080/wfhir/fhir";
     }
     if(result.endsWith("/")) {
       return result.substring(0, result.length()-1);
@@ -318,19 +347,8 @@ class FHIRServlet extends HttpServlet
     if(pathInfo.endsWith("/")) {
       pathInfo = pathInfo.substring(0, pathInfo.length()-1);
     }
-    List<String> result = new ArrayList<String>();
-    if(pathInfo.length() == 0) {
-      return result;
-    }
-    int begin = 0;
-    int indexOf = pathInfo.indexOf(',');
-    while(indexOf >= 0) {
-      result.add(pathInfo.substring(begin, indexOf));
-      begin = indexOf + 1;
-      indexOf = pathInfo.indexOf(',', begin);
-    }
-    result.add(pathInfo.substring(begin));
-    return result;
+    if(pathInfo.length() == 0) return new ArrayList<String>();
+    return Arrays.asList(pathInfo.split("/"));
   }
   
   protected
@@ -338,7 +356,6 @@ class FHIRServlet extends HttpServlet
   {
     OperationOutcomeIssue issue = new OperationOutcomeIssue();
     issue.setCode(code);
-    
     OperationOutcome operationOutcome = new OperationOutcome();
     operationOutcome.setIssue(new OperationOutcomeIssue[] { issue });
     

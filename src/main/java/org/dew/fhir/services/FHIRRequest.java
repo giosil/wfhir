@@ -14,13 +14,14 @@ import org.dew.fhir.util.FUtil;
  *
  */
 public 
-class FHIRRequest<T extends Resource> implements Serializable
+class FHIRRequest implements Serializable
 {
   private static final long serialVersionUID = -1893986457430276781L;
   
   protected String id;
   protected String vid;
-  protected T resource;
+  protected Resource resource;
+  protected String base;
   protected String format;
   protected boolean pretty;
   protected String summary;
@@ -48,7 +49,7 @@ class FHIRRequest<T extends Resource> implements Serializable
     this.vid = vid;
   }
 
-  public FHIRRequest(T resource)
+  public FHIRRequest(Resource resource)
   {
     this.resource = resource;
   }
@@ -83,7 +84,7 @@ class FHIRRequest<T extends Resource> implements Serializable
     this.format = format;
     this.elements = elements;
   }
-
+  
   public String getId() {
     return id;
   }
@@ -92,8 +93,12 @@ class FHIRRequest<T extends Resource> implements Serializable
     return vid;
   }
 
-  public T getResource() {
+  public Resource getResource() {
     return resource;
+  }
+
+  public String getBase() {
+    return base;
   }
 
   public String getFormat() {
@@ -144,8 +149,12 @@ class FHIRRequest<T extends Resource> implements Serializable
     this.vid = vid;
   }
 
-  public void setResource(T resource) {
+  public void setResource(Resource resource) {
     this.resource = resource;
+  }
+
+  public void setBase(String base) {
+    this.base = base;
   }
 
   public void setFormat(String format) {
@@ -276,6 +285,6 @@ class FHIRRequest<T extends Resource> implements Serializable
   
   @Override
   public String toString() {
-    return "FHIRRequest(" + id + "," + vid + "," + resource + "," + format + "," + pretty + "," + summary + "," + elements + "," + parameters + ")";
+    return "FHIRRequest(" + id + "," + vid + "," + resource + "," + base + "," + format + "," + pretty + "," + summary + "," + elements + "," + parameters + ")";
   }
 }
