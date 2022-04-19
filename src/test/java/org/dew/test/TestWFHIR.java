@@ -42,11 +42,11 @@ class TestWFHIR extends TestCase
   public 
   void testApp() 
   {
-    checkModel(false, false);
+    // checkModel(false, false);
     
     // examples();
     
-    // clientExamples();
+    clientExamples();
   }
   
   public 
@@ -80,6 +80,8 @@ class TestWFHIR extends TestCase
   void clientExamples()
   {
     FHIRClient client = new FHIRClient("http://localhost:8080/wfhir/fhir", "organization");
+    client.setBasicAuthUsername("test");
+    client.setBasicAuthPassword("test");
     
     try {
       FHIRRequest request = new FHIRRequest("12345");

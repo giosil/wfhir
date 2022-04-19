@@ -16,13 +16,13 @@ class MockOrganizationService implements IFHIRService
   FHIRResponse read(FHIRRequest request) 
       throws Exception 
   {
-    System.out.println("MockOrganizationService.read(" + request + ")...");
+    System.out.println("MockOrganizationService.read(" + request + ") <" + request.getPrincipal() + ">...");
     
     Organization resource = buildMockResource();
     
     FHIRResponse fhirResponse = new FHIRResponse(resource);
     
-    System.out.println("MockOrganizationService.read(" + request + ") -> " + fhirResponse);
+    System.out.println("MockOrganizationService.read(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
     
     return fhirResponse;
   }
@@ -32,13 +32,13 @@ class MockOrganizationService implements IFHIRService
   FHIRResponse vread(FHIRRequest request) 
       throws Exception 
   {
-    System.out.println("MockOrganizationService.vread(" + request + ")...");
+    System.out.println("MockOrganizationService.vread(" + request + ") <" + request.getPrincipal() + ">...");
     
     Organization resource = buildMockResource();
     
     FHIRResponse fhirResponse = new FHIRResponse(resource);
     
-    System.out.println("MockOrganizationService.vread(" + request + ") -> " + fhirResponse);
+    System.out.println("MockOrganizationService.vread(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
     
     return fhirResponse;
   }
@@ -48,14 +48,14 @@ class MockOrganizationService implements IFHIRService
   FHIRResponse update(FHIRRequest request) 
       throws Exception 
   {
-    System.out.println("MockOrganizationService.update(" + request + ")...");
+    System.out.println("MockOrganizationService.update(" + request + ") <" + request.getPrincipal() + ">...");
     
     Organization resource = buildMockResource();
     
     FHIRResponse fhirResponse = new FHIRResponse(resource);
     fhirResponse.setVid("2");
     
-    System.out.println("MockOrganizationService.update(" + request + ") -> " + fhirResponse);
+    System.out.println("MockOrganizationService.update(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
     
     return fhirResponse;
   }
@@ -65,14 +65,14 @@ class MockOrganizationService implements IFHIRService
   FHIRResponse patch(FHIRRequest request) 
       throws Exception 
   {
-    System.out.println("MockOrganizationService.patch(" + request + ")...");
+    System.out.println("MockOrganizationService.patch(" + request + ") <" + request.getPrincipal() + ">...");
     
     Organization resource = buildMockResource();
     
     FHIRResponse fhirResponse = new FHIRResponse(resource);
     fhirResponse.setVid("3");
     
-    System.out.println("MockOrganizationService.patch(" + request + ") -> " + fhirResponse);
+    System.out.println("MockOrganizationService.patch(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
     
     return fhirResponse;
   }
@@ -82,13 +82,13 @@ class MockOrganizationService implements IFHIRService
   FHIRResponse delete(FHIRRequest request) 
     throws Exception 
   {
-    System.out.println("MockOrganizationService.delete(" + request + ")...");
+    System.out.println("MockOrganizationService.delete(" + request + ") <" + request.getPrincipal() + ">...");
     
     OperationOutcome operationOutcome = new OperationOutcome("information", "informational", "Successfully deleted 1 resource(s) in 1ms");
     
     FHIRResponse fhirResponse = new FHIRResponse(operationOutcome);
     
-    System.out.println("MockOrganizationService.delete(" + request + ") -> " + fhirResponse);
+    System.out.println("MockOrganizationService.delete(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
     
     return fhirResponse;
   }
@@ -98,14 +98,14 @@ class MockOrganizationService implements IFHIRService
   FHIRResponse history(FHIRRequest request) 
     throws Exception 
   {
-    System.out.println("MockOrganizationService.history(" + request + ")...");
+    System.out.println("MockOrganizationService.history(" + request + ") <" + request.getPrincipal() + ">...");
     
     Organization resource = buildMockResource();
     
     FHIRResponse fhirResponse = new FHIRResponse(resource);
     fhirResponse.setVid(request.getVid());
     
-    System.out.println("MockOrganizationService.history(" + request + ") -> " + fhirResponse);
+    System.out.println("MockOrganizationService.history(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
     
     return fhirResponse;
   }
@@ -115,14 +115,14 @@ class MockOrganizationService implements IFHIRService
   FHIRResponse create(FHIRRequest request) 
     throws Exception 
   {
-    System.out.println("MockOrganizationService.create(" + request + ")...");
+    System.out.println("MockOrganizationService.create(" + request + ") <" + request.getPrincipal() + ">...");
     
     Organization resource = buildMockResource();
     
     FHIRResponse fhirResponse = new FHIRResponse(resource);
     fhirResponse.setVid("1");
     
-    System.out.println("MockOrganizationService.create(" + request + ") -> " + fhirResponse);
+    System.out.println("MockOrganizationService.create(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
     
     return fhirResponse;
   }
@@ -131,7 +131,7 @@ class MockOrganizationService implements IFHIRService
   public FHIRResponse search(FHIRRequest request) 
       throws Exception 
   {
-    System.out.println("MockOrganizationService.search(" + request + ")...");
+    System.out.println("MockOrganizationService.search(" + request + ") <" + request.getPrincipal() + ">...");
     
     String base = request.getBase();
     String type = request.getType();
@@ -143,7 +143,7 @@ class MockOrganizationService implements IFHIRService
     
     FHIRResponse fhirResponse = new FHIRResponse(bundle);
     
-    System.out.println("MockOrganizationService.search(" + request + ") -> " + fhirResponse);
+    System.out.println("MockOrganizationService.search(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
     
     return fhirResponse;
   }

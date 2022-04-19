@@ -1,6 +1,9 @@
 package org.dew.fhir.services;
 
 import java.io.Serializable;
+
+import java.security.Principal;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +36,8 @@ class FHIRRequest implements Serializable
   protected String include;
   protected String revinclude;
   protected Map<String, Object> parameters;
+  // Security
+  protected Principal principal;
   
   public FHIRRequest()
   {
@@ -91,7 +96,7 @@ class FHIRRequest implements Serializable
     this.format = format;
     this.elements = elements;
   }
-  
+
   public String getId() {
     return id;
   }
@@ -148,6 +153,10 @@ class FHIRRequest implements Serializable
     return parameters;
   }
 
+  public Principal getPrincipal() {
+    return principal;
+  }
+
   public void setId(String id) {
     this.id = id;
   }
@@ -202,6 +211,10 @@ class FHIRRequest implements Serializable
 
   public void setParameters(Map<String, Object> parameters) {
     this.parameters = parameters;
+  }
+
+  public void setPrincipal(Principal principal) {
+    this.principal = principal;
   }
 
   public void addParameter(String name, String value) {

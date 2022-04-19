@@ -1,5 +1,6 @@
 package org.dew.fhir.client;
 
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,10 +18,19 @@ import org.dew.fhir.util.FHIRUtil;
 public 
 class FHIRClient implements IFHIRService
 {
+  // Attributes
+  protected String basicAuthUsername;
+  protected String basicAuthPassword;
+  protected String bearer;
+  protected int connectTimeout = 60000;
+  protected int readTimeout = 60000;
+  protected OutputStream tracerRequest;
+  protected OutputStream tracerResponse;
   protected String base;
   protected String type;
   protected String accept = "application/fhir+json";
-  protected WHttp whttp;
+  // Internal
+  protected WHttp  whttp;
   
   public FHIRClient(String base)
   {
@@ -39,6 +49,34 @@ class FHIRClient implements IFHIRService
     whttp.setHeaders(getHeaders());
   }
 
+  public String getBasicAuthUsername() {
+    return basicAuthUsername;
+  }
+
+  public String getBasicAuthPassword() {
+    return basicAuthPassword;
+  }
+
+  public String getBearer() {
+    return bearer;
+  }
+
+  public int getConnectTimeout() {
+    return connectTimeout;
+  }
+
+  public int getReadTimeout() {
+    return readTimeout;
+  }
+
+  public OutputStream getTracerRequest() {
+    return tracerRequest;
+  }
+
+  public OutputStream getTracerResponse() {
+    return tracerResponse;
+  }
+
   public String getBase() {
     return base;
   }
@@ -47,12 +85,63 @@ class FHIRClient implements IFHIRService
     return type;
   }
 
+  public String getAccept() {
+    return accept;
+  }
+
+  public WHttp getWhttp() {
+    return whttp;
+  }
+
+  public void setBasicAuthUsername(String basicAuthUsername) {
+    this.basicAuthUsername = basicAuthUsername;
+    this.whttp.setBasicAuthUsername(basicAuthUsername);
+  }
+
+  public void setBasicAuthPassword(String basicAuthPassword) {
+    this.basicAuthPassword = basicAuthPassword;
+    this.whttp.setBasicAuthPassword(basicAuthPassword);
+  }
+
+  public void setBearer(String bearer) {
+    this.bearer = bearer;
+    this.whttp.setBearer(bearer);
+  }
+
+  public void setConnectTimeout(int connectTimeout) {
+    this.connectTimeout = connectTimeout;
+    this.whttp.setConnectTimeout(connectTimeout);
+  }
+
+  public void setReadTimeout(int readTimeout) {
+    this.readTimeout = readTimeout;
+    this.whttp.setReadTimeout(readTimeout);
+  }
+
+  public void setTracerRequest(OutputStream tracerRequest) {
+    this.tracerRequest = tracerRequest;
+    this.whttp.setTracerRequest(tracerRequest);
+  }
+
+  public void setTracerResponse(OutputStream tracerResponse) {
+    this.tracerResponse = tracerResponse;
+    this.whttp.setTracerResponse(tracerResponse);
+  }
+
   public void setBase(String base) {
     this.base = base;
   }
 
   public void setType(String type) {
     this.type = type;
+  }
+
+  public void setAccept(String accept) {
+    this.accept = accept;
+  }
+
+  public void setWhttp(WHttp whttp) {
+    this.whttp = whttp;
   }
 
   @Override
