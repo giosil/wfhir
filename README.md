@@ -13,7 +13,7 @@ This library DON'T contains:
 
 - persistence engine of resources;
 - user interfaces or viewers;
-- tools for server/resource management.
+- tools for server/resources management.
 
 ## Serialization and Deserialization
 
