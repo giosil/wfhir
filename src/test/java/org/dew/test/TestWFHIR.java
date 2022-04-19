@@ -5,7 +5,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.dew.fhir.client.FHIRClient;
+
 import org.dew.fhir.model.Address;
+import org.dew.fhir.model.Bundle;
 import org.dew.fhir.model.CodeableConcept;
 import org.dew.fhir.model.Coding;
 import org.dew.fhir.model.ContactDetail;
@@ -19,8 +21,10 @@ import org.dew.fhir.model.Resource;
 import org.dew.fhir.model.ValueSet;
 import org.dew.fhir.model.ValueSetCompose;
 import org.dew.fhir.model.ValueSetComposeInclude;
+
 import org.dew.fhir.services.FHIRRequest;
 import org.dew.fhir.services.FHIRResponse;
+
 import org.dew.fhir.util.FHIRSchema;
 import org.dew.fhir.util.FHIRUtil;
 
@@ -42,15 +46,21 @@ class TestWFHIR extends TestCase
   public 
   void testApp() 
   {
-    // checkModel(false, false);
+    String sOperation = System.getProperty("dew.test.op", "");
     
-    // examples();
-    
-    clientExamples();
+    if(sOperation == null || sOperation.length() == 0 || sOperation.equalsIgnoreCase("model")) {
+      checkModel(false, false);
+    }
+    else if(sOperation.equalsIgnoreCase("client")) {
+      checkClient();
+    }
+    else {
+      checkSerializationDeserialization();
+    }
   }
   
   public 
-  void examples()
+  void checkSerializationDeserialization()
   {
     System.out.println("examples()...");
     System.out.println("-------------------------------------------------");
@@ -77,26 +87,34 @@ class TestWFHIR extends TestCase
   }
   
   public 
-  void clientExamples()
+  void checkClient()
   {
-    FHIRClient client = new FHIRClient("http://localhost:8080/wfhir/fhir", "organization");
-    client.setBasicAuthUsername("test");
-    client.setBasicAuthPassword("test");
+    FHIRClient client = new FHIRClient("http://localhost:8080/wfhir/fhir");
+    client.setBasicAuth("test", "test");
     
     try {
-      FHIRRequest request = new FHIRRequest("12345");
+      FHIRRequest req = new FHIRRequest();
       
       System.out.println("read...");
-      FHIRResponse response = client.read(request);
+      FHIRResponse res = client.read(req.type("organization").id("120201"));
       
-      Resource resource = response.getResource();
+      Resource resource = res.getResource();
       System.out.println("resource = " + resource);
       
       System.out.println("delete...");
-      response = client.delete(request);
+      res = client.delete(req.type("organization").id("120201"));
       
-      OperationOutcome outcome = response.getOutcome();
+      OperationOutcome outcome = res.getOutcome();
       System.out.println("outcome = " + outcome);
+      
+      System.out.println("search...");
+      res = client.search(req.clear().type("organization").contains("name", "ROMA"));
+      
+      Bundle bundle = res.getBundle();
+      System.out.println("bundle = " + bundle);
+      if(bundle != null) {
+        System.out.println("bundle.listURL() = " + bundle.listURL());
+      }
     }
     catch(Exception ex) {
       ex.printStackTrace();

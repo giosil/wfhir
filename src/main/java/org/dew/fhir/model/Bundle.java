@@ -1,6 +1,7 @@
 package org.dew.fhir.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -115,6 +116,31 @@ class Bundle extends Resource implements Serializable
       newLink[link.length] = new BundleLink(url, relation);
     }
     total = link.length;
+  }
+  
+  public 
+  void addLink(String relation, String base, String type, Resource resource)
+  {
+    if(base == null) base = ""; 
+    if(type == null || resource == null) return;
+    addLink(relation, base + "/" + type + "/" + resource.getId());
+  }
+  
+  public
+  java.util.List<String> listURL()
+  {
+    if(link == null || link.length == 0) {
+      return new ArrayList<>();
+    }
+    java.util.List<String> result = new ArrayList<String>();
+    for(int i = 0; i < link.length; i++) {
+      BundleLink bundleLink = link[i];
+      if(bundleLink == null) continue;
+      String linkURL = bundleLink.getUrl();
+      if(linkURL == null || linkURL.length() == 0) continue;
+      result.add(linkURL);
+    }
+    return result;
   }
 
   @Override

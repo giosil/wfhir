@@ -143,6 +143,15 @@ class FHIRClient implements IFHIRService
   public void setWhttp(WHttp whttp) {
     this.whttp = whttp;
   }
+  
+  // Utils
+  
+  public void setBasicAuth(String username, String password) {
+    this.basicAuthUsername = username;
+    this.basicAuthPassword = password;
+    this.whttp.setBasicAuthUsername(username);
+    this.whttp.setBasicAuthPassword(password);
+  }
 
   @Override
   public 
@@ -355,12 +364,6 @@ class FHIRClient implements IFHIRService
     if(request == null) {
       throw new Exception("FHIRRequest is null");
     }
-    String id = request.getId();
-    if(id == null) id = "";
-    Resource resource = request.getResource();
-    if(resource == null) {
-      throw new Exception("FHIRRequest.resource is null");
-    }
     String requestType = type;
     if(requestType == null || requestType.length() == 0) {
       requestType = request.getType();
@@ -369,7 +372,7 @@ class FHIRClient implements IFHIRService
       throw new Exception("Invalid type");
     }
     
-    String response = whttp.get(requestType + "/" + id);
+    String response = whttp.get(requestType, request.parameters());
     
     Map<String, Object> mapResponse = FHIRUtil.deserialize(response);
     

@@ -1,8 +1,11 @@
 package org.dew.fhir.mock;
 
+import java.util.Map;
+
 import org.dew.fhir.model.Bundle;
 import org.dew.fhir.model.OperationOutcome;
 import org.dew.fhir.model.Organization;
+import org.dew.fhir.model.Resource;
 
 import org.dew.fhir.services.FHIRRequest;
 import org.dew.fhir.services.FHIRResponse;
@@ -16,141 +19,93 @@ class MockOrganizationService implements IFHIRService
   FHIRResponse read(FHIRRequest request) 
       throws Exception 
   {
-    System.out.println("MockOrganizationService.read(" + request + ") <" + request.getPrincipal() + ">...");
+    String id = request.getId();
     
-    Organization resource = buildMockResource();
+    Organization resource = new Organization("120201", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
     
-    FHIRResponse fhirResponse = new FHIRResponse(resource);
-    
-    System.out.println("MockOrganizationService.read(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
-    
-    return fhirResponse;
+    return new FHIRResponse(resource).id(id);
   }
-
+  
   @Override
   public 
   FHIRResponse vread(FHIRRequest request) 
       throws Exception 
   {
-    System.out.println("MockOrganizationService.vread(" + request + ") <" + request.getPrincipal() + ">...");
+    String id = request.getId();
+    String vid = request.getVid();
     
-    Organization resource = buildMockResource();
+    Organization resource = new Organization("120201", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
     
-    FHIRResponse fhirResponse = new FHIRResponse(resource);
-    
-    System.out.println("MockOrganizationService.vread(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
-    
-    return fhirResponse;
+    return new FHIRResponse(resource).id(id).vid(vid);
   }
-
+  
   @Override
   public 
   FHIRResponse update(FHIRRequest request) 
       throws Exception 
   {
-    System.out.println("MockOrganizationService.update(" + request + ") <" + request.getPrincipal() + ">...");
+    Resource resource = request.getResource();
     
-    Organization resource = buildMockResource();
-    
-    FHIRResponse fhirResponse = new FHIRResponse(resource);
-    fhirResponse.setVid("2");
-    
-    System.out.println("MockOrganizationService.update(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
-    
-    return fhirResponse;
+    return new FHIRResponse(resource).vid("2");
   }
-
+  
   @Override
   public 
   FHIRResponse patch(FHIRRequest request) 
       throws Exception 
   {
-    System.out.println("MockOrganizationService.patch(" + request + ") <" + request.getPrincipal() + ">...");
+    Resource resource = request.getResource();
     
-    Organization resource = buildMockResource();
-    
-    FHIRResponse fhirResponse = new FHIRResponse(resource);
-    fhirResponse.setVid("3");
-    
-    System.out.println("MockOrganizationService.patch(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
-    
-    return fhirResponse;
+    return new FHIRResponse(resource).vid("3");
   }
-
+  
   @Override
   public 
   FHIRResponse delete(FHIRRequest request) 
     throws Exception 
   {
-    System.out.println("MockOrganizationService.delete(" + request + ") <" + request.getPrincipal() + ">...");
+    String id = request.getId();
     
-    OperationOutcome operationOutcome = new OperationOutcome("information", "informational", "Successfully deleted 1 resource(s) in 1ms");
+    OperationOutcome operationOutcome = new OperationOutcome("information", "informational", "Success");
     
-    FHIRResponse fhirResponse = new FHIRResponse(operationOutcome);
-    
-    System.out.println("MockOrganizationService.delete(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
-    
-    return fhirResponse;
+    return new FHIRResponse(operationOutcome).vid(id);
   }
-
+  
   @Override
   public 
   FHIRResponse history(FHIRRequest request) 
     throws Exception 
   {
-    System.out.println("MockOrganizationService.history(" + request + ") <" + request.getPrincipal() + ">...");
+    String id = request.getId();
+    String vid = request.getVid();
     
-    Organization resource = buildMockResource();
+    Organization resource = new Organization("120201", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
     
-    FHIRResponse fhirResponse = new FHIRResponse(resource);
-    fhirResponse.setVid(request.getVid());
-    
-    System.out.println("MockOrganizationService.history(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
-    
-    return fhirResponse;
+    return new FHIRResponse(resource).id(id).vid(vid);
   }
-
+  
   @Override
   public 
   FHIRResponse create(FHIRRequest request) 
     throws Exception 
   {
-    System.out.println("MockOrganizationService.create(" + request + ") <" + request.getPrincipal() + ">...");
+    Resource resource = request.getResource();
     
-    Organization resource = buildMockResource();
-    
-    FHIRResponse fhirResponse = new FHIRResponse(resource);
-    fhirResponse.setVid("1");
-    
-    System.out.println("MockOrganizationService.create(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
-    
-    return fhirResponse;
+    return new FHIRResponse(resource).vid("1");
   }
-
+  
   @Override
   public FHIRResponse search(FHIRRequest request) 
       throws Exception 
   {
-    System.out.println("MockOrganizationService.search(" + request + ") <" + request.getPrincipal() + ">...");
+    Map<String, Object> parameters = request.getParameters();
+    System.out.println(parameters);
     
-    String base = request.getBase();
-    String type = request.getType();
-    
-    Organization resource = buildMockResource();
+    Organization resource = new Organization("120201", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
     
     Bundle bundle = new Bundle("searchset");
-    bundle.addLink("self", base + "/" + type + "/" + resource.getId());
+    bundle.addLink("self", request.getBase(), request.getType(), resource);
     
-    FHIRResponse fhirResponse = new FHIRResponse(bundle);
-    
-    System.out.println("MockOrganizationService.search(" + request + ") <" + request.getPrincipal() + "> -> " + fhirResponse);
-    
-    return fhirResponse;
-  }
-  
-  protected
-  Organization buildMockResource()
-  {
-    return new Organization("120201000", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
+    return new FHIRResponse(bundle);
   }
 }

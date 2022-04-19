@@ -3,7 +3,8 @@ package org.dew.fhir.services;
 import java.io.Serializable;
 
 import java.security.Principal;
-
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,10 +33,9 @@ class FHIRRequest implements Serializable
   // Extension
   protected String type;
   protected boolean history;
-  protected String compartment;
   protected String include;
   protected String revinclude;
-  protected Map<String, Object> parameters;
+  protected Map<String, Object> parameters = new HashMap<String, Object>();
   // Security
   protected Principal principal;
   
@@ -137,10 +137,6 @@ class FHIRRequest implements Serializable
     return history;
   }
 
-  public String getCompartment() {
-    return compartment;
-  }
-
   public String getInclude() {
     return include;
   }
@@ -150,7 +146,7 @@ class FHIRRequest implements Serializable
   }
 
   public Map<String, Object> getParameters() {
-    return parameters;
+    return parameters();
   }
 
   public Principal getPrincipal() {
@@ -197,10 +193,6 @@ class FHIRRequest implements Serializable
     this.history = history;
   }
 
-  public void setCompartment(String compartment) {
-    this.compartment = compartment;
-  }
-
   public void setInclude(String include) {
     this.include = include;
   }
@@ -216,11 +208,215 @@ class FHIRRequest implements Serializable
   public void setPrincipal(Principal principal) {
     this.principal = principal;
   }
-
-  public void addParameter(String name, String value) {
-    if(name == null || name.length() == 0) {
-      return;
+  
+  // Utils
+  
+  public boolean isSearch() {
+    if(id == null || id.length() == 0) {
+      return true;
     }
+    return false;
+  }
+  
+  public FHIRRequest search() {
+    this.id = null;
+    return this;
+  }
+  
+  public FHIRRequest base(String base) {
+    this.base = base;
+    return this;
+  }
+  
+  public FHIRRequest type(String type) {
+    this.type = type;
+    return this;
+  }
+  
+  public FHIRRequest id(String id) {
+    this.id = id;
+    return this;
+  }
+  
+  // Search parameters
+  
+  public FHIRRequest _id(String val) {
+    parameters.put("_id", val);
+    return this;
+  }
+  
+  public FHIRRequest _lastUpdated(Object val) {
+    parameters.put("_lastUpdated", FUtil.formatDate(val, "-"));
+    return this;
+  }
+  
+  public FHIRRequest _lastUpdated(String operator, Object val) {
+    if(operator == null) operator = "";
+    parameters.put("_lastUpdated", operator + FUtil.formatDate(val, "-"));
+    return this;
+  }
+  
+  public FHIRRequest _tag(String val) {
+    parameters.put("_tag", val);
+    return this;
+  }
+
+  public FHIRRequest _profile(String val) {
+    parameters.put("_profile", val);
+    return this;
+  }
+  
+  public FHIRRequest _security(String val) {
+    parameters.put("_security", val);
+    return this;
+  }
+  
+  public FHIRRequest _text(String val) {
+    parameters.put("_text", val);
+    return this;
+  }
+  
+  public FHIRRequest _content(String val) {
+    parameters.put("_content", val);
+    return this;
+  }
+  
+  public FHIRRequest _list(String val) {
+    parameters.put("_list", val);
+    return this;
+  }
+  
+  public FHIRRequest _has(String val) {
+    parameters.put("_text", val);
+    return this;
+  }
+  
+  public FHIRRequest _type(String val) {
+    parameters.put("_type", val);
+    return this;
+  }
+  
+  public FHIRRequest _query(String val) {
+    if(parameters == null) {
+      parameters = new HashMap<String, Object>();
+    }
+    parameters.put("_query", val);
+    return this;
+  }
+  
+  public FHIRRequest _filter(String val) {
+    if(parameters == null) {
+      parameters = new HashMap<String, Object>();
+    }
+    parameters.put("_filter", val);
+    return this;
+  }
+  
+  public FHIRRequest vid(String vid) {
+    this.vid = vid;
+    return this;
+  }
+  
+  public FHIRRequest format(String format) {
+    return this;
+  }
+
+  public FHIRRequest summary(String summary) {
+    this.summary = summary;
+    return this;
+  }
+  
+  public FHIRRequest history() {
+    this.history = true;
+    return this;
+  }
+
+  public FHIRRequest history(boolean history) {
+    this.history = history;
+    return this;
+  }
+  
+  public FHIRRequest pretty() {
+    this.pretty = true;
+    return this;
+  }
+
+  public FHIRRequest pretty(boolean pretty) {
+    this.pretty = pretty;
+    return this;
+  }
+
+  public FHIRRequest resource(Resource resource) {
+    this.resource = resource;
+    return this;
+  }
+  
+  public FHIRRequest clear() {
+    id = null;
+    vid = null;
+    // base = null;
+    resource = null;
+    format = null;
+    pretty = false;
+    summary = null;
+    elements = null;
+    type = null;
+    history = false;
+    include = null;
+    revinclude = null;
+    if(parameters != null) {
+      parameters.clear();
+    }
+    else {
+      parameters = new HashMap<String, Object>();
+    }
+    return this;
+  }
+  
+  public
+  Map<String, Object> parameters()
+  {
+    if(parameters == null) {
+      parameters = new HashMap<String, Object>();
+    }
+    if(id != null && id.length() > 0) {
+      parameters.put("id", id);
+    }
+    if(vid != null && vid.length() > 0) {
+      parameters.put("vid", vid);
+    }
+    if(format != null && format.length() > 0) {
+      parameters.put("_format", format);
+    }
+    if(summary != null && summary.length() > 0) {
+      parameters.put("_summary", summary);
+    }
+    if(pretty) {
+      parameters.put("_pretty", String.valueOf(pretty));
+    }
+    if(elements != null && elements.size() > 0) {
+      parameters.put("_elements", elements);
+    }
+    if(include != null && include.length() > 0) {
+      parameters.put("_include", include);
+    }
+    if(revinclude != null && revinclude.length() > 0) {
+      parameters.put("_revinclude", revinclude);
+    }
+    // No type, resource, etc.
+    return parameters;
+  }
+  
+  public FHIRRequest add(String name, String value) {
+    if(name == null || name.length() == 0) {
+      return this;
+    }
+    
+    if(name.equals("_type") || name.equals("type")) {
+      this.type = value;
+      return this;
+    }
+    
     if(name.equals("id")) {
       this.id = value;
     }
@@ -239,26 +435,62 @@ class FHIRRequest implements Serializable
     else if(name.equals("_elements") || name.equals("elements")) {
       this.elements = FUtil.toListOfString(value);
     }
-    else if(name.equals("_type") || name.equals("type")) {
-      this.type = value;
+    else if(name.equals("_include") || name.equals("include")) {
+      this.include = value;
     }
-    else {
-      if(this.parameters == null) {
-        this.parameters = new HashMap<String, Object>();
-      }
-      this.parameters.put(name, value);
+    else if(name.equals("_revinclude") || name.equals("revinclude")) {
+      this.revinclude = value;
     }
+    
+    if(this.parameters == null) {
+      this.parameters = new HashMap<String, Object>();
+    }
+    this.parameters.put(name, value);
+    return this;
   }
   
-  public Object valueOf(String name) {
+  public FHIRRequest add(String name, String modifier, String value) {
+    if(modifier == null || modifier.length() == 0) {
+      return add(name, value);
+    }
+    return add(name + ":" + modifier, value);
+  }
+  
+  public FHIRRequest not(String name, String value) {
+    return add(name, "not", value);
+  }
+  
+  public FHIRRequest exact(String name, String value) {
+    return add(name, "exact", value);
+  }
+  
+  public FHIRRequest contains(String name, String value) {
+    return add(name, "contains", value);
+  }
+  
+  public FHIRRequest missing(String name, boolean value) {
+    return add(name, "contains", String.valueOf(value));
+  }
+  
+  public Object val(String name) {
     if(name == null || name.length() == 0) {
       return null;
     }
+    
+    Object result = null;
+    if(this.parameters != null) {
+      result = this.parameters.get(name);
+      if(result != null) return result;
+    }
+    
     if(name.equals("id")) {
       return this.id;
     }
     else if(name.equals("vid")) {
       return this.vid;
+    }
+    else if(name.equals("type")) {
+      return this.type;
     }
     else if(name.equals("_format") || name.equals("format")) {
       return this.format;
@@ -272,22 +504,74 @@ class FHIRRequest implements Serializable
     else if(name.equals("_elements") || name.equals("elements")) {
       return this.elements;
     }
-    else if(name.equals("_type") || name.equals("type")) {
-      return this.type;
+    else if(name.equals("_include") || name.equals("include")) {
+      return this.include;
+    }
+    else if(name.equals("_revinclude") || name.equals("revinclude")) {
+      return this.revinclude;
     }
     
-    if(this.parameters != null) {
-      return this.parameters.get(name);
-    }
     return null;
   }
   
-  public Object valueOf(String name, Object defaultValue) {
-    Object result = valueOf(name);
+  public Object val(String name, Object defaultValue) {
+    Object result = val(name);
     if(result == null) {
       return defaultValue;
     }
     return result;
+  }
+
+  public String strVal(String name) {
+    return FUtil.toString(val(name), null);
+  }
+  
+  public String strVal(String name, String defaultValue) {
+    return FUtil.toString(val(name), defaultValue);
+  }
+
+  public int intVal(String name) {
+    return FUtil.toInt(val(name), 0);
+  }
+  
+  public int intVal(String name, int defaultValue) {
+    return FUtil.toInt(val(name), defaultValue);
+  }
+  
+  public double doubleVal(String name) {
+    return FUtil.toDouble(val(name), 0);
+  }
+  
+  public double doubleVal(String name, double defaultValue) {
+    return FUtil.toDouble(val(name), defaultValue);
+  }
+  
+  public boolean boolVal(String name) {
+    return FUtil.toBoolean(val(name), false);
+  }
+  
+  public boolean boolVal(String name, boolean defaultValue) {
+    return FUtil.toBoolean(val(name), defaultValue);
+  }
+  
+  public Date dateVal(String name) {
+    return FUtil.toDate(val(name), false);
+  }
+  
+  public Date dateVal(String name, Object defaultValue) {
+    return FUtil.toDate(val(name), defaultValue);
+  }
+  
+  public Calendar calVal(String name) {
+    return FUtil.toCalendar(val(name), false);
+  }
+  
+  public Calendar calVal(String name, Object defaultValue) {
+    return FUtil.toCalendar(val(name), defaultValue);
+  }
+  
+  public List<String> listVal(String name) {
+    return FUtil.toListOfString(val(name));
   }
 
   @Override

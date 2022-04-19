@@ -15,7 +15,7 @@
 	
 	<servlet>
 		<servlet-name>FHIRServlet</servlet-name>
-		<servlet-class>org.dew.fhir.server.FHIRServlet</servlet-class>
+		<servlet-class>org.dew.fhir.server.TestServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	

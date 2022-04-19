@@ -34,8 +34,33 @@ import org.dew.fhir.util.FHIRUtil;
 
 /**
  * 
- * FHIR Server.
- *
+ * FHIR Servlet.
+ * 
+ * <pre>
+ * public
+ * class WebServices extends org.rpc.server.RpcServlet
+ * {
+ *   public
+ *   void init()
+ *     throws javax.servlet.ServletException
+ *   {
+ *     baseLocation     = null;
+ *     checkSession     = false;
+ *     checkSessionName = "user";
+ *     basicAuth        = true;
+ *     basicRealm       = "wfhir";
+ *     
+ *     services.addHandler("organization", new MockOrganizationService());
+ *   }
+ *   
+ *   protected
+ *   Principal authenticate(String username, String password)
+ *   {
+ *     if(!username.equals(password)) return null;
+ *     return new FHIRPrincipal(username);
+ *   }
+ *  }
+ *  </pre>
  */
 public 
 class FHIRServlet extends HttpServlet 
@@ -47,7 +72,7 @@ class FHIRServlet extends HttpServlet
   protected String  baseLocation     = null;
   protected boolean checkSession     = false;
   protected String  checkSessionName = "user";
-  protected boolean basicAuth        = true;
+  protected boolean basicAuth        = false;
   protected String  basicRealm       = "wfhir";
   protected String  encoding         = null;
   protected int     basicExpiryIn    = 4*60*60*1000;
@@ -58,7 +83,6 @@ class FHIRServlet extends HttpServlet
   void init() 
     throws ServletException 
   {
-    services.addHandler("organization", new org.dew.fhir.mock.MockOrganizationService());
   }
   
   @Override
@@ -94,7 +118,10 @@ class FHIRServlet extends HttpServlet
     
     FHIRResponse fhirResponse = null;
     try {
-      if(fhirRequest.isHistory()) {
+      if(fhirRequest.isSearch()) {
+        fhirResponse = service.search(fhirRequest);
+      }
+      else if(fhirRequest.isHistory()) {
         fhirResponse = service.vread(fhirRequest);
       }
       else {
@@ -397,7 +424,7 @@ class FHIRServlet extends HttpServlet
     Enumeration<String> parameterNames = request.getParameterNames();
     while(parameterNames.hasMoreElements()) {
       String name = parameterNames.nextElement();
-      result.addParameter(name, request.getParameter(name));
+      result.add(name, request.getParameter(name));
     }
     
     String format = result.getFormat();

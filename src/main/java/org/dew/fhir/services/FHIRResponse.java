@@ -143,6 +143,33 @@ class FHIRResponse implements Serializable
     }
   }
   
+  // Utils
+  
+  public FHIRResponse id(String id) {
+    this.id = id;
+    return this;
+  }
+  
+  public FHIRResponse vid(String vid) {
+    this.vid = vid;
+    return this;
+  }
+  
+  public FHIRResponse outcome(OperationOutcome outcome) {
+    this.outcome = outcome;
+    return this;
+  }
+  
+  public FHIRResponse bundle(Bundle bundle) {
+    this.bundle = bundle;
+    return this;
+  }
+  
+  public FHIRResponse resource(Resource resource) {
+    setResource(resource);
+    return this;
+  }
+  
   @Override
   public boolean equals(Object object) {
     if(object instanceof FHIRResponse) {
