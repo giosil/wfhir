@@ -11,9 +11,9 @@ This library contains:
 
 This library DON'T contains:
 
-- persistence engine of resource;
-- tools with user interfaces;
-- other things of a self-consistent system (security, audit, logging, etc.).
+- persistence engine of resources;
+- user interfaces or viewers;
+- tools for server/resource management.
 
 ## Serialization and Deserialization
 
