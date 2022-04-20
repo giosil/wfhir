@@ -235,7 +235,7 @@ class MockOrganizationService implements IFHIRService
 
 - `git clone https://github.com/giosil/wfhir.git`
 - `mvn clean install -f pom2.xml` - this install wfhir as library
-- `mvn clean install` - this create war
+- `mvn clean install` - this create the war file
 - `docker build -t wfhir .` - this will create a Docker image named wfhir
 - `docker run --rm -it -p 8080:8080 wfhir` - To run image named wfhir
 
