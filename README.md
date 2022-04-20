@@ -4,10 +4,11 @@ A simple HL7&copy; FHIR&copy; implementation.
 
 This library contains:
 
-- FHIR resources as POJO beans (see [model package](src/main/java/org/dew/fhir/model));
+- FHIR resources as POJO beans (see [org.dew.fhir.model](src/main/java/org/dew/fhir/model));
 - serialization and deserialization utilities (see [FHIRUtil](src/main/java/org/dew/fhir/util/FHIRUtil.java));
-- base servlet to implement own endpoint (see [FHIRUtil](src/main/java/org/dew/fhir/server/FHIRServlet.java));
-- client to invoke RESTful API (see [FHIRUtil](src/main/java/org/dew/fhir/client/FHIRClient.java)).
+- base servlet to implement own endpoint (see [FHIRServlet](src/main/java/org/dew/fhir/server/FHIRServlet.java));
+- classes and interfaces to implements FHIR services (see [IFHIRService](src/main/java/org/dew/fhir/services/IFHIRService.java));
+- client to invoke RESTful API (see [FHIRClient](src/main/java/org/dew/fhir/client/FHIRClient.java)).
 
 This library DON'T contains:
 
@@ -16,6 +17,8 @@ This library DON'T contains:
 - tools for server/resources management.
 
 ## Serialization and Deserialization
+
+The format RDF/Turtle is not supported.
 
 ```java
 import org.dew.fhir.model.*;
@@ -226,13 +229,14 @@ class MockOrganizationService implements IFHIRService
     return new FHIRResponse(bundle);
   }
 }
-
 ```
 
 ## Build
 
 - `git clone https://github.com/giosil/wfhir.git`
 - `mvn clean install`
+- `docker build -t wfhir .` - this will create a Docker image named wfhir
+- `docker run --rm -it -p 8080:8080 wfhir` - To run image named wfhir
 
 ## Contributors
 

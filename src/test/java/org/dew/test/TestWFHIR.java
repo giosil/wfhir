@@ -70,7 +70,7 @@ class TestWFHIR extends TestCase
     System.out.println("checkSerializationDeserialization()...");
     System.out.println("-------------------------------------------------");
     try {
-      Organization res = new Organization("asl-120201", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
+      Organization res = new Organization("120201", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
       System.out.println(res);
       
       String json = FHIRUtil.serialize(res, "application/fhir+json");
