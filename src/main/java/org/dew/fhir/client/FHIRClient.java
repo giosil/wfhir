@@ -138,6 +138,7 @@ class FHIRClient implements IFHIRService
 
   public void setAccept(String accept) {
     this.accept = accept;
+    whttp.setHeaders(getHeaders());
   }
 
   public void setWhttp(WHttp whttp) {
