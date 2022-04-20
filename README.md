@@ -4,10 +4,10 @@ A simple HL7&copy; FHIR&copy; implementation.
 
 This library contains:
 
-- java beans of FHIR resources;
-- serialization and deserialization utilities;
-- base servlet to implement own endpoint;
-- client to invoke FHIR RESTful API.
+- FHIR resources as POJO beans (see [model package](src/main/java/org/dew/fhir/model));
+- serialization and deserialization utilities (see [FHIRUtil](src/main/java/org/dew/fhir/util/FHIRUtil.java));
+- base servlet to implement own endpoint (see [FHIRUtil](src/main/java/org/dew/fhir/server/FHIRServlet.java));
+- client to invoke RESTful API (see [FHIRUtil](src/main/java/org/dew/fhir/client/FHIRClient.java)).
 
 This library DON'T contains:
 
@@ -21,7 +21,7 @@ This library DON'T contains:
 import org.dew.fhir.model.*;
 import org.dew.fhir.util.FHIRUtil;
 
-Organization res = new Organization("120201000", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
+Organization res = new Organization("120201", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
   
 String json = FHIRUtil.serialize(res, "application/fhir+json");
   

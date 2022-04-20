@@ -27,6 +27,7 @@ import org.dew.fhir.services.FHIRResponse;
 
 import org.dew.fhir.util.FHIRSchema;
 import org.dew.fhir.util.FHIRUtil;
+import org.dew.fhir.util.FUtil;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -46,12 +47,16 @@ class TestWFHIR extends TestCase
   public 
   void testApp() 
   {
-    String sOperation = System.getProperty("dew.test.op", "");
+    String operation = System.getProperty("dew.test.op", "");
     
-    if(sOperation == null || sOperation.length() == 0 || sOperation.equalsIgnoreCase("model")) {
+    if(operation == null || operation.length() == 0) {
+      System.out.println("dew.test.op not setted (ex. -Ddew.test.op=client)");
       checkModel(false, false);
     }
-    else if(sOperation.equalsIgnoreCase("client")) {
+    else if(operation.equalsIgnoreCase("model")) {
+      checkModel(true, false);
+    }
+    else if(operation.equalsIgnoreCase("client")) {
       checkClient();
     }
     else {
@@ -62,7 +67,7 @@ class TestWFHIR extends TestCase
   public 
   void checkSerializationDeserialization()
   {
-    System.out.println("examples()...");
+    System.out.println("checkSerializationDeserialization()...");
     System.out.println("-------------------------------------------------");
     try {
       Organization res = new Organization("asl-120201", "http://hl7.it/sid/fls", "120201", "ASL ROMA 1");
@@ -89,6 +94,9 @@ class TestWFHIR extends TestCase
   public 
   void checkClient()
   {
+    System.out.println("checkClient()...");
+    System.out.println("-------------------------------------------------");
+    
     FHIRClient client = new FHIRClient("http://localhost:8080/wfhir/fhir");
     client.setBasicAuth("test", "test");
     
@@ -300,13 +308,13 @@ class TestWFHIR extends TestCase
         String fhirType = fhirSchema.getType(objectName, field, bbElements);
         
         if(fhirType == null || fhirType.length() == 0) {
-          if(traceFld) System.out.println("  " + rpad(field, ' ', 25) + rpad("?", ' ', 80) + " (no type available)");
+          if(traceFld) System.out.println("  " + FUtil.rpad(field, ' ', 25) + FUtil.rpad("?", ' ', 80) + " (no type available)");
           continue;
         }
         
         String classType = fhirSchema.getClassType(objectClass, field);
         if(classType == null) {
-          if(traceFld) System.out.println("  " + rpad(field, ' ', 25) + rpad(fhirType, ' ', 80) + " (missing)");
+          if(traceFld) System.out.println("  " + FUtil.rpad(field, ' ', 25) + FUtil.rpad(fhirType, ' ', 80) + " (missing)");
           missingFld.add(objectName + "." + field);
           continue;
         }
@@ -315,10 +323,10 @@ class TestWFHIR extends TestCase
           String note = " (schema=" + fhirType + ", class=" + classType + ")";
           invalidFld.add(objectName + "." + field + " " + note);
           
-          if(traceFld) System.out.println("  " + rpad(field, ' ', 25) + rpad(fhirType, ' ', 80) + " (incorrect: " + classType + ")");
+          if(traceFld) System.out.println("  " + FUtil.rpad(field, ' ', 25) + FUtil.rpad(fhirType, ' ', 80) + " (incorrect: " + classType + ")");
         }
         else {
-          if(traceFld) System.out.println("  " + rpad(field, ' ', 25) + rpad(fhirType, ' ', 80));
+          if(traceFld) System.out.println("  " + FUtil.rpad(field, ' ', 25) + FUtil.rpad(fhirType, ' ', 80));
         }
       }
     }
@@ -388,7 +396,6 @@ class TestWFHIR extends TestCase
         }
       }
     }
-    
     System.out.println("### Missing objects [" + missingObj.size() + " of " + listResources.size() + "]:");
     for(int i = 0; i < missingObj.size(); i++) {
       System.out.println(missingObj.get(i));
@@ -402,19 +409,6 @@ class TestWFHIR extends TestCase
       System.out.println(invalidFld.get(i));
     }
     System.out.println("-------------------------------------------------");
-  }
-  
-  protected static
-  String rpad(String text, char c, int length)
-  {
-    if(text == null) text = "";
-    int iTextLength = text.length();
-    if(iTextLength >= length) return text;
-    int diff = length - iTextLength;
-    StringBuffer sb = new StringBuffer();
-    sb.append(text);
-    for(int i = 0; i < diff; i++) sb.append(c);
-    return sb.toString();
   }
   
   protected static
