@@ -203,6 +203,7 @@ class FHIRRequest implements Serializable
 
   public void setParameters(Map<String, Object> parameters) {
     this.parameters = parameters;
+    this.parameters();
   }
 
   public void setPrincipal(Principal principal) {
@@ -407,6 +408,17 @@ class FHIRRequest implements Serializable
     return parameters;
   }
   
+  public FHIRRequest put(String name, Object value) {
+    if(name == null || name.length() == 0) {
+      return this;
+    }
+    if(this.parameters == null) {
+      this.parameters = new HashMap<String, Object>();
+    }
+    this.parameters.put(name, value);
+    return this;
+  }
+  
   public FHIRRequest add(String name, String value) {
     if(name == null || name.length() == 0) {
       return this;
@@ -520,6 +532,21 @@ class FHIRRequest implements Serializable
       return defaultValue;
     }
     return result;
+  }
+  
+  public boolean check(String name) {
+    if(name == null || name.length() == 0) {
+      return false;
+    }
+    if(this.parameters == null) return false;
+    Object val = this.parameters.get(name);
+    if(val == null) return false;
+    if(val instanceof String) {
+      if(((String) val).length() == 0) {
+        return false;
+      }
+    }
+    return true;
   }
 
   public String strVal(String name) {
