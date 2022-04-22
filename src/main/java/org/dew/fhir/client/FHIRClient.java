@@ -1,8 +1,11 @@
 package org.dew.fhir.client;
 
 import java.io.OutputStream;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.net.ssl.SSLSocketFactory;
 
 import org.dew.fhir.model.Resource;
 import org.dew.fhir.services.FHIRRequest;
@@ -24,6 +27,7 @@ class FHIRClient implements IFHIRService
   protected String bearer;
   protected int connectTimeout = 60000;
   protected int readTimeout = 60000;
+  protected SSLSocketFactory sslSocketFactory;
   protected OutputStream tracerRequest;
   protected OutputStream tracerResponse;
   protected String base;
@@ -145,8 +149,16 @@ class FHIRClient implements IFHIRService
     this.whttp = whttp;
   }
   
+  public SSLSocketFactory getSslSocketFactory() {
+    return sslSocketFactory;
+  }
+
+  public void setSslSocketFactory(SSLSocketFactory sslSocketFactory) {
+    this.sslSocketFactory = sslSocketFactory;
+    whttp.setSslSocketFactory(sslSocketFactory);
+  }
+
   // Utils
-  
   public void setBasicAuth(String username, String password) {
     this.basicAuthUsername = username;
     this.basicAuthPassword = password;

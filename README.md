@@ -6,7 +6,7 @@ This library contains:
 
 - FHIR resources as POJO beans (see [org.dew.fhir.model](src/main/java/org/dew/fhir/model));
 - serialization and deserialization utilities (see [FHIRUtil](src/main/java/org/dew/fhir/util/FHIRUtil.java));
-- base servlet to implement own endpoint (see [FHIRServlet](src/main/java/org/dew/fhir/server/FHIRServlet.java));
+- base servlet to implement own services endpoint (see [FHIRServlet](src/main/java/org/dew/fhir/server/FHIRServlet.java));
 - classes and interfaces to implement FHIR services (see [IFHIRService](src/main/java/org/dew/fhir/services/IFHIRService.java));
 - client to invoke RESTful API (see [FHIRClient](src/main/java/org/dew/fhir/client/FHIRClient.java)).
 
@@ -79,7 +79,7 @@ catch(Exception ex) {
 }
 ```
 
-## Endpoint
+## Services endpoint
 
 ```java
 import java.security.Principal;
