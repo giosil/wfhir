@@ -491,7 +491,7 @@ class WHttp
         fieldMethod.setAccessible(true);
         fieldMethod.set(target, "PATCH");
       }
-      catch(IllegalAccessException | NoSuchFieldException ex) {
+      catch(Exception ex) {
         connection.setRequestProperty("X-HTTP-Method-Override", "PATCH");
         connection.setRequestMethod("POST");
       }
