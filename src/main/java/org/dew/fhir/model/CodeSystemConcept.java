@@ -25,6 +25,24 @@ class CodeSystemConcept extends BackboneElement implements Serializable
   {
   }
 
+  public CodeSystemConcept(String code)
+  {
+    this.code = code;
+  }
+
+  public CodeSystemConcept(String code, String display)
+  {
+    this.code = code;
+    this.display = display;
+  }
+
+  public CodeSystemConcept(String code, String display, String definition)
+  {
+    this.code = code;
+    this.display = display;
+    this.definition = definition;
+  }
+
   public String getCode() {
     return code;
   }
@@ -83,7 +101,8 @@ class CodeSystemConcept extends BackboneElement implements Serializable
   
   @Override
   public int hashCode() {
-    return (code + ":" + definition).hashCode();
+    if(code == null) return 0;
+    return code.hashCode();
   }
   
   @Override
