@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class Coding extends Element implements Serializable
 {
-  private static final long serialVersionUID = -4438727259854935572L;
+  private static final long serialVersionUID = -4458607513410164003L;
   
   protected String system;
   protected String version;
@@ -48,6 +48,21 @@ class Coding extends Element implements Serializable
   {
     this.system = system;
     this.version = version;
+    this.code = code;
+    this.display = display;
+    this.userSelected = userSelected;
+  }
+  
+  public Coding(String id, String display, Boolean userSelected)
+  {
+    this.id = id;
+    this.display = display;
+    this.userSelected = userSelected;
+  }
+  
+  public Coding(String id, String display, String code, Boolean userSelected)
+  {
+    this.id = id;
     this.code = code;
     this.display = display;
     this.userSelected = userSelected;
@@ -103,11 +118,11 @@ class Coding extends Element implements Serializable
 
   @Override
   public int hashCode() {
-    return (system + ":" + version + ":" + code).hashCode();
+    return (id + ":" + code).hashCode();
   }
   
   @Override
   public String toString() {
-    return "Coding(" + system + "," + version + "," + code + "," + display + ")";
+    return "Coding(" + id + "," + system + "," + version + "," + code + "," + display + ")";
   }
 }
