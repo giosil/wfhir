@@ -13,11 +13,11 @@ class Coding extends Element implements Serializable
 {
   private static final long serialVersionUID = -4438727259854935572L;
   
-  private String system;
-  private String version;
-  private String code;
-  private String display;
-  private Boolean userSelected;
+  protected String system;
+  protected String version;
+  protected String code;
+  protected String display;
+  protected Boolean userSelected;
   
   public Coding()
   {
