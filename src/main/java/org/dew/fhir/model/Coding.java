@@ -11,7 +11,7 @@ import java.io.Serializable;
 public 
 class Coding extends Element implements Serializable
 {
-  private static final long serialVersionUID = -4458607513410164003L;
+  private static final long serialVersionUID = -6366388196465327881L;
   
   protected String system;
   protected String version;
@@ -23,17 +23,32 @@ class Coding extends Element implements Serializable
   {
   }
   
-  public Coding(String system, String code)
+  public Coding(String id, String display)
   {
-    this.system = system;
+    this.id = id;
+    this.display = display;
+  }
+  
+  public Coding(String id, String display, Boolean userSelected)
+  {
+    this.id = id;
+    this.display = display;
+    this.userSelected = userSelected;
+  }
+  
+  public Coding(String id, String display, String code)
+  {
+    this.id = id;
+    this.display = display;
     this.code = code;
   }
   
-  public Coding(String system, String version, String code)
+  public Coding(String id, String display, String code, Boolean userSelected)
   {
-    this.system = system;
-    this.version = version;
+    this.id = id;
     this.code = code;
+    this.display = display;
+    this.userSelected = userSelected;
   }
   
   public Coding(String system, String version, String code, String display)
@@ -48,21 +63,6 @@ class Coding extends Element implements Serializable
   {
     this.system = system;
     this.version = version;
-    this.code = code;
-    this.display = display;
-    this.userSelected = userSelected;
-  }
-  
-  public Coding(String id, String display, Boolean userSelected)
-  {
-    this.id = id;
-    this.display = display;
-    this.userSelected = userSelected;
-  }
-  
-  public Coding(String id, String display, String code, Boolean userSelected)
-  {
-    this.id = id;
     this.code = code;
     this.display = display;
     this.userSelected = userSelected;
