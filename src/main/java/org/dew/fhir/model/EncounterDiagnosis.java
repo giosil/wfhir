@@ -16,6 +16,8 @@ class EncounterDiagnosis extends BackboneElement implements Serializable
   protected Reference<Resource> condition;
   protected CodeableConcept use;
   protected Integer rank;
+  // extra
+  protected CodeableConcept role;
   
   public EncounterDiagnosis()
   {
@@ -29,6 +31,10 @@ class EncounterDiagnosis extends BackboneElement implements Serializable
     return use;
   }
 
+  public CodeableConcept getRole() {
+    return role;
+  }
+
   public Integer getRank() {
     return rank;
   }
@@ -39,6 +45,10 @@ class EncounterDiagnosis extends BackboneElement implements Serializable
 
   public void setUse(CodeableConcept use) {
     this.use = use;
+  }
+
+  public void setRole(CodeableConcept role) {
+    this.role = role;
   }
 
   public void setRank(Integer rank) {
