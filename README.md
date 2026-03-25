@@ -239,6 +239,13 @@ class MockOrganizationService implements IFHIRService
 - `docker build -t wfhir .` - this will create a Docker image named wfhir
 - `docker run --rm -it -p 8080:8080 wfhir` - To run image named wfhir
 
+## IT Realm
+
+- https://www.hl7.it/realm-italiano/
+- https://www.hl7.it/fhir/
+- https://www.hl7.it/fhir/cda2fhir/
+- https://www.hl7.it/fhir/cda2fhir/contesto.html
+
 ## Contributors
 
 * [Giorgio Silvestris](https://github.com/giosil)
