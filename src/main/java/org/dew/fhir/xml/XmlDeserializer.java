@@ -3,12 +3,15 @@ package org.dew.fhir.xml;
 import java.io.ByteArrayInputStream;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
+
+import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -16,7 +19,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 public
 class XmlDeserializer implements ContentHandler
@@ -28,13 +30,15 @@ class XmlDeserializer implements ContentHandler
   protected Map<String, Object> curr;
   protected String path;
   protected List<String> divs;
-  protected Set<String> closed;
+  
+  protected List<String> listObjectId = new ArrayList<String>();
+  protected Map<String, Map<String, Object>> objects = new HashMap<String, Map<String,Object>>();
   
   public XmlDeserializer()
   {
   }
   
-  public 
+  public
   Map<String, Object> getRoot()
   {
     return root;
@@ -48,20 +52,21 @@ class XmlDeserializer implements ContentHandler
     curr   = null;
     path   = null;
     divs   = new ArrayList<String>();
-    closed = null;
     
     if(content == null || content.length < 7) return;
     
     String xml = new String(content);
     List<IndexRange> listOfIndexRange = getDivSectionsIndexRanges(xml);
-    for(int i = 0; i < listOfIndexRange.size() ; i++) {
+    for(int i = 0; i < listOfIndexRange.size(); i++) {
       IndexRange indexRange = listOfIndexRange.get(i);
       if(indexRange.start < 0 || indexRange.end < 0) continue;
       divs.add(xml.substring(indexRange.start, indexRange.end + 1));
     }
     
     InputSource inputSource = new InputSource(new ByteArrayInputStream(content));
-    XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+    SAXParserFactory factory = SAXParserFactory.newInstance();
+    factory.setNamespaceAware(true);
+    XMLReader xmlReader = factory.newSAXParser().getXMLReader();
     xmlReader.setContentHandler(this);
     xmlReader.parse(inputSource);
   }
@@ -73,20 +78,21 @@ class XmlDeserializer implements ContentHandler
     root   = null;
     curr   = null;
     path   = null;
-    divs   = new ArrayList<String>();
-    closed = null;
+    divs   = new ArrayList<String> ();
     
     if(xml == null || xml.length() < 7) return;
     
     List<IndexRange> listOfIndexRange = getDivSectionsIndexRanges(xml);
-    for(int i = 0; i < listOfIndexRange.size() ; i++) {
+    for(int i = 0; i < listOfIndexRange.size(); i++) {
       IndexRange indexRange = listOfIndexRange.get(i);
       if(indexRange.start < 0 || indexRange.end < 0) continue;
       divs.add(xml.substring(indexRange.start, indexRange.end + 1));
     }
     
     InputSource inputSource = new InputSource(new ByteArrayInputStream(xml.getBytes()));
-    XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+    SAXParserFactory factory = SAXParserFactory.newInstance();
+    factory.setNamespaceAware(true);
+    XMLReader xmlReader = factory.newSAXParser().getXMLReader();
     xmlReader.setContentHandler(this);
     xmlReader.parse(inputSource);
   }
@@ -99,7 +105,6 @@ class XmlDeserializer implements ContentHandler
     
     root   = new HashMap<String, Object>();
     curr   = root;
-    closed = new HashSet<String>();
   }
   
   public
@@ -133,10 +138,14 @@ class XmlDeserializer implements ContentHandler
     }
     
     String value = null;
+    String url   = null;
     for(int i = 0; i < attributes.getLength(); i++) {
       String attrLocalName = attributes.getLocalName(i);
       if(attrLocalName.equals("value")) {
         value = attributes.getValue(i);
+      }
+      else if(attrLocalName.equals("url")) {
+        url = attributes.getValue(i);
       }
     }
     
@@ -158,12 +167,6 @@ class XmlDeserializer implements ContentHandler
         List<Object> list = (List<Object>) prev;
         list.add(value);
       }
-      else if(closed.contains(path)) {
-        List<Object> list = new ArrayList<>();
-        list.add(prev);
-        list.add(value);
-        curr.put(localName, list);
-      }
       else {
         curr.put(localName, value);
       }
@@ -172,32 +175,56 @@ class XmlDeserializer implements ContentHandler
       Map<String, Object> map = null;
       Object prev = curr.get(localName);
       if(prev instanceof Map) {
-        map = (Map<String, Object>) prev;
+        map = createObject(localName, stackSize, url);
+        
+        List<Object> list = new ArrayList<Object>();
+        list.add(normalize((Map<String, Object>) prev));
+        list.add(map);
+        
+        curr.put(localName, list);
       }
       else if(prev instanceof List) {
         List<Object> list = (List<Object>) prev;
-        Object last = list.size() > 0 ? list.get(list.size() - 1) : null;
-        if(last instanceof Map) {
-          map = (Map<String, Object>) last;
-        }
-        else {
-          map = new HashMap<String, Object>();
-          list.add(map);
-        }
+        map = createObject(localName, stackSize, url);
+        list.add(map);
       }
       else {
-        map = new HashMap<String, Object>();
+        map = createObject(localName, stackSize, url);
         curr.put(localName, map);
       }
       curr = map;
     }
   }
   
+  protected
+  Map<String, Object> createObject(String localName, int stackSize, String url)
+  {
+    Map<String, Object> map = new HashMap<String, Object>();
+    if(url != null && url.length() > 0) {
+      map.put("url", url);
+    }
+    objects.put(localName + "#" + stackSize, map);
+    listObjectId.add(localName + "#" + stackSize);
+    return map;
+  }
+  
   public
   void endElement(String uri, String localName, String qName)
     throws SAXException
   {
-    closed.add(path);
+    String objectId = localName + "#" + stackElements.size();
+    
+    Map<String, Object> mapObject = objects.get(objectId);
+    if(mapObject != null) normalize(mapObject);
+    
+    int indexOf = listObjectId.indexOf(objectId);
+    if(indexOf > 0) {
+      String prevObjectId = listObjectId.get(indexOf - 1);
+      curr = objects.get(prevObjectId);
+      if(curr == null) curr = root;
+    }
+    
+    listObjectId.remove(objectId);
     
     if(!stackElements.isEmpty()) stackElements.pop();
     path = "";
@@ -224,7 +251,7 @@ class XmlDeserializer implements ContentHandler
   protected
   List<IndexRange> getDivSectionsIndexRanges(String xml)
   {
-    List<IndexRange> listResult = new ArrayList<IndexRange>();
+    List<IndexRange> listResult = new ArrayList<IndexRange> ();
     
     if(xml == null || xml.length() == 0) return listResult;
     int length = xml.length();
@@ -291,6 +318,153 @@ class XmlDeserializer implements ContentHandler
     return listResult;
   }
   
+  protected static
+  Map<String, Object> normalize(Map<String, Object> map)
+  {
+    if(map == null || map.isEmpty()) return map;
+    
+    // Le mappe che hanno una sola chiave la quale inizia con una lettera maiuscola individuano una risorsa.
+    // La mappa contenuta dalla chiave sale di livello e si aggiunge l'attributo resourceType.
+    String singleKey = singleKey(map);
+    if(singleKey != null && singleKey.length() > 0) {
+      char c0 = singleKey.charAt(0);
+      if(c0 >= 65 && c0 <= 90) {
+        Map<String, Object> value = mapObject(map, singleKey);
+        if(value != null) {
+          map.clear();
+          map.putAll(value);
+          map.put("resourceType", singleKey);
+        }
+      }
+    }
+    
+    boolean isBundle = isBundle(map);
+    
+    // CodeableConcept[] code
+    // {code={coding={... -> {code=[{coding=[...
+    replaceListOfList(map, "code", "coding");
+    
+    // DomainResource
+    replaceList(map, "contained");
+    replaceList(map, "extension");
+    replaceList(map, "modifierExtension");
+    
+    // Patient / Organization / Practitioner
+    if(!isBundle) {
+      replaceList(map, "identifier");
+    }
+    replaceList(map, "telecom");
+    replaceList(map, "address");
+    replaceList(map, "qualification");
+    
+    // Bundle
+    if(isBundle) {
+      replaceList(map, "link");
+      replaceList(map, "entry");
+    }
+    
+    // Extension.valueCodeableConcept
+    Map<String, Object> valueCodeableConcept = mapObject(map, "valueCodeableConcept");
+    if(valueCodeableConcept != null && !valueCodeableConcept.isEmpty()) {
+      replaceList(valueCodeableConcept, "coding");
+    }
+    
+    // Consent / DocumentReference / HealthcareService
+    replaceList(map, "category");
+    
+    return map;
+  }
+  
+  protected static
+  String singleKey(Map<String, Object> map)
+  {
+    if(map == null) return null;
+    
+    Set<String> keySet = map.keySet();
+    if(keySet == null || keySet.size() != 1) return null;
+    
+    String result= null;
+    Iterator<String> iterator = keySet.iterator();
+    if(iterator.hasNext()) {
+      result = iterator.next();
+    }
+    return result;
+  }
+  
+  protected static
+  boolean isBundle(Map<String, Object> map)
+  {
+    if(map == null) return false;
+    String resourceType = string(map, "resourceType");
+    if(resourceType != null && resourceType.length() > 0) {
+      return resourceType.equalsIgnoreCase("Bundle");
+    }
+    return map.containsKey("entry");
+  }
+  
+  protected static
+  String string(Map<String, Object> map, String key)
+  {
+    if(map == null || key == null) return null;
+    Object value = map.get(key);
+    if(value == null) return null;
+    return value.toString();
+  }
+  
+  @SuppressWarnings("unchecked")
+  protected static
+  Map<String, Object> mapObject(Map<String, Object> map, String key)
+  {
+    if(map == null || key == null) return null;
+    Object value = map.get(key);
+    if(value instanceof Map) {
+      return (Map<String, Object>) value;
+    }
+    return null;
+  }
+  
+  protected static
+  void replaceListOfList(Map<String, Object> map, String key1, String key2)
+  {
+    if(map == null || key1 == null || key2 == null) {
+      return;
+    }
+    Map<String, Object> mapValue1 = mapObject(map, key1);
+    if(mapValue1 == null) return;
+    
+    Map<String, Object> mapValue2 = mapObject(mapValue1, key2);
+    if(mapValue2 == null) return;
+    
+    List<Object> list2 = new ArrayList<Object>();
+    list2.add(mapValue2);
+    mapValue1.put(key2, list2);
+    
+    List<Object> list1 = new ArrayList<Object>();
+    list1.add(mapValue1);
+    map.put(key1, list1);
+  }
+  
+  protected static
+  void replaceList(Map<String, Object> map, String key)
+  {
+    if(map == null || key == null) {
+      return;
+    }
+    Object value = map.get(key);
+    if(value == null) {
+      return;
+    }
+    if(value instanceof Collection) {
+      return;
+    }
+    if(value.getClass().isArray()) {
+      return;
+    }
+    List<Object> list = new ArrayList<Object>();
+    list.add(value);
+    map.put(key, list);
+  }
+  
   static class IndexRange
   {
     public int start = -1;
@@ -313,7 +487,7 @@ class XmlDeserializer implements ContentHandler
     
     @Override
     public boolean equals(Object object) {
-      if (object instanceof IndexRange) {
+      if(object instanceof IndexRange) {
         return toString().equals(object.toString());
       }
       return false;
@@ -330,4 +504,3 @@ class XmlDeserializer implements ContentHandler
     }
   }
 }
-
