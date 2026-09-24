@@ -118,7 +118,7 @@ class Coding extends Element implements Serializable
 
   @Override
   public int hashCode() {
-    return (id + ":" + code).hashCode();
+    return (id + ":" + system + ":" + code).hashCode();
   }
   
   @Override
