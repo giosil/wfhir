@@ -20,6 +20,13 @@ class CodeableConcept extends Element implements Serializable
   public CodeableConcept()
   {
   }
+  
+  public CodeableConcept(Coding coding0)
+  {
+    if(coding0 != null) {
+      coding = new Coding[] { coding0 };
+    }
+  }
 
   public Coding[] getCoding() {
     return coding;
