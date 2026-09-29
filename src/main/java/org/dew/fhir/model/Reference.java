@@ -22,7 +22,12 @@ class Reference<T extends Resource> extends Element implements Serializable
   public Reference()
   {
   }
-
+  
+  public Reference(String reference)
+  {
+    this.reference = reference;
+  }
+  
   public Reference(String reference, String type)
   {
     this.reference = reference;
